@@ -1,0 +1,219 @@
+<chapter id="preface">
+  <title>
+    Intro to Python
+  </title>
+
+  <para>
+    Python is an all-purpose programming language. It can be used to
+    create desktop applications, 3d graphics, video games, and even
+    websites. It's a good language to learn because it's simpler than
+    complex languages like C, C++, or Java, but is almost as powerful,
+    and is used in just about every industry that uses computers.
+  </para>
+
+  <para>
+    Unlike Scratch, Python doesn't have a GUI. You have to type code
+    into a text editor, save the file, and then run it with the Python
+    interpreter.
+  </para>
+
+<mediaobject>
+  <info>
+    <othercredit>
+      <orgname>MakerBox</orgname>
+    </othercredit>
+    <othercredit>
+      <orgname>MIT</orgname>
+    </othercredit>
+  </info>
+  <alt>Scratch and Python</alt>
+  <imageobject>
+    <imagedata align="left" width="4.3in" format="JPG"
+	       fileref="images/scratchLikePython.jpg"/>
+  </imageobject>
+  <textobject>
+    <para>
+    The Scratch interface is like Python. The Scratch scripts and you
+    make with Scratch blocks are like Python code.      
+    </para>
+  </textobject>
+</mediaobject>
+
+<section id="intro_start-python">
+  <title>
+    Starting Python
+  </title>
+
+  <para>
+    Since you've never used Python before, your first task is to try a
+    few simple one-line programmes with it. You can talk directly to
+    Python by running it in a terminal. 
+  </para>
+
+  <itemizedlist>
+    <listitem>
+      <para>
+	On Linux or macOS, launch a terminal window and type <command>python</command> 
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+	On Windows, launch Python from the Start menu.
+      </para>
+      <para>
+	If there is no Python in the Start menu, launch PowerShell and
+	type <command>Python.exe</command>
+      </para>
+      <para>
+	If that doesn't work, make sure you have Python installed, or
+	just use <link
+	xlink:href="https://getfedora.org/en_GB/workstation/download/">Linux</link>. It's
+	free and doesn't even require you to install it to use it.
+      </para>
+    </listitem>
+  </itemizedlist>
+
+</section>
+
+<section id="intro_python-commands">
+  <title>
+    Telling Python what to do
+  </title>
+
+  <para>
+    Just like Scratch has code blocks, Python has keywords that tell
+    Python what you want it to do.
+  </para>
+
+  <para>
+    For instance, type this at your Python prompt and then press <keycode>Return</keycode>&#58;
+  </para>
+
+  <screen>
+    <prompt>&#62;&#62;&#62;</prompt> <command>print&#40;&#34;Hello world.&#34;&#41;</command>
+    <comuputeroutput>Hello world.</comuputeroutput>
+  </screen>
+
+  <para>
+    The keyword <command>print</command> tells Python to print out
+    whatever text you give it in parentheses and quotes.
+  </para>
+
+  <para>
+    That's not very exciting, though. Unlike Scratch, which has
+    probably 100 code blocks ready to use, Python only
+    has access to some basic keywords, like <command>print</command>,
+    <command>help</command>, and so on.
+  </para>
+
+  <para>
+    Use the <command>import</command> keyword to load more keywords.
+  </para>
+
+  <screen>
+    <prompt>&#62;&#62;&#62;</prompt> <command>import turtle</command>
+  </screen>
+
+  <para>
+    Turtle is a fun module to use. It&#39;s exactly like the Pen code
+    blocks in Scratch.
+  </para>
+
+  <screen>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.begin_fill&#40;&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
+    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.end_fill&#40;&#41;</command>    
+  </screen>
+
+  <section id="intro_exercise">
+    <title>Exercise</title>
+
+    <para>
+      See what shapes you can draw with the turtle module.
+    </para>
+
+    <para>
+      To clear you turtle drawing area, use the
+      <command>turtle.clear&#40;&#41;</command> keyword.
+    </para>
+
+    <para>
+      What do you think the keyword
+      <command>turtle.color&#40;&#34;blue&#34;&#41;</command> does?
+    </para>
+  </section>
+</section>
+
+  <section id="intro_script">
+    <title>Scripting Python</title>
+    
+    <para>
+      Now that you've had a chance to play around with Python in the
+      terminal, it&#39;s time to write a Python script. 
+    </para>
+
+    <qandaset defaultlabel="intro_script-q1">
+      <qandaentry>
+	<question>
+	  <para>What is a script in Scratch?</para>
+	</question>
+	<answer>
+	  <para>It&#39;s a list of instructions that controls your programme.</para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+
+    <para>
+      A script in Python is a lot like a script in Scratch. The
+      difference is that instead of using code blocks, Python uses keywords.
+    </para>
+
+    <para>
+      Open an empty text file and type this programme. In Python, the
+      indentation matters, so type this exactly as you see it, using
+      the <keycode>Tab</keycode> key to indent when necessary.
+    </para>
+
+
+    <screen>
+      import turtle as t
+      import time
+      
+      t.color("blue")
+      t.begin_fill()
+
+      n=0
+      
+      while n < 4:
+          t.forward(100)
+          t.left(90)
+      
+      t.end_fill()
+      time.sleep(5)
+    </screen>
+
+    <para>
+      Save the text file as <filename>turtle.py</filename>.
+    </para>
+
+    <para>
+      To run your script, type <command>python
+      $MOHE/turtle.py</command> on Linux or macOS. On Windows, type
+      <command>Python.exe turtle.py</command>
+    </para>
+
+    <para>
+      Once you have run your script, it&#39;s time to explore an even
+      better module. One popular module used to create video games with Python
+      is called PyGame. It&#39;s got a lot more features than turtle,
+      but is also a lot more complex, so be prepared.
+    </para>
+  </section>
+</chapter>

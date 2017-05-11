@@ -1,0 +1,260 @@
+<chapter id="player">
+  <title>
+    Spawning a player
+  </title>
+
+  <para>
+    Every game needs a player, and every player needs a playable
+    character. 
+  </para>
+
+  <mediaobject>
+    <info>
+      <othercredit>
+	<orgname>MakerBox</orgname>
+      </othercredit>
+      <othercredit>
+	<orgname>MIT</orgname>
+      </othercredit>
+    </info>
+    <alt>Sprites in Scratch</alt>
+    <imageobject>
+      <imagedata align="left" width="4.3in" format="JPG"
+		 fileref="images/sprite.jpg"/>
+    </imageobject>
+    <textobject>
+      <para>
+	Playable characters in Scratch are provided by Sprites.
+      </para>
+    </textobject>
+  </mediaobject>
+
+<para>
+  Pygame uses sprites, too. In Scratch, you created a new sprite and
+  then chose a costume for the sprite. You do something similar in
+  Python. Before you do, create a directory called
+  <filename>images</filename> alongside of your Python script
+  file. Put the image you want to use for your sprite into the
+  <filename>images</filename> folder.
+</para>
+
+<para>
+  In Python, when you create an object that you want to appear on
+  screen, you create a <firstterm>class</firstterm>.
+</para>
+
+<para>
+  Near the top of your Python script, add the code to create a
+  player. In the code sample below, the first 3 lines are already in the
+  Python script that you&#39;re working on&#58;
+</para>
+
+<programlisting>
+import pygame
+import sys
+import os # new code below
+
+class Player(pygame.sprite.Sprite):
+    '''
+    Spawn a player
+    '''
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+	img = pygame.image.load(os.path.join('images','hero.png')).convert()
+	self.images.append(img)
+	self.image = self.images[0]
+	self.rect  = self.image.get_rect()
+</programlisting>
+
+<para>
+  If you have a walk cycle for your playable character, save each
+  drawing as an individual file called <filename>hero1.png</filename>
+  to <filename>hero8.png</filename> in the <filename>images</filename>
+  folder.
+</para>
+
+<para>
+  To tell Python to cycle through each file, you must use a loop.
+</para>
+
+  <qandaset defaultlabel="player_q1">
+    <qandaentry>
+      <question>
+	<para>What kind of loop does Scratch use to repeat something
+	a specific number of times?</para>
+	</question>
+	<answer>
+	  <para>A repeat loop.</para>
+	</answer>
+    </qandaentry>
+  </qandaset>
+
+  <para>
+    In Scratch, you used a repeat loop to repeat an action for a
+    specific number of times. In Python, you use a for loop&#58;
+  </para>
+
+<programlisting>
+import pygame
+import sys
+import os # new code below
+
+class Player(pygame.sprite.Sprite):
+    '''
+    Spawn a player
+    '''
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for i in range(1,9):
+            img = pygame.image.load(os.path.join('images','hero' + str(i) + '.png')).convert()
+            self.images.append(img)
+            self.image = self.images[0]
+            self.rect  = self.image.get_rect()
+</programlisting>
+
+<section id="player_spawn">
+  <title>Bringing the player in the game world</title>
+
+  <para>
+    In Scratch, when you want to show a sprite in your game, you can
+    use a few Scratch blocks.
+  </para>
+
+    <qandaset defaultlabel="player_spawn-q1">
+    <qandaentry>
+      <question>
+	<para>What are some of the Scratch blocks you might use to
+	show a sprite on the stage?</para>
+	</question>
+	<answer>
+	  <para>Show, Go to X or Y, Change to costume.</para>
+	</answer>
+    </qandaentry>
+  </qandaset>
+
+  <para>
+    In Python, you must call the Player sprite you created and add it to
+    a sprite group. In this code sample, the first 3 lines are
+    existing code, so add the lines afterwards&#58;
+  </para>
+  
+<programlisting>
+screen = pygame.display.set_mode([screenX,screenY])
+backdrop = pygame.image.load(os.path.join('images','stage.png')).convert()
+backdropRect = screen.get_rect()
+
+# new code below
+
+player = Player()   # spawn player
+player.rect.x = 0   # go to x
+player.rect.y = 0   # go to y
+movingsprites = pygame.sprite.Group()
+movingsprites.add(player)
+</programlisting>
+
+<para>
+  Try launching your game to see what happens. Warning&#58; it
+  won&#39;t do what you expect.
+</para>
+
+<para>
+  When you launch your project, the player sprite doesn&#39;t
+  spawn. Actually, it spawns, but only for a millisecond.
+</para>
+
+<qandaset defaultlabel="player_spawn-q2">
+  <qandaentry>
+    <question>
+      <para>
+	How do you fix something that only happens for a millisecond?
+      </para>
+    </question>
+    <answer>
+      <para>Put it into the main loop.</para>
+    </answer>
+  </qandaentry>
+</qandaset>
+
+<para>
+  To make the player spawn for longer than a millisecond, tell Python
+  to draw it once per loop.
+</para>
+
+<para>
+  Change the bottom clause of your loop to look like this&#58;
+</para>
+
+<programlisting>
+    screen.blit(backdrop, backdropRect)
+    movingsprites.draw(screen) # draw player
+    pygame.display.flip()
+    clock.tick(fps)
+</programlisting>
+
+<para>
+  Launch your game now. Your player spawns.
+</para>
+
+</section>
+<section id="player_alpha">
+  <title>Setting the alpha channel</title>
+
+  <para>
+    Your sprite probably has a coloured block around it. This is called
+    the <firstterm>alpha</firstterm> channel. It&#39;s meant to be the
+    colour of invisibility, but Python doesn&#39;t know to make it
+    invisible yet.
+  </para>
+
+  <para>
+    You can tell Python what colour to make invisible by setting an
+    alpha channel, using RGB values. If you don&#39;t know the RGB
+    values your drawing uses as alpha, open your drawing in Krita or
+    Inkscape and fill the empty space around your drawing with a
+    unique colour. Take note of the colour&#39;s RGB values and use
+    that in your Python script.
+  </para>
+
+  <para>
+    In this example code, <emphasis>000</emphasis> is used. That's
+    black, so the sprite in the example code never uses true black for
+    the parts that need to look black. RGB values are very strict, so
+    you can use 000 for alpha and 111 for something very close to
+    black in your actual drawing.
+  </para>
+
+  <para>
+    Using alpha requires the addition of two lines in your Sprite
+    creation code. The first line is already in your code. Add the
+    other 2 lines&#58;
+  </para>
+
+<programlisting>
+            img = pygame.image.load(os.path.join('images','hero' + str(i) + '.png')).convert()
+            img.convert_alpha()     # optimise for alpha
+            img.set_colorkey(alpha) # set alpha
+</programlisting>
+
+<para>
+  Python doesn&#39;t know what to use as alpha, unless you tell it. In
+  the setup area of your code, add some colour definitions. In the
+  following code, the first two lines already exist in your script, so
+  add the last 3 lines&#58;
+</para>
+
+<programlisting>
+screenX = 960
+screenY = 720
+alpha = (0,0,0)
+black = (1,1,1)
+white = (255,255,255)
+</programlisting>
+
+<para>
+  Launch your game to see the results.
+</para>
+
+</section>
+</chapter>

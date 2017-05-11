@@ -1,0 +1,50 @@
+--- 005.py	2017-05-09 11:48:11.133112197 +1200
++++ 006.py	2017-05-09 12:57:41.179167829 +1200
+@@ -4,6 +4,7 @@
+ # add player movement
+ # add platforms
+ # add gravity
++# add collisions
+ 
+ # GNU All-Permissive License
+ # Copying and distribution of this file, with or without modification,
+@@ -61,7 +62,7 @@
+         self.momentumX += x
+         self.momentumY += y
+ 
+-    def update(self):
++    def update(self,platform_list):
+         '''
+         Update sprite position
+         '''
+@@ -88,6 +89,21 @@
+                 self.frame = 0
+             self.image = self.images[self.frame//afps+4]
+ 
++        # collisions
++        block_hit_list = pygame.sprite.spritecollide(self, platform_list, False)
++        if self.momentumX > 0:
++            for block in block_hit_list:
++                self.rect.y = currentY
++                self.rect.x = currentX+9
++                # gravity
++                self.momentumY     = 0
++
++        if self.momentumY > 0:
++            for block in block_hit_list:
++                self.rect.y = currentY
++                # gravity
++                self.momentumY     = 0
++
+     def gravity(self):
+         self.momentumY += 3.2  # how fast player falls
+ 
+@@ -164,7 +180,7 @@
+     screen.blit(backdrop, backdropRect)
+     platform_list.draw(screen)   # refresh platforms
+     player.gravity()             # check gravity
+-    player.update()              # refresh player
++    player.update(platform_list) # refresh player
+     movingsprites.draw(screen)   # refresh player position
+     pygame.display.flip()
+     clock.tick(fps)

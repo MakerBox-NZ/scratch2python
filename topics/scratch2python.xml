@@ -1,0 +1,69 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+"/usr/share/xml/docbook5/schema/dtd/5.0/docbook.dtd">
+
+<book xmlns='http://docbook.org/ns/docbook'>
+  <title>
+    Graduating from Scratch to Python&#58; A Student and Teacher Guide
+  </title>
+
+
+  <info>
+    <author>
+      <personname>
+      <firstname>Seth</firstname>
+      <surname>Kenlon</surname>
+    </personname>
+    </author>
+    <copyright>
+      <year>2017</year>
+      <holder>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</holder>
+    </copyright>
+    <volumenum>1</volumenum>
+    <issuenum>1</issuenum>
+    <publisher><publishername>Makerbox</publishername></publisher>
+    <pubdate>2017</pubdate>
+  
+    <revhistory>
+      <revision>
+	<revnumber>1.0</revnumber>
+        <date>2017-03-17</date>
+	<revremark>First Draft.</revremark>
+      </revision>
+    </revhistory>
+  </info>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="preface.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="intro.xml" /> 
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="world.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="player.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="move.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="platform.xml" /> 
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="gravity.xml" />
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="collision.xml" />
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="jump.xml" />
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="scroll.xml" />
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="loot.xml" />
+
+  <!-- end -->
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="colophon.xml" />
+</book>

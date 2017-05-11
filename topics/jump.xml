@@ -1,0 +1,230 @@
+<chapter id="jump">
+  <title>
+    Fighting gravity with jumping
+  </title>
+
+  <para>
+    Now that you&#39;ve worked so hard to simulate gravity, you need
+    to give your player a way to fight against gravity by jumping. 
+  </para>
+
+  <para>
+    A jump is a temporary reprieve from gravity. For a few moments,
+    you jump <emphasis>up</emphasis> instead of fall down, the way
+    gravity is pulling you. But once you hit the peak of your jump,
+    gravity kicks in again and pulls you back down to Earth.
+  </para>
+
+  <para>
+    In code, this translates to variables. First, you must establish
+    variables for the player sprite so that Python can track whether
+    or not the sprite is jumping or not. Once the player sprite is
+    jumping, then gravity gets applied to the player sprite
+    again, pulling it back down to the nearest object.
+  </para>
+
+  <section id="jump_variables">
+    <title>Setting jump state variables</title>
+
+    <para>
+      You must add two new variables to your Player class&#58;
+    </para>
+
+    <itemizedlist>
+      <listitem>
+	<para>
+	  One to track whether your player is jumping or not,
+	  determined by whether or not your player sprite is standing
+	  on solid ground.
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>
+	  One to bring the player back down to the ground.
+	</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
+      Add these variables to your player class. In the following code,
+      the first 3 lines are for context, so just add the final
+      two&#58;
+    </para>
+
+<programlisting>
+        self.momentumX = 0
+        self.momentumY = 0
+        self.frame     = 0
+        # gravity variables here
+        self.collide_delta = 0
+        self.jump_delta    = 6
+</programlisting>
+    
+<para>
+  The first variable is set to 0 because in its
+  natural state, the player sprite is not in a mid-jump. The other
+  variable is set to 6 to prevent the sprite from bouncing
+  &#40;actually, jumping&#41; when it first lands in the game
+  world. When you&#39;ve finished this chapter, you can try setting it
+  to 0 to see what happens.
+</para>
+
+  </section>
+
+  <section id="jump_variables">
+    <title>Colliding mid-jump</title>
+
+    <para>
+      If you jump across on a trampoline, your jumps are pretty
+      impressive. But what would happen if you jumped into a wall
+      &#40;don&#39;t try it to find out&#41;? Your jump, no matter how
+      impressive it started out to be, would end very quickly because
+      you collided with something much larger and much more solid than
+      you.
+    </para>
+
+    <para>
+      To mimic that in your video game, you must set the
+      <varname>self.collide_delta</varname> variable to 0 whenever
+      your player sprite collides with something. If
+      <varname>self.collide_delta</varname> is anything other than 0,
+      then your player is jumping, and your player can&#39;t jump when
+      your player has hit a wall or the Earth.
+    </para>
+
+    <para>
+      In the <code>update</code> function of your Player class, modify
+      the code to look like this &#40;you only need to add the two
+      lines with commends by them&#41;&#58;
+    </para>
+    
+<programlisting>
+                self.rect.x = currentX+9
+                # gravity
+                self.momentumY     = 0
+                self.collide_delta = 0 # stop jumping
+
+        if self.momentumY > 0:
+            for block in block_hit_list:
+                self.rect.y = currentY
+                # gravity
+                self.momentumY     = 0
+                self.collide_delta = 0 # stop jumping
+</programlisting>
+  </section>
+
+    <section id="jump_jump">
+    <title>Jumping</title>
+
+    <para>
+      Your simulated gravity always wants your player&#39;s Y axis
+      movement to be 0 or more. To create a jump, you write
+      code that sends your player sprite off of solid ground, into the
+      air.
+    </para>
+
+    <para>
+      In the <code>update</code> function of your Player class, add a
+      temporary reprieve from gravity&#58;
+    </para>
+
+<programlisting>
+        # gravity
+        if self.collide_delta < 6 and self.jump_delta < 6:
+            self.jump_delta     = 6*2
+            self.momentumY     -= 33  # how high to jump
+
+            self.collide_delta += 6
+            self.jump_delta    += 6
+</programlisting>
+  
+<para>
+  According to this code, a jump sends the player sprite 33 pixels
+  into the air. It&#39;s a negative 33 because, remember, a lower
+  number in Pygame means closer to the top of the screen.
+</para>
+
+<para>
+  The player sprite is prevented from jumping again until it collides
+  with a platform&#59; this prevents mid-air jumps.
+</para>
+
+<note>
+  <para>
+    Try setting <code>self.collide_delta</code> and
+    <code>self.jump_delta</code> to 0 for a 100&#37; chance to jump in
+    mid-air.
+  </para>
+</note>
+
+<para>
+  All that code simulates a jump, but it never gets triggered because
+  you player has never jumped. Your player sprite's
+  <code>self.jump_delta</code> was set to 6 initially, and your jump
+  update code only gets triggered when it&#39;s less than 6. 
+</para>
+
+<para>
+  To trigger a new setting for the jumping varable, create a
+  <code>jump</code> function in your Player class that sets the
+  <code>self.jump_delta</code> to less than 6, causing gravity to be
+  temporarily reprieved by sending your player sprite 33 pixels into
+  the air.
+</para>
+
+<programlisting>
+    def jump(self,platform_list):
+        self.jump_delta = 0
+</programlisting>
+
+<para>
+  That&#39;s all the <code>jump</code> function requires, believe it
+  or not. The rest happens in the <code>update</code> function.
+</para>
+
+<para>
+  There's one final thing to do before jumping works in your game. If
+  you can&#39;t think of what it is, try playing your game now to see
+  how jumping works for you.
+</para>
+
+<para>
+  You probably realise now that nothing in your main loop is actually
+  calling the <code>jump</code> function. You made a placeholder key
+  press for it very early on, but right now all the jump key does is
+  print <computeroutput>jump</computeroutput> to the terminal.
+</para>
+    </section>
+<section id="jump_key">
+  <title>Calling the jump function</title>
+
+  <para>
+    In your main loop, change the result of the <keycode>up
+    arrow</keycode> from printing a debug statement to calling the
+    <code>jump</code> function.
+  </para>
+
+  <para>
+    Notice that the <code>jump</code> function, like the
+    <code>update</code> function, needs to know about collisions, so
+    you have to tell it which <code>platform_list</code> to use.
+  </para>
+
+<programlisting>
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                player.jump(platform_list)
+</programlisting>
+
+<para>
+  If you would rather use the <keycode>Spacebar</keycode> for jumping,
+  set the key to <code>pygame.K_SPACE</code> instead of
+  <keycode>pygame.K_UP</keycode>.
+</para>
+
+<para>
+  Try your game now. Next up, the world needs to scroll.
+</para>
+
+</section>
+  </chapter>

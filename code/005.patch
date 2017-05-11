@@ -1,0 +1,46 @@
+--- 004.py	2017-05-09 09:54:01.129020813 +1200
++++ 005.py	2017-05-09 11:48:11.133112197 +1200
+@@ -3,6 +3,7 @@
+ # add a player and player control
+ # add player movement
+ # add platforms
++# add gravity
+ 
+ # GNU All-Permissive License
+ # Copying and distribution of this file, with or without modification,
+@@ -43,7 +44,7 @@
+         pygame.sprite.Sprite.__init__(self)
+         self.momentumX = 0
+         self.momentumY = 0
+-        self.frame = 0
++        self.frame     = 0
+         self.images = []
+         for i in range(1,9):
+             img = pygame.image.load(os.path.join('images','hero' + str(i) + '.png')).convert()
+@@ -87,6 +88,13 @@
+                 self.frame = 0
+             self.image = self.images[self.frame//afps+4]
+ 
++    def gravity(self):
++        self.momentumY += 3.2  # how fast player falls
++
++        if self.rect.y > screenY and self.momentumY >= 0:
++            self.momentumY     = 0
++            self.rect.y        = screenY-20
++            
+ # map where the platforms go
+ # x location, y location, image width, image height, image file
+ def level1():
+@@ -154,8 +162,9 @@
+ 
+ #    screen.fill(black)
+     screen.blit(backdrop, backdropRect)
+-    platform_list.draw(screen)
+-    player.update()
+-    movingsprites.draw(screen) #refresh player position
++    platform_list.draw(screen)   # refresh platforms
++    player.gravity()             # check gravity
++    player.update()              # refresh player
++    movingsprites.draw(screen)   # refresh player position
+     pygame.display.flip()
+     clock.tick(fps)

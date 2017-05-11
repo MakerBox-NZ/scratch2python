@@ -1,0 +1,46 @@
+--- 007.py	2017-05-09 16:48:52.883352887 +1200
++++ 008.py	2017-05-09 18:45:54.139446556 +1200
+@@ -6,6 +6,7 @@
+ # add gravity
+ # add collisions
+ # add jump
++# add scrolling
+ 
+ # GNU All-Permissive License
+ # Copying and distribution of this file, with or without modification,
+@@ -160,11 +161,13 @@
+ backdropRect = screen.get_rect()
+ platform_list = level1()
+ player = Player()   # spawn player
+-player.rect.x = 0
++player.rect.x = 10
+ player.rect.y = 0
+ movingsprites = pygame.sprite.Group()
+ movingsprites.add(player)
+ movesteps = 10      # how fast to move
++forwardX  = 600     # when to scroll
++backwardX = 230     # when to scroll
+ 
+ '''
+ Main loop
+@@ -193,6 +196,20 @@
+                 sys.exit()
+                 main = False
+ 
++    # scroll the world forward
++    if player.rect.x >= forwardX:
++        scroll = player.rect.x - forwardX
++        player.rect.x = forwardX
++        for platform in platform_list:
++            platform.rect.x -= scroll
++
++    # scroll the world backward
++    if player.rect.x <= backwardX:
++        scroll = min(1,(backwardX - player.rect.x))
++        player.rect.x = backwardX
++        for platform in platform_list:
++            platform.rect.x += scroll
++                
+ #    screen.fill(black)
+     screen.blit(backdrop, backdropRect)
+     platform_list.draw(screen)   # refresh platforms

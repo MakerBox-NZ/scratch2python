@@ -1,0 +1,63 @@
+--- 006.py	2017-05-09 12:57:41.179167829 +1200
++++ 007.py	2017-05-09 16:48:52.883352887 +1200
+@@ -5,6 +5,7 @@
+ # add platforms
+ # add gravity
+ # add collisions
++# add jump
+ 
+ # GNU All-Permissive License
+ # Copying and distribution of this file, with or without modification,
+@@ -46,6 +47,9 @@
+         self.momentumX = 0
+         self.momentumY = 0
+         self.frame     = 0
++        # gravity variables
++        self.collide_delta = 0
++        self.jump_delta    = 6
+         self.images = []
+         for i in range(1,9):
+             img = pygame.image.load(os.path.join('images','hero' + str(i) + '.png')).convert()
+@@ -97,19 +101,32 @@
+                 self.rect.x = currentX+9
+                 # gravity
+                 self.momentumY     = 0
++                self.collide_delta = 0
+ 
+         if self.momentumY > 0:
+             for block in block_hit_list:
+                 self.rect.y = currentY
+                 # gravity
+                 self.momentumY     = 0
++                self.collide_delta = 0
++
++        # gravity
++        if self.collide_delta < 6 and self.jump_delta < 6:
++            self.jump_delta     = 6*2
++            self.momentumY     -= 33  # how high to jump
++
++            self.collide_delta += 6
++            self.jump_delta    += 6
++
++    def jump(self,platform_list):
++        self.jump_delta = 0
+ 
+     def gravity(self):
+         self.momentumY += 3.2  # how fast player falls
+ 
+         if self.rect.y > screenY and self.momentumY >= 0:
+             self.momentumY     = 0
+-            self.rect.y        = screenY-20
++            self.rect.y        = screenY
+             
+ # map where the platforms go
+ # x location, y location, image width, image height, image file
+@@ -164,7 +181,7 @@
+             if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                 player.control(movesteps,0)
+             if event.key == pygame.K_UP or event.key == ord('w'):
+-                print('jump')
++                player.jump(platform_list)
+ 
+         if event.type == pygame.KEYUP:
+             if event.key == pygame.K_LEFT or event.key == ord('a'):

@@ -1,0 +1,48 @@
+9a10
+> # add loot
+50a52
+>         self.score     = 0
+70c72
+<     def update(self,platform_list):
+---
+>     def update(self,platform_list,loot_list):
+97a100,105
+>         loot_hit_list = pygame.sprite.spritecollide(self, loot_list, False)
+>         for loot in loot_hit_list:
+>             loot_list.remove(loot)
+>             self.score += 1
+>             print(self.score)
+>             
+138c146
+<     block = Platform(20,427,173,72, os.path.join('images','block1.png'))
+---
+>     block = Platform(620,427,173,72, os.path.join('images','block1.png'))
+140c148
+<     block = Platform(60,227,337,72, os.path.join('images','block2.png'))
+---
+>     block = Platform(860,227,337,72, os.path.join('images','block2.png'))
+143a152,157
+> def loot1():
+>     loot_list = pygame.sprite.Group()
+>     loot = Platform(666,355,92,99, os.path.join('images','loot.png'))
+>     loot_list.add(loot)
+>     return loot_list
+>     
+161c175
+< backdropRect = screen.get_rect()
+---
+> backdropRect  = screen.get_rect()
+162a177
+> loot_list     = loot1()
+204a220,221
+>         for loot in loot_list:
+>             loot.rect.x -= scroll
+211a229,230
+>         for loot in loot_list:
+>             loot.rect.x += scroll
+215a235
+>     loot_list.draw(screen)       # refresh loot
+217c237
+<     player.update(platform_list) # refresh player
+---
+>     player.update(platform_list,loot_list) # refresh player

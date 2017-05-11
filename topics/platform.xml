@@ -1,0 +1,550 @@
+<chapter id="platform">
+  <title>
+    Creating platforms
+  </title>
+
+  <para>
+    Pygame is excellent at making side-scrolling platformers. It can
+    do more than just side-scrollers, but anything more complex than a
+    side-scroller takes a lot more coding, so it&#39;s best to start
+    with a good old fashioned platformer.
+  </para>
+
+  <para>
+    A platformer game needs platforms.
+  </para>
+
+  <para>
+    In Scratch, if you want to make a platformer, you might just paint
+    platforms onto your stage. But in Python, the platforms themselves
+    are sprites, just like your playable sprite. 
+  </para>
+
+  <para>
+    There are two major steps in creating the platforms. First, you
+    must code the objects, and then you must map out where you want
+    the objects to appear.
+  </para>
+
+  <section id="platform_object">
+    <title>
+      Coding platform objects
+    </title>
+
+<qandaset defaultlabel="platform_object-q1">
+  <qandaentry>
+    <question>
+      <para>
+	What Python keyword is used to create an object in Pygame?
+      </para>
+    </question>
+    <answer>
+      <para>A class.</para>
+    </answer>
+  </qandaentry>
+</qandaset>
+
+<para>
+  To build a platform object, you create a class called
+  <code>Platform</code>. It&#39;s a sprite, just like your Player
+  sprite, with many of the same properties. 
+</para>
+
+<para>
+  Your platforms need to know a lot of information about what kind of
+  platform you want, and where it should be in the game world, and
+  what image it should contain. A lot of that information might not
+  even exist yet, depending on how much you have planned out your
+  game, but that&#39;s all right. Just as you didn&#39;t tell your
+  Player sprite how fast to move until the end of the Movement
+  chapter, you don&#39;t actually have to tell the Platforms
+  everything up front.
+</para>
+
+<para>
+  Near the top of your script, create a new class. The first three
+  lines in the code are for context&#58;
+</para>
+
+<programlisting>
+import pygame
+import sys
+import os
+## new code below:
+
+class Platform(pygame.sprite.Sprite):
+    # x location, y location, img width, img height, img file    
+    def __init__(self,xloc,yloc,imgw,imgh,img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface([imgw,imgh])
+        self.image.convert_alpha()
+        self.image.set_colorkey(alpha)
+        self.blockpic = pygame.image.load(img).convert()
+        self.rect = self.image.get_rect()
+        self.rect.y = yloc
+        self.rect.x = xloc
+        
+        # paint the image into the blocks
+        self.image.blit(self.blockpic,(0,0),(0,0,imgw,imgh))
+</programlisting>
+
+<para>
+  This class creates an object on your screen in
+  <emphasis>some</emphasis> X and Y location, with
+  <emphasis>some</emphasis> width and height, using
+  <emphasis>some</emphasis> image file for texture.
+</para>
+
+<qandaset defaultlabel="platform_object-q2">
+  <qandaentry>
+    <question>
+      <para>
+	If you were to launch your game right now, would you see any
+	platforms? Why or why not?
+      </para>
+    </question>
+    <answer>
+      <para>No, because nothing calls the Platform class yet, and the
+      platforms are not used in the main loop.</para>
+    </answer>
+  </qandaentry>
+</qandaset>
+
+<para>
+  The next step is to map out where all of your platforms need to appear.
+</para>
+</section>  
+
+<section id="platform_map">
+  <title>
+    Mapping your game world
+  </title>
+  
+  <para>
+    Mapping out your game world is a vital part of level design, and
+    of game programming in general. It involves a lot of maths, too,
+    but nothing too difficult, and Python can help.
+  </para>
+
+  <bridgehead>Paint your world</bridgehead>
+
+  <para>
+    The first thing you need to do is create your game world. You can
+    use GIMP, Krita, Inkscape, or any other variety of open source
+    graphics applications to draw your world.
+  </para>
+
+  <bridgehead>Cut the world into tiles</bridgehead>
+  
+  <para>
+    Once you&#39;ve done that, you need to cut it up into tiles. You
+    can do that by using your graphic application&#39;s
+    <firstterm>crop</firstterm> tool. You need at least two tilse&#58;
+  </para>
+
+  <itemizedlist>
+    <listitem>
+      <para>
+	Ground&#58; this is the ground level of your game world. It's
+	the part of the screen that keeps your player from falling off
+	the world.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+	Platforms&#58; these are elevated objects that your character
+	can climb or jump onto.
+      </para>
+    </listitem>
+  </itemizedlist>
+
+  <para>
+    Save each tile in your <filename>images</filename> directory,
+    using names that make sense. For instance, call the ground tile
+    <filename>block0.png</filename>, the first platform
+    <filename>block1.png</filename>, the next platform
+    <filename>block2.png</filename>, and so on.
+  </para>
+
+  <bridgehead>Do maths</bridgehead>
+
+  <para>
+    Now it&#39;s time for maths.
+  </para>
+
+  <para>
+    To calculate where everything needs to be placed in your game
+    world, you need to know&#58;
+  </para>
+
+  <itemizedlist>
+    <listitem>
+      <para>
+	The size of your screen.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+	The size of each tile.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+	Where on the screen you want a tile to appear.
+      </para>
+    </listitem>
+  </itemizedlist>
+
+  <para>
+    In Scratch, your stage had coordinates with 0,0 in the very center
+    of the screen. In Pygame, your game world has coordinates, but 0,0
+    is in the top left corner of your screen.
+  </para>
+
+  <mediaobject>
+    <info>
+      <othercredit>
+	<orgname>MakerBox</orgname>
+      </othercredit>
+      <othercredit>
+	<orgname>Slackermedia</orgname>
+      </othercredit>
+    </info>
+    <alt>Example of coordinates in Pygame</alt>
+    <imageobject>
+      <imagedata align="left" width="4.3in" format="PNG"
+		 fileref="images/coordinates.png"/>
+    </imageobject>
+    <textobject>
+      <para>
+	Map coordinates in Pygame, assuming your game world is 960
+	wide and 720 tall.
+      </para>
+    </textobject>
+  </mediaobject>
+
+  <para>
+    To calculate where your ground tile is, for instance, you must
+    fill in the variables listed above. The first one doesn&#39;t
+    change much, since it&#39;s the size of your game world
+    screen. These are the values you entered for
+    <varname>screenX</varname> and <varname>screenY</varname> in your
+    Python script.
+  </para>
+
+    <itemizedlist>
+    <listitem>
+      <para>
+	The size of your screen. Assume, for this example, that your
+	screen is 960 pixels wide and 720 pixels tall.
+      </para>
+    </listitem>
+    </itemizedlist>
+
+    <para>
+      Next, you must find the dimensions of your tile. Assume that
+      your ground tile is named <filename>block0.png</filename>. To
+      find its dimensions, you can open it in Krita. Click on the
+      <guimenu>Image</guimenu> menu and select
+      <guimenuitem>Properties</guimenuitem>. The dimensions are
+      provided at the very top of the <guilabel>Properties</guilabel>
+      window.
+    </para>
+
+    <para>
+      Alternately, you can create a simple Python script to tell you
+      the dimensions of an image. Open a new text file and type this
+      code into it&#58;
+    </para>
+
+<programlisting>
+#!/usr/bin/env python3
+
+from PIL import Image
+import os.path
+import sys
+
+if len(sys.argv) > 1:
+    print(sys.argv[1])
+else:
+    sys.exit('Syntax: identify.py [filename]')
+
+pic = sys.argv[1]
+dim = Image.open(pic)
+X   = dim.size[0]
+Y   = dim.size[1]
+
+print(X,Y)
+</programlisting>
+
+<para>
+  Save the text file as <filename>identify.py</filename>.
+</para>
+
+<para>
+  To set up this script, you must install an extra set of Python
+  keywords&#58;
+</para>
+
+<screen>
+  <prompt>&#36;</prompt> <command>pip3</command> install Pillow --user
+</screen>
+
+<para>
+  Once that has installed, run your script&#58;
+</para>
+
+<screen>
+  <prompt>&#36;</prompt> <command>python ./identify.py</command>
+  images/block0.png
+  <computeroutput>(1920, 129)</computeroutput>
+</screen>
+
+    <itemizedlist>
+    <listitem>
+      <para>
+	The size of each tile.  In this example, the image size of the
+	ground tile is 1920 pixels wide and 129 high.
+      </para>
+    </listitem>
+    </itemizedlist>
+
+    <para>
+      Finally, you must calculate where you want to place the tile on
+      your game screen. In the case of the ground, you want the tile
+      to be anchored at the very bottom of the screen.
+    </para>
+
+    <para>
+      Along the X axis, you want your ground to start at 0. That is,
+      you want the ground to be anchored all the way to the left, and
+      extend from there.
+    </para>
+    
+    <para>
+      Along the Y axis, you have to do some math. Since you know that the screen is 720 pixels tall, and your
+      ground is 129 pixels tall&#58; subtract 129 from 720 to get the
+      pixel at with you want the ground to
+      <emphasis>start</emphasis>. Objects are always &#34;pinned&#34;
+      in Pygame by their top left corner, so if you place your ground
+      tile at 591 pixels, then the ground tile extends downward along
+      the Y axis from there.
+    </para>
+    
+    <itemizedlist>
+    <listitem>
+      <para>
+	Where on the screen you want a tile to appear. From your
+	calculation, you know that the position you need is 0,591.
+      </para>
+    </listitem>
+  </itemizedlist>
+
+  <para>
+    You must do this calculation for each tile in your game world.
+    Not every tile will fit into your screen, of course, but
+    that&#39;s why they call it a &#34;side-scroller&#34;. Anything
+    that doesn't fit in your game screen will be
+    <emphasis>scrolled</emphasis> into view as the player moves toward
+    it. So for now, assume that your world is infinitely wide, and jot
+    down the coordinates for each tile.
+  </para>
+
+  <para>
+    It might help to make a simple sketch of your layout so that you have all the
+    information you need on one reference sheet.
+  </para>
+
+  <mediaobject>
+    <info>
+      <othercredit>
+	<orgname>MakerBox</orgname>
+      </othercredit>
+      <othercredit>
+	<orgname>Slackermedia</orgname>
+      </othercredit>
+    </info>
+    <alt>Example layout for Pygame level</alt>
+    <imageobject>
+      <imagedata align="left" width="4.3in" format="PNG"
+		 fileref="images/layout.png"/>
+    </imageobject>
+    <textobject>
+      <para>
+	A simple sketch with all the data for a level.
+      </para>
+    </textobject>
+  </mediaobject>
+
+</section>
+
+<section id="platform_spawn">
+  <title>Spawning platforms</title>
+
+  <para>
+    Now that you know where you want your Platforms to be, you must
+    tell Python where to place them, and add them to your main
+    loop so they get drawn to your screen.
+  </para>
+
+  <qandaset defaultlabel="platform_spawn-q1">
+  <qandaentry>
+    <question>
+      <para>
+	In Scratch, how did you create a new level for a game?
+      </para>
+    </question>
+    <answer>
+      <para>
+	You created a new costume for the stage.
+      </para>
+    </answer>
+  </qandaentry>
+  </qandaset>
+  
+  <mediaobject>
+    <info>
+      <othercredit>
+	<orgname>MakerBox</orgname>
+      </othercredit>
+      <othercredit>
+	<orgname>MIT</orgname>
+      </othercredit>
+    </info>
+    <alt>Stage costumes in Scratch</alt>
+    <imageobject>
+      <imagedata align="left" width="4.3in" format="PNG"
+		 fileref="images/levels.jpg"/>
+    </imageobject>
+    <textobject>
+      <para>
+	A level is Scratch is a stage costume.
+      </para>
+    </textobject>
+  </mediaobject>
+  
+  <para>
+    In Pygame, a level is just a collection of assets that get drawn
+    on the screen. Since this is a small game, you can create a Python
+    function to represent Level 1 of your game. In complex games, each
+    Level might be its own script file that gets called by your main
+    file.
+  </para>
+
+  <para>
+    Under your classes, but above your setup, create your Level 1
+    function. In this code, the final 5 lines are for context, so just
+    add the function and its contents, but don&#39;t type exactly what
+    you see here. Instead, use the tiles and values that you have
+    obtained to create your own map.
+  </para>
+  
+<pragramlisting>
+def level1():
+    platform_list = pygame.sprite.Group()
+    block = Platform(0,591,1920,129, os.path.join('images','block0.png'))
+    platform_list.add(block)
+    block = Platform(20,427,173,72, os.path.join('images','block1.png'))
+    platform_list.add(block)
+    block = Platform(60,227,337,72, os.path.join('images','block2.png'))
+    platform_list.add(block)
+    return platform_list
+'''
+Setup
+'''
+alpha = (0,0,0)
+black = (1,1,1)
+</pragramlisting>
+
+<para>
+  This function, whatever yours may look like, really only does a few
+  things. First, you creates a sprite group called
+  <code>platform_list</code>. Then you create a platform called as a
+  variable called <varname>block</varname>, using your Platform
+  class. Then you add the platform you just created to the group.
+</para>
+
+<para>
+  You repeat this process as many times as you need in order to build
+  your level.
+</para>
+
+<para>
+  Finally, you output the <code>platform_list</code> into whatever
+  variable called the function.
+</para>
+
+<para>
+  That means that whenever you need to create a new level, you can
+  make a new function with a whole new set of platforms.
+</para>
+
+<para>
+  In the setup area of your script file, generate a platform list for
+  Level 1 by calling the function. In this code, only the middle line
+  is new&#58; 
+</para>
+
+<programlisting>
+backdropRect = screen.get_rect()
+platform_list = level1()  # set stage to Level 1
+player = Player()
+</programlisting>
+
+<qandaset defaultlabel="platform_spawn-q2">
+  <qandaentry>
+    <question>
+      <para>
+	How do you think you would control changing Levels in a
+	complex game?
+      </para>
+    </question>
+    <answer>
+      <para>
+	Use an if statement to determine if a player has achieved a
+	certain goal. If they have, set the platform_list to the next
+	level.
+      </para>
+    </answer>
+  </qandaentry>
+</qandaset>
+
+<para>
+  Is your game ready to launch yet?
+</para>
+
+<qandaset defaultlabel="platform_spawn-q3">
+  <qandaentry>
+    <question>
+      <para>
+	How do we make sure assets get drawn to the screen during a game?
+      </para>
+    </question>
+    <answer>
+      <para>
+	Add it to the main loop.
+      </para>
+    </answer>
+  </qandaentry>
+</qandaset>
+
+<para>
+  To add your platform_list to the main loop, add one line to the
+  bottom of your script, within the loop code. Add the middle
+  line&#58;
+</para>
+
+<programlisting>
+screen.blit(backdrop, backdropRect)
+platform_list.draw(screen)  # draw platforms on screen
+player.update()
+</programlisting>
+
+<para>
+  Launch your game, and adjust the placement of your platforms as
+  needed. Don&#39;t worry that you can&#39;t see the platforms that
+  are spawned off-screen&#59; you&#39;ll fix that soon. 
+</para>
+
+</section>
+</chapter>

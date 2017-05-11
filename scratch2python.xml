@@ -1,0 +1,78 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+"/usr/share/xml/docbook5/schema/dtd/5.0/docbook.dtd">
+
+<book xmlns='http://docbook.org/ns/docbook'>
+  <title>
+    Graduating from Scratch to Python&#58; A Student and Teacher Guide
+  </title>
+
+
+  <info>
+    <author>
+      <personname>
+      <firstname>Seth</firstname>
+      <surname>Kenlon</surname>
+    </personname>
+    </author>
+    <copyright>
+      <year>2017</year>
+      <holder>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</holder>
+    </copyright>
+    <volumenum>1</volumenum>
+    <issuenum>1</issuenum>
+    <publisher><publishername>Makerbox</publishername></publisher>
+    <pubdate>2017</pubdate>
+  
+    <revhistory>
+      <revision>
+	<revnumber>1.0</revnumber>
+        <date>2017-03-17</date>
+	<revremark>First Draft.</revremark>
+      </revision>
+    </revhistory>
+  </info>
+
+  <!-- class 1 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="preface.xml" /> 
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="world.xml" />
+
+  <!-- class 2 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="sprite.xml" />
+
+  <!-- class 3,4,5 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="move.xml" />
+
+  <!-- class 6 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="auto.xml" />
+
+  <!-- class 7 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="collision.xml" />
+
+  <!-- class 8 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="throw.xml" />
+ 
+  <!-- class 9 -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="win.xml" />
+
+  <!-- bonus -->
+  
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="next.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="sound.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="score.xml" />
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="colophon.xml" />
+</book>
