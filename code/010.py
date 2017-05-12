@@ -43,8 +43,7 @@ class Enemy(pygame.sprite.Sprite):
         '''
         if self.counter >= 0 and self.counter <= 100:
             self.rect.x  += 10
-            self.counter += 1
-        elif self.counter >= 100 and self.counter < 150:
+        elif self.counter >= 100 and self.counter < 200:
             self.rect.x  -= 10
         else:
             self.counter = 0

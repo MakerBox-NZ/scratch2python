@@ -9,7 +9,7 @@
     ready know how to implement enemies.
   </para>
 
-    <qandaset defaultlabel="player_q1">
+    <qandaset defaultlabel="enemy_q1">
     <qandaentry>
       <question>
 	<para>
@@ -72,11 +72,6 @@
   </para>
 
   <para>
-    One important addition is a counter variable. You&#39;ll need a
-    counter variable later, to keep track of the enemy&#39;s movement.
-  </para>
-
-  <para>
     At the top of the Objects section of your code, create a class
     called <code>Enemy</code> with this code&#58;
   </para>
@@ -94,7 +89,6 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.counter = 0 
 </programlisting>
 
 </section>
@@ -229,9 +223,67 @@ for context, so just add the final two&#58;
   </para>
 
   <para>
-    
+    Unlike a player sprite, the enemy sprite is not controlled by the
+    user. Its movements must be automated.
+  </para>
 
-    
+  <para>
+    How do you get an enemy to move back and forth within the game
+    world when the game world scrolls whenever the player moves?
+  </para>
+
+  <para>
+    You tell your enemy sprite to take, for example, 10
+    paces to the right, and then 10 paces to the left. An enemy sprite
+    can&#39;t count, so you have to create a variable to keep track of
+    how many paces your enemy has moved, and then program your enemy
+    to move either right or left depending on the value of your
+    counting variable.
+  </para>
+
+  <para>
+    First, create the counter variable in your Enemy class. Add the
+    last line in this code sample&#58;
+  </para>
+
+<programlisting>
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.counter = 0  # counter variabla
+</programlisting>
+
+<para>
+  Next, create a <code>move</code> function in your Enemy class. Use
+  an if-else loop to create what is called an <emphasis>infinite
+  loop</emphasis>&#58;
+</para>
+
+<itemizedlist>
+  <listitem>
+    <para>
+      Move right if the counter is 0 to 100.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      Move left if the counter is 100 to 200.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      Reset the counter back to 0 if the counter is greater than 200.
+    </para>
+  </listitem>
+</itemizedlist>
+
+<para>
+  A infinite loop has no ending&#59; it loops forever because nothing
+  in the loop is ever untrue. The counter, in this case, will always
+  be either between 0 and 100 or 100 and 200, so the enemy sprite will
+  walk right to left and right to left forever.
+</para>
+
 <programlisting>
     def move(self):
         '''
@@ -239,7 +291,6 @@ for context, so just add the final two&#58;
         '''
         if self.counter >= 0 and self.counter <= 100:
             self.rect.x  += 10
-            self.counter += 1
         elif self.counter >= 100 and self.counter < 150:
             self.rect.x  -= 10
         else:
@@ -248,6 +299,28 @@ for context, so just add the final two&#58;
 
         self.counter += 1
 </programlisting>
-	
+
+<para>
+  Will this code work if you launch your game now?
+</para>
+
+<para>
+  Of course not. You must call the <code>move</code> function from
+  your main loop. Add the middle line from this sample code to your
+  loop&#58;
+</para>
+
+<programlisting>
+    player.update(platform_list,loot_list)
+    enemy.move()  # move enemy sprite
+    movingsprites.draw(screen)
+</programlisting>  
+
+<para>
+  Launch your game and see if you can avoid your enemy. Then try
+  adding some more enemies. As an exercise, see if you can think of
+  how you can change how far different enemy sprites move.
+</para>
+
 </section>
 </chapter>

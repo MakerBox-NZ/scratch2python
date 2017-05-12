@@ -1,34 +1,146 @@
 <chapter id="enemy">
   <title>
-    Going behind enemy lines
+    Looting
   </title>
 
   <para>
-    Just as you technically know how to create a looting system as
-    long as you know how to do platforms, you also technically all
-    ready know how to implement enemies.
+    At this point, you now know all the basics to program video game
+    mechanics. You can build upon these basics to create a
+    fully-functional video game all your own. As an example of how to
+    leverage what you already know for new purposes, this chapter
+    covers how to implement a looting system using what you already
+    know about platforms.
+  </para>
+  
+  <para>
+    In most video games, you have the opportunity to &#34;loot&#34;,
+    or collect treasures and other items within the game world. Loot
+    usually increases your score, or your health, or they provide
+    information leading you to your next quest.
   </para>
 
-    <qandaset defaultlabel="player_q1">
-    <qandaentry>
-      <question>
-	<para>
-	  How do you create a moving enemy in Scratch?
-	</para>
-	</question>
-	<answer>
-	  <para>Forever loops and movement blocks, along with
-	  collision blocks so that the enemy moves back and forth
-	  within a certain region of the game world.</para>
-	</answer>
-    </qandaentry>
-    </qandaset>
+  <para>
+    Including loot in your game is similar to programming
+    platforms. Like platforms, loot has no user controls, loot scrolls
+    with the game world, and must check for collisions with the player
+    sprite. 
+  </para>
+      
+<section id="loot_function">
+  <title>
+    Creating the loot function
+  </title>
+  
+  <para>
+    Loot is so similar to platforms that you don&#39;t even need a
+    Loot class. You can just reuse the Platform class and call the
+    results loot.
+  </para>
+  
+  <para>
+    Since loot type and placement probably differs from
+    level to level, create a new function called <code>loot1</code>
+    just under your <code>level1</code> function. 
+  </para>
 
-    <para>
-      In Scratch, you probably used a forever-loop and collisions to
-      make an enemy sprite roam some section of the game world, hoping
-      to collide with the hero.
-    </para>
+  <para>
+    Since loot items are not actual platforms, you must also create a
+    new <code>loot_list</code> group, and add loot objects to
+    it. You&#39;ll use this group when checking for collisions.
+  </para>
+
+<programlisting>
+def loot1():
+    loot_list = pygame.sprite.Group()
+    loot = Platform(666,355,92,99, os.path.join('images','loot.png'))
+    loot_list.add(loot)
+    return loot_list
+</programlisting>
+
+<para>
+  You can add as many loot objects as you like, just remember to add
+  them each to the group. Placement of loot can be just as complex as
+  mapping platforms, so use your level design you used to map out your
+  platforms.
+</para>
+
+<para>
+  Call the function in the Setup section of your script. In the
+  following code, the first two lines are for context, so add the third&#58;
+</para>
+
+<programlisting>
+backdropRect  = screen.get_rect()
+platform_list = level1()
+loot_list     = loot1()  # spawn loot
+</programlisting>
+
+<para>
+  As you know by now, the loot won't get drawn to the screen unless
+  you include it in your main loop. Add the middle line from the
+  following code sample to your loop&#58;
+</para>
+
+<programlisting>
+    platform_list.draw(screen)
+    loot_list.draw(screen) # refresh loot
+    player.gravity()
+</programlisting>
+
+<para>
+  Launch your game to see what happens.
+</para>
+
+<para>
+  Your loot objects are spawned, but they don&#39;t do anything when
+  your player runs into them, nor do they scroll when your player runs
+  past them. Fix these issues next.
+</para>
+</section>
+
+<section id="loot_scroll">
+  <title>Scrolling loot</title>
+
+  <para>
+    Like platforms, loot has to scroll when the player moves through
+    the game world. The logic is identical to platform scrolling. To
+    scroll the forward, add the last two lines&#58;
+  </para>
+
+<programlisting>
+        for platform in platform_list:
+            platform.rect.x -= scroll
+        for loot in loot_list:    # scroll loot
+            loot.rect.x -= scroll # scroll loot
+</programlisting>
+
+<para>
+  To scroll backward, add the last two lines&#58;
+</para>
+
+<programlisting>
+        for platform in platform_list:
+            platform.rect.x += scroll
+        for loot in loot_list:
+	    loot.rect.x += scroll
+</programlisting>
+
+<para>
+  Launch your game again to see that your loot objects now act like
+  they&#39;re <emphasis>in</emphasis> the game world instead of just
+  painted on top of it.
+</para>
+</section>
+
+<section id="loot_collision">
+  <title>Detecting collisions</title>
+
+  <para>
+    Like platforms, you can check for collisions between loot and your
+    player. The logic is the same as platform collisions, except that
+    a hit doesn't affect gravity. Instead, a hit causes the loot to
+    disappear and increment the player&#39;s score.
+  </para>
 
     <mediaobject>
     <info>
@@ -39,215 +151,77 @@
 	<orgname>MIT</orgname>
       </othercredit>
     </info>
-    <alt>Enemy sprites in Scratch</alt>
+    <alt>Looting in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/enemy.jpg"/>
+		 fileref="images/loot.jpg"/>
     </imageobject>
     <textobject>
       <para>
-	An enemy sprites in scratch.
+	Looting in Scratch increments the score and hides the loot.
       </para>
     </textobject>
   </mediaobject>
 
-      
-<section id="enemy_sprite">
-  <title>
-    Creating the enemy sprite
-  </title>
-  
   <para>
-    Your enemy sprite shares a lot in common with you player
-    sprite. You have to make a class so that enemies can spawn, you
-    have to create an update function so that enemies detect
-    collisions, and you have to make a movement function so your enemy
-    can roam around.
+    When your player touches a loot object, you can remove that object
+    from the <code>loot_list</code>. That means that when your main
+    loop redraws all loot items in <code>loot_list</code>, it
+    won&#39;t redraw that particular object, so it looks like the
+    player has picked up the loot. 
   </para>
 
   <para>
-    Start with the class. Conceptually, it's mostly the same as your
-    Player class. You set an image or series of images to it and set its
-    starting position.
-  </para>
-
-  <para>
-    One important addition is a counter variable. You&#39;ll need a
-    counter variable later, to keep track of the enemy&#39;s movement.
-  </para>
-
-  <para>
-    At the top of the Objects section of your code, create a class
-    called <code>Enemy</code> with this code&#58;
+    Add the following code above the platform collision detection. The
+    last line is for context&#58;
   </para>
 
 <programlisting>
-class Enemy(pygame.sprite.Sprite):
-    '''
-    Spawn an enemy
-    '''
-    def __init__(self,x,y,img):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join('images',img))
-        self.image.convert_alpha()
-        self.image.set_colorkey(alpha)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.counter = 0 
+        loot_hit_list = pygame.sprite.spritecollide(self, loot_list, False)
+        for loot in loot_hit_list:
+            loot_list.remove(loot)
+            self.score += 1
+	    print(self.score)
+
+	block_hit_list = pygame.sprite.spritecollide(self, platform_list, False)
 </programlisting>
 
-</section>
-
-<section id="enemy_spawn">
-  <title>Spawning an enemy</title>
-  
-<para>
-  You can make the class useful for spawning more than just one enemy
-  by allowing yourself to tell the class which image to use for the
-  sprite, and where in the world the sprite should appear. This means
-  that you can use this same enemy class to generate any number of
-  enemy sprites anywhere in the game world. All you have to do is make
-  a call to the class, tell it which image to use, along with the X
-  and Y coordinates.
-</para>
-
-<para>
-  Again, this is similar in principle to spawning a player sprite. In
-  the Setup section of your script, add this code. The first two lines
-  are for context, so just add the final three&#58;
+<para> Not only do you remove the loot object from its group when a
+collision happens, you award your player with a bump in score. You
+haven't created a score variable yet, so add that to your player&#39;s
+properties. In the following code, first two lines are for context, so
+just add the score variable&#58;
 </para>
 
 <programlisting>
-movingsprites = pygame.sprite.Group()
-movingsprites.add(player)
-# enemy code below
-enemy   = Enemy(777,531,'owl.png') # spawn enemy
-enemies = pygame.sprite.Group()    # create enemy group 
-enemies.add(enemy)                 # add enemy to group
-</programlisting>
-
-<para>
-  All the same rules apply to the enemy that apply to platforms or
-  loot objects. They need to scroll when the player moves, and they need
-  to be updated in the main loop.
-</para>
-
-<para> In your main loop, add these blocks of code. First, use the
-same rules for scrolling platforms and loot. The first two lines are
-for context, so just add the final two&#58;
-</para>
-
-<programlisting>
-        for loot in loot_list:
-            loot.rect.x -= scroll
-        for enemy in enemies:
-            enemy.rect.x -= scroll
-</programlisting>
-
-<para>
-  To scroll in the other direction&#58;
-</para>
-
-<programlisting>
-        for loot in loot_list:
-            loot.rect.x += scroll
-        for enemy in enemies:
-            enemy.rect.x += scroll
-</programlisting>
-
-<para>
-  And then draw all enemies in the enemy group to the screen. Right
-  now you only have one enemy, but you can add more later if you
-  want. As long as you add an enemy to the enemies group, it will get
-  drawn to the screen during the main loop. The middle line in the new
-  line you need to add&#58;
-</para>
-
-<programlisting>
-    movingsprites.draw(screen)
-    enemies.draw(screen)  # refresh enemies
-    pygame.display.flip()
-</programlisting>
-
-<para>
-  Launch your game. Your enemy appears in the game world at whatever X
-  and Y coordinate you chose.
-</para>
-
-</section>
-
-<section id="enemy_collision">
-  <title>Hitting the enemy</title>
-
-  <para>
-    An enemy isn&#39;t much of an enemy if they have no effect on the
-    player. It&#39;s common for enemies to cause damage when a player
-    collides with them. The logic is exactly the same as loot. 
-  </para>
-
-  <para>
-    Since you probably want to track the player&#39;s health, the
-    collision check actually happens in the Player class rather than
-    in the Enemy class. You can track the enemy&#39;s health, too, if
-    you want. The logic and code is pretty much the same, but for now
-    just track the player&#39;s health.
-  </para>
-
-  <para>
-    To track player health, you must first establish a variable for
-    the player&#39;s health. Add the third line to you Player class&#58;
-  </para>
-
-<programlisting>
+        self.momentumY = 0
         self.frame     = 0
-        self.score     = 0
-        self.health    = 10  # track health
+	self.score     = 0
 </programlisting>
 
-  <para>
-    In the <code>update</code> function of your Player class, add this
-    code block in the same area as your loot and platform collision
-    checks&#58;
-  </para>
-  
+<para>
+  As with platforms, you have to tell the <code>update</code> function
+  which list to use when detecting collisions.
+</para>
+
 <programlisting>
-        hit_list = pygame.sprite.spritecollide(self, enemies, False)
-        for enemy in hit_list:
-            self.health -= 1
-            print(self.health)
-</programlisting>
-</section>
+    def update(self,platform_list,loot_list):
+</programlisting>  
 
-<section id="enemy_move">
-  <title>Moving the enemy</title>
+<para>
+  When calling the <code>update</code> function in your main loop,
+  include the <code>loot_list</code>&#58;
+</para>
 
-  <para>
-    An enemy that stands still is useful if you want, for instance,
-    spikes or traps that can harm your player, but it&#39;s more of a
-    challenge if the enemies move around a little.
-  </para>
-
-  <para>
-    
-
-    
 <programlisting>
-    def move(self):
-        '''
-        enemy movement
-        '''
-        if self.counter >= 0 and self.counter <= 100:
-            self.rect.x  += 10
-            self.counter += 1
-        elif self.counter >= 100 and self.counter < 150:
-            self.rect.x  -= 10
-        else:
-            self.counter = 0
-            print('reset')
-
-        self.counter += 1
+    player.gravity()
+    player.update(platform_list,loot_list) # refresh player
 </programlisting>
-	
+
+<para>
+  As you can see, you&#39;ve learned got all the basics. All you have
+  to do now is use what you know in new ways. 
+</para>
+
 </section>
 </chapter>

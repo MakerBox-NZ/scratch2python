@@ -1,5 +1,5 @@
 --- 009.py	2017-05-09 23:08:24.226656673 +1200
-+++ 010.py	2017-05-11 23:43:46.081061194 +1200
++++ 010.py	2017-05-12 13:24:58.699019741 +1200
 @@ -8,6 +8,7 @@
  # add jump
  # add scrolling
@@ -8,7 +8,7 @@
  
  # GNU All-Permissive License
  # Copying and distribution of this file, with or without modification,
-@@ -22,6 +23,34 @@
+@@ -22,6 +23,33 @@
  '''
  Objects
  '''
@@ -32,8 +32,7 @@
 +        '''
 +        if self.counter >= 0 and self.counter <= 100:
 +            self.rect.x  += 10
-+            self.counter += 1
-+        elif self.counter >= 100 and self.counter < 150:
++        elif self.counter >= 100 and self.counter < 200:
 +            self.rect.x  -= 10
 +        else:
 +            self.counter = 0
@@ -43,7 +42,7 @@
  class Platform(pygame.sprite.Sprite):
      '''
      Create a platform
-@@ -50,6 +79,7 @@
+@@ -50,6 +78,7 @@
          self.momentumY = 0
          self.frame     = 0
          self.score     = 0
@@ -51,7 +50,7 @@
          # gravity variables
          self.collide_delta = 0
          self.jump_delta    = 6
-@@ -127,6 +157,11 @@
+@@ -127,6 +156,11 @@
              self.collide_delta += 6
              self.jump_delta    += 6
  
@@ -63,7 +62,7 @@
      def jump(self,platform_list):
          self.jump_delta = 0
  
-@@ -180,6 +215,11 @@
+@@ -180,6 +214,11 @@
  player.rect.y = 0
  movingsprites = pygame.sprite.Group()
  movingsprites.add(player)
@@ -75,7 +74,7 @@
  movesteps = 10      # how fast to move
  forwardX  = 600     # when to scroll
  backwardX = 230     # when to scroll
-@@ -219,6 +259,8 @@
+@@ -219,6 +258,8 @@
              platform.rect.x -= scroll
          for loot in loot_list:
              loot.rect.x -= scroll
@@ -84,7 +83,7 @@
  
      # scroll the world backward
      if player.rect.x <= backwardX:
-@@ -228,6 +270,8 @@
+@@ -228,6 +269,8 @@
              platform.rect.x += scroll
          for loot in loot_list:
              loot.rect.x += scroll
@@ -93,7 +92,7 @@
                  
  #    screen.fill(black)
      screen.blit(backdrop, backdropRect)
-@@ -235,6 +279,8 @@
+@@ -235,6 +278,8 @@
      loot_list.draw(screen)       # refresh loot
      player.gravity()             # check gravity
      player.update(platform_list,loot_list) # refresh player
