@@ -48,22 +48,34 @@
 
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="platform.xml" /> 
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-		href="gravity.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="gravity.xml" />
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-		href="collision.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="collision.xml" />
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-		href="jump.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="jump.xml" />
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-		href="scroll.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="scroll.xml" />
 
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-		href="loot.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="loot.xml" />
 
-  <!-- end -->
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="enemy.xml" />
+<!--
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="sound.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="text.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+	      href="next.xml" />
+
+ end -->
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="colophon.xml" />
 </book>
