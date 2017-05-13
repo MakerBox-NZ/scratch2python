@@ -6,6 +6,8 @@ Have you outgrown Scratch? Looking to graduate to something more advanced? Learn
 
 This git repository is primarily the place where I work on the code that goes into the book. If all you want to do is read the book so you can learn Python and Pygame, you can download the latest build of the book from the `dist` folder.
 
+Once I feel it's truly ready, I'll also publish the book on Smashwords or some similar site, too.
+
 ## How do hack on this thing?
 
 If you want to learn Docbook, or you see some stupid Python code in this book that you think could be better, then please feel free to clone this repository and send me patches.
