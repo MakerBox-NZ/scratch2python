@@ -32,12 +32,12 @@
     for context, so just add the last two lines&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 movingsprites.add(player)
 movesteps = 10
 forwardX  = 600     # when to scroll
 backwardX = 230     # when to scroll    
-</programlisting>
+]]></programlisting>
 
 <para>
   In the main loop, check to see if your player sprite is at the
@@ -51,7 +51,7 @@ backwardX = 230     # when to scroll
   reference&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     # scroll the world forward
     if player.rect.x >= forwardX:
         scroll = player.rect.x - forwardX
@@ -71,7 +71,7 @@ backwardX = 230     # when to scroll
     platform_list.draw(screen)
     player.gravity()
     player.update(platform_list)
-</programlisting>
+]]></programlisting>
 
 <para>
   In this code, scrolling backwards is enabled, but at a logarithmic

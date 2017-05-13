@@ -20,7 +20,7 @@
     <alt>Sprites in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/sprite.jpg"/>
+		 fileref="topics/images/sprite.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -49,7 +49,7 @@
   Python script that you&#39;re working on&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 import pygame
 import sys
 import os # new code below
@@ -65,7 +65,7 @@ class Player(pygame.sprite.Sprite):
 	self.images.append(img)
 	self.image = self.images[0]
 	self.rect  = self.image.get_rect()
-</programlisting>
+]]></programlisting>
 
 <para>
   If you have a walk cycle for your playable character, save each
@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
   To tell Python to cycle through each file, you must use a loop.
 </para>
 
-  <qandaset defaultlabel="player_q1">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>What kind of loop does Scratch use to repeat something
@@ -95,7 +95,7 @@ class Player(pygame.sprite.Sprite):
     specific number of times. In Python, you use a for loop&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 import pygame
 import sys
 import os # new code below
@@ -112,7 +112,7 @@ class Player(pygame.sprite.Sprite):
             self.images.append(img)
             self.image = self.images[0]
             self.rect  = self.image.get_rect()
-</programlisting>
+]]></programlisting>
 
 <section id="player_spawn">
   <title>Bringing the player in the game world</title>
@@ -122,7 +122,7 @@ class Player(pygame.sprite.Sprite):
     use a few Scratch blocks.
   </para>
 
-    <qandaset defaultlabel="player_spawn-q1">
+    <qandaset>
     <qandaentry>
       <question>
 	<para>What are some of the Scratch blocks you might use to
@@ -140,7 +140,7 @@ class Player(pygame.sprite.Sprite):
     existing code, so add the lines afterwards&#58;
   </para>
   
-<programlisting>
+<programlisting><![CDATA[
 screen = pygame.display.set_mode([screenX,screenY])
 backdrop = pygame.image.load(os.path.join('images','stage.png')).convert()
 backdropRect = screen.get_rect()
@@ -152,7 +152,7 @@ player.rect.x = 0   # go to x
 player.rect.y = 0   # go to y
 movingsprites = pygame.sprite.Group()
 movingsprites.add(player)
-</programlisting>
+]]></programlisting>
 
 <para>
   Try launching your game to see what happens. Warning&#58; it
@@ -164,7 +164,7 @@ movingsprites.add(player)
   spawn. Actually, it spawns, but only for a millisecond.
 </para>
 
-<qandaset defaultlabel="player_spawn-q2">
+<qandaset>
   <qandaentry>
     <question>
       <para>
@@ -186,12 +186,12 @@ movingsprites.add(player)
   Change the bottom clause of your loop to look like this&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     screen.blit(backdrop, backdropRect)
     movingsprites.draw(screen) # draw player
     pygame.display.flip()
     clock.tick(fps)
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game now. Your player spawns.
@@ -231,11 +231,11 @@ movingsprites.add(player)
     other 2 lines&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
             img = pygame.image.load(os.path.join('images','hero' + str(i) + '.png')).convert()
             img.convert_alpha()     # optimise for alpha
             img.set_colorkey(alpha) # set alpha
-</programlisting>
+]]></programlisting>
 
 <para>
   Python doesn&#39;t know what to use as alpha, unless you tell it. In
@@ -244,13 +244,13 @@ movingsprites.add(player)
   add the last 3 lines&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 screenX = 960
 screenY = 720
 alpha = (0,0,0)
 black = (1,1,1)
 white = (255,255,255)
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game to see the results.

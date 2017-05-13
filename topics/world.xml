@@ -21,7 +21,7 @@
   <alt>The Scratch stage</alt>
   <imageobject>
     <imagedata align="left" width="4.3in" format="JPG"
-	       fileref="images/stage.jpg"/>
+	       fileref="topics/images/stage.jpg"/>
   </imageobject>
   <textobject>
     <para>
@@ -63,7 +63,7 @@
     improve your game and share their changes with you&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 #!/usr/bin/env python3
 # by Seth Kenlon
 
@@ -80,18 +80,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-</programlisting>
+]]></programlisting>
 
 <para>
   Then, you tell Python what modules you want to use. Remember,
   modules are like sets of Scratch blocks.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 import pygame # load pygame keywords
 import sys    # let  python use your file system
 import os     # help python identify your OS
-</programlisting>
+]]></programlisting>
 
 <para>
   Since you&#39;ll be working a lot with this script file, it helps to
@@ -100,7 +100,7 @@ import os     # help python identify your OS
   you, the programmer, sees. Create three blocks in your code.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 '''
 Objects
 '''
@@ -118,7 +118,7 @@ Main Loop
 '''
 
 # put game loop here
-</programlisting>
+]]></programlisting>
 
 <para>
   Next, set the window size for your game. Keep in mind that not
@@ -126,13 +126,13 @@ Main Loop
   size that will fit on most people&#39;s computers.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 '''
 Setup
 '''
 screenX = 960
 screenY = 720
-</programlisting>
+]]></programlisting>
 
 <para>
   The Pygame engine requires some basic setup before you can use it in
@@ -140,12 +140,12 @@ screenY = 720
   start &#40;init&#41; Pygame.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 fps = 40   # frame rate
 afps = 4   # animation cycles
 clock = pygame.time.Clock()
 pygame.init()
-</programlisting>
+]]></programlisting>
 
 <para>
   In Scratch, to activate a script, you use the <firstterm>When green
@@ -164,7 +164,7 @@ pygame.init()
   <alt>When green flag is clicked</alt>
   <imageobject>
     <imagedata align="left" width="4.3in" format="JPG"
-	       fileref="images/flag.jpg"/>
+	       fileref="topics/images/flag.jpg"/>
   </imageobject>
   <textobject>
     <para>
@@ -180,9 +180,9 @@ pygame.init()
   not True, then the game has stopped.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 main = True
-</programlisting>
+]]></programlisting>
 
 <para>
   Now you can set your background.
@@ -202,20 +202,20 @@ main = True
     <filename>stage.png</filename> into it.
   </para>
   
-  <programlisting>
+  <programlisting><![CDATA[
     screen   = pygame.display.set_mode([screenX,screenY])
     backdrop = pygame.image.load(os.path.join('images','stage.png').convert()
     backdropRect = screen.get_rect()
-  </programlisting>
+  ]]></programlisting>
 
   <para>
     If you&#39;re just going to fill the background of your game
     screen with a colour, all you need is&#58;
   </para>
 
-  <programlisting>
+  <programlisting><![CDATA[
     screen   = pygame.display.set_mode([screenX,screenY])
-  </programlisting>
+  ]]></programlisting>
     
   <para>
     At this point, you could theoretically start your game. The
@@ -229,18 +229,18 @@ main = True
     name&#41;. Then launch your game with Python&#58;
   </para>
   
-  <screen>
+  <programlisting><![CDATA[
     <prompt>&#36;</prompt> <command>python</command>
     .&#47;your-name_game.py
-  </screen>
+  ]]></programlisting>
 
   <para>
     If you&#39;re still using Windows, use this command&#58;
   </para>
 
-  <screen>
+  <programlisting><![CDATA[
     <command>Python.exe</command> your-name_game.py
-  </screen>
+  ]]></programlisting>
 
   <para>
     Don&#39;t expect much, because your game only lasts a millisecond
@@ -258,7 +258,7 @@ main = True
     runs in less than a second.  
   </para>
 
-  <qandaset defaultlabel="world_loop-q1">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>What code block in Scratch makes a script repeat
@@ -281,7 +281,7 @@ main = True
     keyboard have been pressed or released.
   </para>
 
-    <qandaset defaultlabel="world_loop-q2">
+    <qandaset>
     <qandaentry>
       <question>
 	<para>What would be a useful function for your game to have
@@ -294,7 +294,7 @@ main = True
     </qandaentry>
   </qandaset>
 
-<programlisting>
+<programlisting><![CDATA[
 '''
 Main loop
 '''
@@ -309,7 +309,7 @@ while main == True:
                 pygame.quit()
                 sys.exit()
                 main = False
-</programlisting>
+]]></programlisting>
 
 <para>
   Also in your main loop, refresh your screen&#39;s background.
@@ -321,18 +321,18 @@ while main == True:
       If you are using an image&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
     screen.blit(backdrop, backdropRect)
-</programlisting>
+]]></programlisting>
   </listitem>
   <listitem>
     <para>
       If you are just using a colour for the background&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
     screen.fill(black)
-</programlisting>
+]]></programlisting>
   </listitem>
 </itemizedlist>
 
@@ -341,10 +341,10 @@ while main == True:
   advance the game&#39;s clock.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     pygame.display.flip()
     clock.tick(fps)
-</programlisting>
+]]></programlisting>
 
 <para>
   Save your file, and run it again to see the most boring game ever

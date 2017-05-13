@@ -1,4 +1,4 @@
-<chapter id="preface">
+<chapter id="intro">
   <title>
     Intro to Python
   </title>
@@ -29,7 +29,7 @@
   <alt>Scratch and Python</alt>
   <imageobject>
     <imagedata align="left" width="4.3in" format="JPG"
-	       fileref="images/scratchLikePython.jpg"/>
+	       fileref="topics/images/scratchLikePython.jpg"/>
   </imageobject>
   <textobject>
     <para>
@@ -67,8 +67,8 @@
       </para>
       <para>
 	If that doesn't work, make sure you have Python installed, or
-	just use <link
-	xlink:href="https://getfedora.org/en_GB/workstation/download/">Linux</link>. It's
+	just use <ulink
+	url="https://getfedora.org/en_GB/workstation/download/">Linux</ulink>. It's
 	free and doesn't even require you to install it to use it.
       </para>
     </listitem>
@@ -90,10 +90,10 @@
     For instance, type this at your Python prompt and then press <keycode>Return</keycode>&#58;
   </para>
 
-  <screen>
-    <prompt>&#62;&#62;&#62;</prompt> <command>print&#40;&#34;Hello world.&#34;&#41;</command>
-    <comuputeroutput>Hello world.</comuputeroutput>
-  </screen>
+  <programlisting><![CDATA[
+    >>> print("Hello world.")
+    Hello world.
+  ]]></programlisting>
 
   <para>
     The keyword <command>print</command> tells Python to print out
@@ -111,26 +111,26 @@
     Use the <command>import</command> keyword to load more keywords.
   </para>
 
-  <screen>
-    <prompt>&#62;&#62;&#62;</prompt> <command>import turtle</command>
-  </screen>
+  <programlisting><![CDATA[
+    >>> import turtle
+  ]]></programlisting>
 
   <para>
     Turtle is a fun module to use. It&#39;s exactly like the Pen code
     blocks in Scratch.
   </para>
 
-  <screen>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.begin_fill&#40;&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.left&#40;90&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.forward&#40;100&#41;</command>
-    <prompt>&#62;&#62;&#62;</prompt> <command>turtle.end_fill&#40;&#41;</command>    
-  </screen>
+  <programlisting><![CDATA[
+    >>> turtle.begin_fill()
+    >>> turtle.forward(100)
+    >>> turtle.left(90)
+    >>> turtle.forward(100)
+    >>> turtle.left(90)
+    >>> turtle.forward(100)
+    >>> turtle.left(90)
+    >>> turtle.forward(100)
+    >>> turtle.end_fill()
+  ]]></programlisting>
 
   <section id="intro_exercise">
     <title>Exercise</title>
@@ -159,7 +159,7 @@
       terminal, it&#39;s time to write a Python script. 
     </para>
 
-    <qandaset defaultlabel="intro_script-q1">
+    <qandaset>
       <qandaentry>
 	<question>
 	  <para>What is a script in Scratch?</para>
@@ -182,7 +182,7 @@
     </para>
 
 
-    <screen>
+    <programlisting><![CDATA[
       import turtle as t
       import time
       
@@ -197,7 +197,7 @@
       
       t.end_fill()
       time.sleep(5)
-    </screen>
+    ]]></programlisting>
 
     <para>
       Save the text file as <filename>turtle.py</filename>.

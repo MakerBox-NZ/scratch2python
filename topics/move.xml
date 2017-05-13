@@ -8,7 +8,7 @@
     around.
   </para>
 
-  <qandaset defaultlabel="move_q1">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>Which code blocks does Scratch use to provide movement
@@ -39,7 +39,7 @@
     <alt>Movement control in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/move.jpg"/>
+		 fileref="topics/images/move.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -61,7 +61,7 @@
       Open your Python game script in a text editor.
     </para>
 
-  <qandaset defaultlabel="move_q2">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>Where should you put code that needs to run continuously
@@ -80,7 +80,7 @@
     debugging technique.
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 while main == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -104,7 +104,7 @@ while main == True:
                 pygame.quit()
                 sys.exit()
                 main = False    
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game using Python, and watch the terminal window for
@@ -114,14 +114,14 @@ while main == True:
   keys.
 </para>
 
-<screen>
+<programlisting><![CDATA[
   <prompt>&#36;</prompt> <command>python</command> <arg>./your-name_game.py</arg>
   <computeroutput>left</computeroutput>
   <computeroutput>left stop</computeroutput>
   <computeroutput>right</computeroutput>
   <computeroutput>right stop</computeroutput>
   <computeroutput>jump</computeroutput>  
-</screen>
+]]></programlisting>
 
 <para>
   This confirms that Pygame detects key presses correctly. Now
@@ -152,13 +152,13 @@ while main == True:
       are for context, so add the last three&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.momentumX = 0  # move along X
         self.momentumY = 0  # move along Y
         self.frame     = 0  # count frames
-</programlisting>
+]]></programlisting>
 
 <para>
   With those variables set, it&#39;s time to code the actual
@@ -181,14 +181,14 @@ while main == True:
   gets decided in later code.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def control(self,x,y):
         '''
         control player movement
         '''
         self.momentumX += x
         self.momentumY += y
-</programlisting>
+]]></programlisting>
 
 <para>
   It's built into Scratch, but when a sprite moves in Pygame, you have
@@ -208,14 +208,14 @@ while main == True:
   it gets moved.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def update(self):
         '''
 	Update sprite position
         '''
 
         currentX = self.rect.x
-</programlisting>
+]]></programlisting>
 
 <para>
   Then create a variable of where you want the sprite to go. Set the
@@ -228,27 +228,27 @@ while main == True:
   position.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 	nextX = currentX+self.momentumX
         self.rect.x = nextX
-</programlisting>
+]]></programlisting>
 
 <para>
   Do the same thing for the Y position&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         currentY = self.rect.y
         nextY = currentY+self.momentumY
         self.rect.y = nextY
-</programlisting>
+]]></programlisting>
 
 <para>
   For animation, advance the animation frames as long as your sprite
   is moving, and use the corresponding animation frame&#58; 
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         # moving left
         if self.momentumX < 0:
             self.frame += 1
@@ -262,7 +262,7 @@ while main == True:
             if self.frame > 3*afps:
                 self.frame = 0
             self.image = self.images[self.frame//afps+4]
-</programlisting>
+]]></programlisting>
 
 <para>
   All the code you&#39;ve just written needs to know how many pixels
@@ -277,11 +277,11 @@ while main == True:
   for context, so just add the third line to your script&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 movingsprites = pygame.sprite.Group()
 movingsprites.add(player)
 movesteps = 10      # how fast to move
-</programlisting>
+]]></programlisting>
 
 <para>
   Now that you have the function and the variable, use your key
@@ -296,7 +296,7 @@ movesteps = 10      # how fast to move
   Y axis you want the Sprite to move with each loop.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT or event.key == ord('a'):
                 player.control(-movesteps,0)
@@ -314,13 +314,13 @@ movesteps = 10      # how fast to move
                 pygame.quit()
                 sys.exit()
                 main = False
-</programlisting>
+]]></programlisting>
 
 <para>
   Try your game now. Warning&#58; it won&#39;t do what you expect, yet&#33;
 </para>
 
-  <qandaset defaultlabel="move_q3">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>Why doesn&#39;t your sprite move yet?</para>
@@ -337,12 +337,12 @@ movesteps = 10      # how fast to move
     of your Sprite. Add the line with the comment&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
     player.update()  # update player position
     movingsprites.draw(screen)
     pygame.display.flip()
     clock.tick(fps)
-</programlisting>
+]]></programlisting>
 
 </section>
 </chapter>

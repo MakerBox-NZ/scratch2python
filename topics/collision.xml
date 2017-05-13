@@ -9,7 +9,7 @@
     in your game, so now it&#39;s time to simulate collision.
   </para>
 
-    <qandaset defaultlabel="collision_q1">
+    <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -45,7 +45,7 @@
       ground, then your player stops falling.
     </para>
       
-    <qandaset defaultlabel="physics_q1">
+    <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -72,7 +72,7 @@
     <alt>Collision detection in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/collide.jpg"/>
+		 fileref="topics/images/collide.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -99,7 +99,7 @@
     code&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
         # collisions
         block_hit_list = pygame.sprite.spritecollide(self, blocker, False)
         if self.momentumX > 0:
@@ -112,7 +112,7 @@
             for block in block_hit_list:
                 self.rect.y = currentY
                 self.momentumY     = 0
-</programlisting>
+]]></programlisting>
 
 <para>
   This code checks for collisions between your player sprite and any
@@ -133,7 +133,7 @@
   If you try to launch your game now, it will crash.
 </para>
 
-<screen>
+<programlisting><![CDATA[
   <prompt>&#36;</prompt> <command>python</command> ./your-name_game.py
   <computeroutput>
     Traceback (most recent call last):
@@ -141,7 +141,7 @@
     player.update() # refresh player
     TypeError: update() takes exactly 2 arguments (1 given)
   </computeroutput>
-</screen>
+]]></programlisting>
 
 <para>
   Your player sprite's new update function needs to know what the
@@ -155,11 +155,11 @@
   <code>player.update</code> call to this &#40;change the middle line&#41;&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     player.gravity()
     player.update(platform_list) # update and collision
     movingsprites.draw(screen)
-</programlisting>
+]]></programlisting>
 
 <para>
   Now launch your game. Your player successfully resists the pull of

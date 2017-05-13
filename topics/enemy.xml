@@ -9,7 +9,7 @@
     ready know how to implement enemies.
   </para>
 
-    <qandaset defaultlabel="enemy_q1">
+    <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -42,7 +42,7 @@
     <alt>Enemy sprites in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/enemy.jpg"/>
+		 fileref="topics/images/enemy.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -76,7 +76,7 @@
     called <code>Enemy</code> with this code&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 class Enemy(pygame.sprite.Sprite):
     '''
     Spawn an enemy
@@ -89,7 +89,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-</programlisting>
+]]></programlisting>
 
 </section>
 
@@ -112,14 +112,14 @@ class Enemy(pygame.sprite.Sprite):
   are for context, so just add the final three&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 movingsprites = pygame.sprite.Group()
 movingsprites.add(player)
 # enemy code below
 enemy   = Enemy(777,531,'owl.png') # spawn enemy
 enemies = pygame.sprite.Group()    # create enemy group 
 enemies.add(enemy)                 # add enemy to group
-</programlisting>
+]]></programlisting>
 
 <para>
   All the same rules apply to the enemy that apply to platforms or
@@ -132,23 +132,23 @@ same rules for scrolling platforms and loot. The first two lines are
 for context, so just add the final two&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         for loot in loot_list:
             loot.rect.x -= scroll
         for enemy in enemies:
             enemy.rect.x -= scroll
-</programlisting>
+]]></programlisting>
 
 <para>
   To scroll in the other direction&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         for loot in loot_list:
             loot.rect.x += scroll
         for enemy in enemies:
             enemy.rect.x += scroll
-</programlisting>
+]]></programlisting>
 
 <para>
   And then draw all enemies in the enemy group to the screen. Right
@@ -158,11 +158,11 @@ for context, so just add the final two&#58;
   line you need to add&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     movingsprites.draw(screen)
     enemies.draw(screen)  # refresh enemies
     pygame.display.flip()
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game. Your enemy appears in the game world at whatever X
@@ -193,11 +193,11 @@ for context, so just add the final two&#58;
     the player&#39;s health. Add the third line to you Player class&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
         self.frame     = 0
         self.score     = 0
         self.health    = 10  # track health
-</programlisting>
+]]></programlisting>
 
   <para>
     In the <code>update</code> function of your Player class, add this
@@ -205,12 +205,12 @@ for context, so just add the final two&#58;
     checks&#58;
   </para>
   
-<programlisting>
+<programlisting><![CDATA[
         hit_list = pygame.sprite.spritecollide(self, enemies, False)
         for enemy in hit_list:
             self.health -= 1
             print(self.health)
-</programlisting>
+]]></programlisting>
 </section>
 
 <section id="enemy_move">
@@ -246,12 +246,12 @@ for context, so just add the final two&#58;
     last line in this code sample&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.counter = 0  # counter variabla
-</programlisting>
+]]></programlisting>
 
 <para>
   Next, create a <code>move</code> function in your Enemy class. Use
@@ -284,7 +284,7 @@ for context, so just add the final two&#58;
   walk right to left and right to left forever.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def move(self):
         '''
         enemy movement
@@ -298,7 +298,7 @@ for context, so just add the final two&#58;
             print('reset')
 
         self.counter += 1
-</programlisting>
+]]></programlisting>
 
 <para>
   Will this code work if you launch your game now?
@@ -310,11 +310,11 @@ for context, so just add the final two&#58;
   loop&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     player.update(platform_list,loot_list)
     enemy.move()  # move enemy sprite
     movingsprites.draw(screen)
-</programlisting>  
+]]></programlisting>  
 
 <para>
   Launch your game and see if you can avoid your enemy. Then try

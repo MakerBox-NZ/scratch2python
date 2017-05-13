@@ -1,7 +1,5 @@
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
-"/usr/share/xml/docbook5/schema/dtd/5.0/docbook.dtd">
-
-<book xmlns='http://docbook.org/ns/docbook'>
+<?xml version="1.0" encoding="utf-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en">
   <title>
     Graduating from Scratch to Python&#58; A Student and Teacher Guide
   </title>
@@ -31,7 +29,7 @@
       </revision>
     </revhistory>
   </info>
-
+<!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/preface.xml" />
 
@@ -65,7 +63,7 @@
 
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/enemy.xml" />
-<!--
+
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/sound.xml" />
 
@@ -75,7 +73,9 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/next.xml" />
 
- end -->
+
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/colophon.xml" />
-</book>
+ end -->
+
+

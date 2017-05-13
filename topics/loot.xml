@@ -1,4 +1,4 @@
-<chapter id="enemy">
+<chapter id="loot">
   <title>
     Looting
   </title>
@@ -49,13 +49,13 @@
     it. You&#39;ll use this group when checking for collisions.
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
 def loot1():
     loot_list = pygame.sprite.Group()
     loot = Platform(666,355,92,99, os.path.join('images','loot.png'))
     loot_list.add(loot)
     return loot_list
-</programlisting>
+]]></programlisting>
 
 <para>
   You can add as many loot objects as you like, just remember to add
@@ -69,11 +69,11 @@ def loot1():
   following code, the first two lines are for context, so add the third&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 backdropRect  = screen.get_rect()
 platform_list = level1()
 loot_list     = loot1()  # spawn loot
-</programlisting>
+]]></programlisting>
 
 <para>
   As you know by now, the loot won't get drawn to the screen unless
@@ -81,11 +81,11 @@ loot_list     = loot1()  # spawn loot
   following code sample to your loop&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     platform_list.draw(screen)
     loot_list.draw(screen) # refresh loot
     player.gravity()
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game to see what happens.
@@ -107,23 +107,23 @@ loot_list     = loot1()  # spawn loot
     scroll the forward, add the last two lines&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
         for platform in platform_list:
             platform.rect.x -= scroll
         for loot in loot_list:    # scroll loot
             loot.rect.x -= scroll # scroll loot
-</programlisting>
+]]></programlisting>
 
 <para>
   To scroll backward, add the last two lines&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         for platform in platform_list:
             platform.rect.x += scroll
         for loot in loot_list:
 	    loot.rect.x += scroll
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game again to see that your loot objects now act like
@@ -154,7 +154,7 @@ loot_list     = loot1()  # spawn loot
     <alt>Looting in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="JPG"
-		 fileref="images/loot.jpg"/>
+		 fileref="topics/images/loot.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -176,7 +176,7 @@ loot_list     = loot1()  # spawn loot
     last line is for context&#58;
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
         loot_hit_list = pygame.sprite.spritecollide(self, loot_list, False)
         for loot in loot_hit_list:
             loot_list.remove(loot)
@@ -184,7 +184,7 @@ loot_list     = loot1()  # spawn loot
 	    print(self.score)
 
 	block_hit_list = pygame.sprite.spritecollide(self, platform_list, False)
-</programlisting>
+]]></programlisting>
 
 <para> Not only do you remove the loot object from its group when a
 collision happens, you award your player with a bump in score. You
@@ -193,30 +193,30 @@ properties. In the following code, first two lines are for context, so
 just add the score variable&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
         self.momentumY = 0
         self.frame     = 0
 	self.score     = 0
-</programlisting>
+]]></programlisting>
 
 <para>
   As with platforms, you have to tell the <code>update</code> function
   which list to use when detecting collisions.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def update(self,platform_list,loot_list):
-</programlisting>  
+]]></programlisting>  
 
 <para>
   When calling the <code>update</code> function in your main loop,
   include the <code>loot_list</code>&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     player.gravity()
     player.update(platform_list,loot_list) # refresh player
-</programlisting>
+]]></programlisting>
 
 <para>
   As you can see, you&#39;ve learned got all the basics. All you have

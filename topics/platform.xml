@@ -31,7 +31,7 @@
       Coding platform objects
     </title>
 
-<qandaset defaultlabel="platform_object-q1">
+<qandaset>
   <qandaentry>
     <question>
       <para>
@@ -66,7 +66,7 @@
   lines in the code are for context&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 import pygame
 import sys
 import os
@@ -86,7 +86,7 @@ class Platform(pygame.sprite.Sprite):
         
         # paint the image into the blocks
         self.image.blit(self.blockpic,(0,0),(0,0,imgw,imgh))
-</programlisting>
+]]></programlisting>
 
 <para>
   This class creates an object on your screen in
@@ -95,7 +95,7 @@ class Platform(pygame.sprite.Sprite):
   <emphasis>some</emphasis> image file for texture.
 </para>
 
-<qandaset defaultlabel="platform_object-q2">
+<qandaset>
   <qandaentry>
     <question>
       <para>
@@ -213,7 +213,7 @@ class Platform(pygame.sprite.Sprite):
     <alt>Example of coordinates in Pygame</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="PNG"
-		 fileref="images/coordinates.png"/>
+		 fileref="topics/images/coordinates.png"/>
     </imageobject>
     <textobject>
       <para>
@@ -257,7 +257,7 @@ class Platform(pygame.sprite.Sprite):
       code into it&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
 #!/usr/bin/env python3
 
 from PIL import Image
@@ -275,7 +275,7 @@ X   = dim.size[0]
 Y   = dim.size[1]
 
 print(X,Y)
-</programlisting>
+]]></programlisting>
 
 <para>
   Save the text file as <filename>identify.py</filename>.
@@ -286,19 +286,19 @@ print(X,Y)
   keywords&#58;
 </para>
 
-<screen>
+<programlisting><![CDATA[
   <prompt>&#36;</prompt> <command>pip3</command> install Pillow --user
-</screen>
+]]></programlisting>
 
 <para>
   Once that has installed, run your script&#58;
 </para>
 
-<screen>
+<programlisting><![CDATA[
   <prompt>&#36;</prompt> <command>python ./identify.py</command>
-  images/block0.png
+  topics/images/block0.png
   <computeroutput>(1920, 129)</computeroutput>
-</screen>
+]]></programlisting>
 
     <itemizedlist>
     <listitem>
@@ -367,7 +367,7 @@ print(X,Y)
     <alt>Example layout for Pygame level</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="PNG"
-		 fileref="images/layout.png"/>
+		 fileref="topics/images/layout.png"/>
     </imageobject>
     <textobject>
       <para>
@@ -387,7 +387,7 @@ print(X,Y)
     loop so they get drawn to your screen.
   </para>
 
-  <qandaset defaultlabel="platform_spawn-q1">
+  <qandaset>
   <qandaentry>
     <question>
       <para>
@@ -414,7 +414,7 @@ print(X,Y)
     <alt>Stage costumes in Scratch</alt>
     <imageobject>
       <imagedata align="left" width="4.3in" format="PNG"
-		 fileref="images/levels.jpg"/>
+		 fileref="topics/images/levels.jpg"/>
     </imageobject>
     <textobject>
       <para>
@@ -485,13 +485,13 @@ black = (1,1,1)
   is new&#58; 
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 backdropRect = screen.get_rect()
 platform_list = level1()  # set stage to Level 1
 player = Player()
-</programlisting>
+]]></programlisting>
 
-<qandaset defaultlabel="platform_spawn-q2">
+<qandaset>
   <qandaentry>
     <question>
       <para>
@@ -513,7 +513,7 @@ player = Player()
   Is your game ready to launch yet?
 </para>
 
-<qandaset defaultlabel="platform_spawn-q3">
+<qandaset>
   <qandaentry>
     <question>
       <para>
@@ -534,11 +534,11 @@ player = Player()
   line&#58;
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
 screen.blit(backdrop, backdropRect)
 platform_list.draw(screen)  # draw platforms on screen
 player.update()
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game, and adjust the placement of your platforms as

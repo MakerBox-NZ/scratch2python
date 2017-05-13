@@ -4,8 +4,8 @@
   </title>
 
   <para>
-    This book is intended for <link
-    xlink:href="https://www.raspberrypi.org/learning/getting-started-with-scratch/worksheet">Scratch</link>
+    This book is intended for <ulink
+    url="https://www.raspberrypi.org/learning/getting-started-with-scratch/worksheet">Scratch</ulink>
     users who are looking to graduate to a more advanced programming
     environment to make even more advanced games. It is written for
     <emphasis>both</emphasis> students and teachers, because
@@ -14,7 +14,7 @@
   </para>
 
   <para>
-    <link xlink:href="https://www.python.org/">Python</link> is a
+    <ulink url="https://www.python.org/">Python</ulink> is a
     popular open source language that is used in the majority of tech
     industries, including 3d modeling, filmmaking, desktop
     applications, IT, security, and gaming. It&#39;s an important
@@ -23,7 +23,7 @@
     simple.
   </para>
 
-  <section id="preface-ready">
+  <section id="preface_ready">
     <title>Are you ready for Python?</title>
     
   <para>

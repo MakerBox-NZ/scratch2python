@@ -52,14 +52,14 @@
       two&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
         self.momentumX = 0
         self.momentumY = 0
         self.frame     = 0
         # gravity variables here
         self.collide_delta = 0
         self.jump_delta    = 6
-</programlisting>
+]]></programlisting>
     
 <para>
   The first variable is set to 0 because in its
@@ -72,7 +72,7 @@
 
   </section>
 
-  <section id="jump_variables">
+  <section id="jump_collide">
     <title>Colliding mid-jump</title>
 
     <para>
@@ -99,7 +99,7 @@
       lines with commends by them&#41;&#58;
     </para>
     
-<programlisting>
+<programlisting><![CDATA[
                 self.rect.x = currentX+9
                 # gravity
                 self.momentumY     = 0
@@ -111,7 +111,7 @@
                 # gravity
                 self.momentumY     = 0
                 self.collide_delta = 0 # stop jumping
-</programlisting>
+]]></programlisting>
   </section>
 
     <section id="jump_jump">
@@ -129,7 +129,7 @@
       temporary reprieve from gravity&#58;
     </para>
 
-<programlisting>
+<programlisting><![CDATA[
         # gravity
         if self.collide_delta < 6 and self.jump_delta < 6:
             self.jump_delta     = 6*2
@@ -137,7 +137,7 @@
 
             self.collide_delta += 6
             self.jump_delta    += 6
-</programlisting>
+]]></programlisting>
   
 <para>
   According to this code, a jump sends the player sprite 33 pixels
@@ -173,10 +173,10 @@
   the air.
 </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def jump(self,platform_list):
         self.jump_delta = 0
-</programlisting>
+]]></programlisting>
 
 <para>
   That&#39;s all the <code>jump</code> function requires, believe it
@@ -211,10 +211,10 @@
     you have to tell it which <code>platform_list</code> to use.
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
             if event.key == pygame.K_UP or event.key == ord('w'):
                 player.jump(platform_list)
-</programlisting>
+]]></programlisting>
 
 <para>
   If you would rather use the <keycode>Spacebar</keycode> for jumping,

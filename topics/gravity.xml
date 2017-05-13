@@ -17,7 +17,7 @@
     physics that are important&#58; gravity and collision.
   </para>
 
-  <qandaset defaultlabel="gravity_q1">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -46,7 +46,7 @@
       bottom of the screen.
     </para>
 
-  <qandaset defaultlabel="gravity_q2">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -72,13 +72,13 @@
     Player class.
   </para>
 
-<programlisting>
+<programlisting><![CDATA[
     def gravity(self):
         self.momentumY += 3.2   # how fast player falls
 
 	if self.rect.y > 960 and self.momentumY >= 0:
             self.momentumY = 0
-</programlisting>
+]]></programlisting>
 
 <para>
   This is a simple function. First, you set your player in vertical motion
@@ -86,7 +86,7 @@
   you have programmed your player to always be falling&#59; that&#39;s gravity.
 </para>  
 
-  <qandaset defaultlabel="gravity_q3">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -111,11 +111,11 @@
     In this code, add the middle line to your loop&#58;
   </para>
   
-<programlisting>
+<programlisting><![CDATA[
     platform_list.draw(screen)
     player.gravity()   # check gravity
     player.update()
-</programlisting>
+]]></programlisting>
 
 <para>
   Launch your game now to see what happens. Look sharp, because it
@@ -150,7 +150,7 @@
     disappeared off screen.
   </para>    
 
-  <qandaset defaultlabel="gravity_floor-q1">
+  <qandaset>
     <qandaentry>
       <question>
 	<para>
@@ -183,14 +183,14 @@
     Make your gravity function look like this&#58;
   </para>
   
-<programlisting>
+<programlisting><![CDATA[
     def gravity(self):
         self.momentumY += 3.2    # how fast player falls
 
         if self.rect.y > screenY and self.momentumY >= 0:
             self.momentumY     = 0
             self.rect.y        = screenY-20    
-</programlisting>
+]]></programlisting>
 
 <para>
   And then launch your game. Your sprite should bounce at the bottom
