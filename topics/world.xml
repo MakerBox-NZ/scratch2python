@@ -20,7 +20,7 @@
   </info>
   <alt>The Scratch stage</alt>
   <imageobject>
-    <imagedata align="left" width="4.3in" format="JPG"
+    <imagedata align="left" format="JPG"
 	       fileref="topics/images/stage.jpg"/>
   </imageobject>
   <textobject>
@@ -163,7 +163,7 @@ pygame.init()
   </info>
   <alt>When green flag is clicked</alt>
   <imageobject>
-    <imagedata align="left" width="4.3in" format="JPG"
+    <imagedata align="left" format="JPG"
 	       fileref="topics/images/flag.jpg"/>
   </imageobject>
   <textobject>

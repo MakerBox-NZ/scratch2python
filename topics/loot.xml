@@ -153,7 +153,7 @@ loot_list     = loot1()  # spawn loot
     </info>
     <alt>Looting in Scratch</alt>
     <imageobject>
-      <imagedata align="left" width="4.3in" format="JPG"
+      <imagedata align="left" format="JPG"
 		 fileref="topics/images/loot.jpg"/>
     </imageobject>
     <textobject>

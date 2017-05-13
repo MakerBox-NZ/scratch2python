@@ -212,7 +212,7 @@ class Platform(pygame.sprite.Sprite):
     </info>
     <alt>Example of coordinates in Pygame</alt>
     <imageobject>
-      <imagedata align="left" width="4.3in" format="PNG"
+      <imagedata align="left" format="PNG"
 		 fileref="topics/images/coordinates.png"/>
     </imageobject>
     <textobject>
@@ -366,7 +366,7 @@ print(X,Y)
     </info>
     <alt>Example layout for Pygame level</alt>
     <imageobject>
-      <imagedata align="left" width="4.3in" format="PNG"
+      <imagedata align="left" format="PNG"
 		 fileref="topics/images/layout.png"/>
     </imageobject>
     <textobject>
@@ -413,7 +413,7 @@ print(X,Y)
     </info>
     <alt>Stage costumes in Scratch</alt>
     <imageobject>
-      <imagedata align="left" width="4.3in" format="PNG"
+      <imagedata align="left" format="PNG"
 		 fileref="topics/images/levels.jpg"/>
     </imageobject>
     <textobject>
