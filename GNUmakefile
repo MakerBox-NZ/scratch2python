@@ -24,7 +24,7 @@ html: cat check scratch2python.tmp.xml build
 	xmlto -o build --skip-validation html-nochunks scratch2python.tmp.xml
 
 txt: cat check scratch2python.tmp.xml build
-	xmlto -o build --skip-validation txt scratch2python.tmp.xml
+	xmlto -o dist --skip-validation txt scratch2python.tmp.xml
 
 epub: cat check scratch2python.tmp.xml build
 	@mkdir build || true
@@ -39,5 +39,3 @@ pdf: cat check scratch2python.tmp.xml build
 clean:
 	@rm -rf build || true
 	@rm scratch2python.tmp.xml
-
-
