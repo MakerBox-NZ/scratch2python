@@ -41,7 +41,7 @@
 
 <section id="intro_install">
   <title>
-    Installing Python and Pygame
+    Installing Python
   </title>
 
   <para>
@@ -87,11 +87,11 @@
 
 <section id="intro_start-python">
   <title>
-    Starting Python
+    Starting Python 3
   </title>
 
   <para>
-    Since you've never used Python before, your first task is to try a
+    Since you&#39;ve never used Python before, your first task is to try a
     few simple one-line programmes with it. You can talk directly to
     Python by running it in a terminal. 
   </para>
@@ -300,4 +300,31 @@
       but is also a lot more complex, so be prepared.
     </para>
   </section>
+
+<section id="intro_install">
+  <title>
+    Installing Pygame
+  </title>
+
+  <para>
+    Before continuing into the exciting world of Pygame, you must install it first. Pythen 3, like Linux, has a <firstterm>package manager</firstterm> that lets you install extra modules from the Internet.
+  </para>
+
+  <para>
+    To install Pygame with Python 3, open a terminal window &#40;on Windows, open Windows PowerShell&#41;&#58;
+  </para>
+
+  <screen>
+    pip3 install pygame
+  </screen>
+
+  <para>
+    If you&#39;re on Windows, you might need to use this instead &#40;it depends on how you installed Python&#41;&#58;
+  </para>
+  
+  <screen>
+    C&#58;\Windows\py.exe -m &#39;pip&#39; install pygame --user
+  </screen>
+
+</section>
 </chapter>

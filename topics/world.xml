@@ -230,7 +230,7 @@ main = True
   </para>
   
   <programlisting><![CDATA[
-    <prompt>&#36;</prompt> <command>python</command>
+    <prompt>&#36;</prompt> <command>python3</command>
     .&#47;your-name_game.py
   ]]></programlisting>
 

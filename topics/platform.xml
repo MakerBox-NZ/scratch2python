@@ -295,7 +295,7 @@ print(X,Y)
 </para>
 
 <programlisting><![CDATA[
-  <prompt>&#36;</prompt> <command>python ./identify.py</command>
+  <prompt>&#36;</prompt> <command>python3 ./identify.py</command>
   topics/images/block0.png
   <computeroutput>(1920, 129)</computeroutput>
 ]]></programlisting>
