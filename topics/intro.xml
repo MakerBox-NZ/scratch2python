@@ -39,6 +39,52 @@
   </textobject>
 </mediaobject>
 
+<section id="intro_install">
+  <title>
+    Installing Python and Pygame
+  </title>
+
+  <para>
+    Before learning Python, you may need to install it.
+  </para>
+
+  <bridgehead>
+    Linux
+  </bridgehead>
+  
+      <para>
+	If you use <ulink url="http://getfedora.org">Linux</ulink>, Python is already included, but make sure that you have <code>Python 3</code>, specifically. To check what version you have installed, open a terminal window and type&#58;
+      </para>
+
+      <code>
+	python3 -V
+      </code>
+
+      <para>
+	If that command is not found, then install Python 3 from your package manager.
+      </para>
+
+  <bridgehead>
+    Mac OS
+  </bridgehead>
+
+  <para>
+    Follow the instructions for Linux, above. Macintosh does not have
+    an inbuilt package manager, so if Python 3 is not found, install
+    it from <ulink
+    url="https://www.python.org/downloads/mac-osx/">python.org&#47;downloads&#47;mac-osx</ulink>.
+  </para>
+
+  <bridgehead>
+    Windows
+  </bridgehead>
+
+  <para>
+    At the time of this writing, Microsoft Windows doesn&#39;t yet ship with Python. Install it from <ulink url="https://www.python.org/downloads/windows">python.org&#47;downloads&#47;windows</ulink>. Be sure to select <guilabel>Add Python to PATH</guilabel> in the install wizard.
+  </para>
+    
+</section>
+
 <section id="intro_start-python">
   <title>
     Starting Python
@@ -53,13 +99,13 @@
   <itemizedlist>
     <listitem>
       <para>
-	On Linux or macOS, launch a terminal window and type <command>python</command> 
+	On Linux or macOS, launch a terminal window and type <command>python3</command> 
       </para>
     </listitem>
 
     <listitem>
       <para>
-	On Windows, launch Python from the Start menu.
+	On Windows, launch Python 3 from the Start menu.
       </para>
       <para>
 	If there is no Python in the Start menu, launch Windows
@@ -158,7 +204,7 @@
     <title>Scripting Python</title>
     
     <para>
-      Now that you've had a chance to play around with Python in the
+      Now that you&#39;ve had a chance to play around with Python 3 in the
       terminal, it&#39;s time to write a Python script. 
     </para>
 
@@ -174,9 +220,44 @@
     </qandaset>
 
     <para>
-      A script in Python is a lot like a script in Scratch. The
-      difference is that instead of using code blocks, Python uses keywords.
+      A script in Python 3 is a lot like a script in Scratch. The
+      difference is that instead of using code blocks, Python 3 uses
+      keywords.
     </para>
+
+    <para>
+      To write a Python script, you must have a text editor.
+    </para>
+
+    <itemizedlist>
+      <listitem>
+	<para>
+	  If you use <emphasis>Linux</emphasis>, you can use whatever
+	  editor is already included &#40;common ones are gedit, kate,
+	  and mousepad&#41;. Alternately, you can try something more
+	  advanced, like <ulink url="atom.io">Atom</ulink> or <ulink
+	  url="http://gnu.org/software/emacs">Emacs</ulink>.
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>
+	  On <emphasis>Mac OS</emphasis>, do not use Text&nbsp;Edit,
+	  because it&#39;s not Python-aware, and it sometimes fails to
+	  save files as text. Instead, use <ulink
+	  url="http://ftp.gnome.org/pub/GNOME/binaries/mac/gedit/3.2/gedit-3.2.6.dmg">gedit</ulink>
+	  or <ulink url="atom.io">Atom</ulink>
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>
+	  On Windows, you can use Notepad, but it&#39;s not Python-aware. try a good text editor like <ulink
+	  url="https://notepad-plus-plus.org">Notepad++</ulink> or
+	  <ulink url="atom.io">Atom</ulink>.
+	</para>
+    </listitem>
+    </itemizedlist>
 
     <para>
       Open an empty text file and type this programme. In Python, the
@@ -207,7 +288,7 @@
     </para>
 
     <para>
-      To run your script, type <command>python
+      To run your script, type <command>python3
       $MOHE/turtle.py</command> on Linux or macOS. On Windows, type
       <command>Python.exe turtle.py</command>
     </para>

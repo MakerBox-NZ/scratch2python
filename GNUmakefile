@@ -22,13 +22,16 @@ cat:
 html: cat check scratch2python.tmp.xml build
 	@test -d build || mkdir build
 	xmlto -o build --skip-validation html-nochunks scratch2python.tmp.xml
+	@mv dist/scratch2python.tmp.html dist/scratch2python.html
 
 txt: cat check scratch2python.tmp.xml build
 	xmlto -o dist --skip-validation txt scratch2python.tmp.xml
+	@mv dist/scratch2python.tmp.txt dist/scratch2python.txt
 
 epub: cat check scratch2python.tmp.xml build
 	@mkdir build || true
 	xmlto -o dist --skip-validation epub scratch2python.tmp.xml
+	@mv dist/scratch2python.tmp.epub dist/scratch2python.epub
 
 pdf: cat check scratch2python.tmp.xml build
 	@mkdir build || true
