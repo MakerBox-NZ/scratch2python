@@ -242,7 +242,7 @@
 
       <listitem>
 	<para>
-	  On <emphasis>Mac OS</emphasis>, do not use Text&nbsp;Edit,
+	  On <emphasis>Mac OS</emphasis>, do not use Text&#032;Edit,
 	  because it&#39;s not Python-aware, and it sometimes fails to
 	  save files as text. Instead, use <ulink
 	  url="http://ftp.gnome.org/pub/GNOME/binaries/mac/gedit/3.2/gedit-3.2.6.dmg">gedit</ulink>
@@ -301,7 +301,7 @@
     </para>
   </section>
 
-<section id="intro_install">
+<section id="intro_pygame">
   <title>
     Installing Pygame
   </title>
