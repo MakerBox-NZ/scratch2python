@@ -62,11 +62,14 @@
 	On Windows, launch Python from the Start menu.
       </para>
       <para>
-	If there is no Python in the Start menu, launch PowerShell and
-	type <command>Python.exe</command>
+	If there is no Python in the Start menu, launch Windows
+	PowerShell and type <command>C&#58;\Windows\py.exe</command>
       </para>
       <para>
-	If that doesn't work, make sure you have Python installed, or
+	If that doesn&#39;t work, try reinstalling Python. Be sure to select <guilabel>Add Python to PATH</guilabel> in the install wizard. Refer to <ulink url="https://docs.python.org/3/using/windows.html">docs.python.org/3/using/windows.html</ulink> for detailed instructions.
+      </para>
+      <para>
+	If that doesn&#39;t work, make sure you have Python installed, or
 	just use <ulink
 	url="https://getfedora.org/en_GB/workstation/download/">Linux</ulink>. It's
 	free and doesn't even require you to install it to use it.
