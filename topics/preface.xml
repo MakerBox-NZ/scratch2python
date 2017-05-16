@@ -1,4 +1,4 @@
-<chapter id="preface">
+<preface>
   <title>
     Who should read this book
   </title>
@@ -79,4 +79,6 @@
   </para>
   
   </section>
-</chapter>
+</preface>
+
+
