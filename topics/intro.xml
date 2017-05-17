@@ -225,6 +225,8 @@
       keywords.
     </para>
 
+    <!-- TODO tell users to use GUI IDLE instead -->
+    
     <para>
       To write a Python script, you must have a text editor.
     </para>
@@ -273,20 +275,32 @@
       t.color("blue")
       t.begin_fill()
 
-      n=0
+      counter=0
       
-      while n < 4:
+      while counter < 4:
           t.forward(100)
           t.left(90)
-      
+	  counter = counter+1
+
       t.end_fill()
       time.sleep(5)
     ]]></programlisting>
 
     <para>
-      Save the text file as <filename>turtle.py</filename>.
+      Save the text file as <filename>myturtle.py</filename>.
     </para>
 
+    <warning>
+      <para>
+	Do not call your file <filename>turtle.py</filename>, because
+	<filename>turtle.py</filename> is the name of the file that
+	contains the turtle programme that you are controlling. Naming
+	your file <filename>turtle.py</filename> will confuse Python,
+	because it will think that you want to <code>import</code>
+	your own file.
+      </para>
+    </warning>
+    
     <para>
       To run your script, type <command>python3
       $MOHE/turtle.py</command> on Linux or macOS. On Windows, type
