@@ -180,7 +180,15 @@ pygame.init()
   not True, then the game has stopped.
 </para>
 
+<para>
+  Add the last line shown in this code sample to yours&#58; 
+</para>
+
 <programlisting><![CDATA[
+fps = 40   # frame rate
+afps = 4   # animation cycles
+clock = pygame.time.Clock()
+pygame.init()
 main = True
 ]]></programlisting>
 
@@ -230,8 +238,7 @@ main = True
   </para>
   
   <programlisting><![CDATA[
-    <prompt>&#36;</prompt> <command>python3</command>
-    .&#47;your-name_game.py
+    $python3 ./your-name_game.py
   ]]></programlisting>
 
   <para>
@@ -239,7 +246,7 @@ main = True
   </para>
 
   <programlisting><![CDATA[
-    <command>Python.exe</command> your-name_game.py
+    Python.exe your-name_game.py
   ]]></programlisting>
 
   <para>
