@@ -7,6 +7,7 @@ check:	scratch2python.tmp.xml
 cat:
 	cat header.xml topics/preface.xml \
 	topics/intro.xml \
+	topics/dice.xml \
 	topics/world.xml \
 	topics/player.xml \
 	topics/move.xml \
