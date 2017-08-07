@@ -101,7 +101,7 @@
 
 <programlisting><![CDATA[
         # collisions
-        block_hit_list = pygame.sprite.spritecollide(self, blocker, False)
+        block_hit_list = pygame.sprite.spritecollide(self, platform_list, False)
         if self.momentumX > 0:
             for block in block_hit_list:
                 self.rect.y = currentY
