@@ -1,0 +1,58 @@
+--- 010.py	2017-05-17 15:05:51.024577000 +1200
++++ 011.py	2017-08-15 21:55:18.886500621 +1200
+@@ -9,6 +9,7 @@
+ # add scrolling
+ # add loot
+ # add auto enemy
++# add onscreen text
+ 
+ # GNU All-Permissive License
+ # Copying and distribution of this file, with or without modification,
+@@ -19,6 +20,7 @@
+ import pygame
+ import sys
+ import os
++import pygame.freetype
+ 
+ '''
+ Objects
+@@ -188,6 +190,13 @@
+     loot = Platform(666,355,92,99, os.path.join('images','loot.png'))
+     loot_list.add(loot)
+     return loot_list
++
++def stats(score,health):
++    text_score  = myfont.render("Score:"+str(score),  1,(11,11,155))
++    text_health = myfont.render("Health:"+str(health), 1,(155,11,11 ))
++    screen.blit(text_score, (4, 4))
++    screen.blit(text_health, (4, 72))
++
+     
+ '''
+ Setup
+@@ -202,6 +211,7 @@
+ afps = 4        # animation cycles
+ clock = pygame.time.Clock()
+ pygame.init()
++pygame.font.init()
+ main = True
+ 
+ screen = pygame.display.set_mode([screenX,screenY])
+@@ -223,6 +233,10 @@
+ forwardX  = 600     # when to scroll
+ backwardX = 230     # when to scroll
+ 
++font_path = "./fonts/amazdoom.ttf"
++font_size = 64
++myfont    = pygame.font.Font(font_path, font_size)
++
+ '''
+ Main loop
+ '''
+@@ -281,5 +295,6 @@
+     enemy.move()
+     movingsprites.draw(screen)   # refresh player position
+     enemies.draw(screen)
++    stats(player.score,player.health)
+     pygame.display.flip()
+     clock.tick(fps)
