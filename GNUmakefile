@@ -18,6 +18,7 @@ cat:
 	topics/scroll.xml \
 	topics/loot.xml \
 	topics/enemy.xml \
+	topics/score.xml \
 	topics/colophon.xml > scratch2python.tmp.xml
 
 html: cat check scratch2python.tmp.xml build

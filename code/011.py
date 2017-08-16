@@ -242,7 +242,7 @@ movesteps = 10      # how fast to move
 forwardX  = 600     # when to scroll
 backwardX = 230     # when to scroll
 
-font_path = "./fonts/amazdoom.ttf"
+font_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),"fonts","amazdoom.ttf")
 font_size = 64
 myfont    = pygame.font.Font(font_path, font_size)
 

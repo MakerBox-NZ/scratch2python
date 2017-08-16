@@ -27,55 +27,16 @@
         <date>2017-03-17</date>
 	<revremark>First Draft.</revremark>
       </revision>
+      <revision>
+	<revnumber>2.0</revnumber>
+	<date>2017-08-17</date>
+	<revremark>Additions based on term 1.</revremark>
+      </revision>
     </revhistory>
   </info>
 <!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/preface.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="topics/intro.xml" /> 
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/world.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/player.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/move.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="topics/platform.xml" /> 
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/gravity.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/collision.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/jump.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/scroll.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/loot.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/enemy.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/sound.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/text.xml" />
-
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/next.xml" />
-
-
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
-	      href="topics/colophon.xml" />
  end -->
 
 
