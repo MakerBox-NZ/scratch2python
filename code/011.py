@@ -10,6 +10,7 @@
 # add loot
 # add auto enemy
 # add onscreen text
+# fix multiple hits from enemy
 
 # GNU All-Permissive License
 # Copying and distribution of this file, with or without modification,
@@ -81,6 +82,7 @@ class Player(pygame.sprite.Sprite):
         self.frame     = 0
         self.score     = 0
         self.health    = 10
+        self.damage    = 0
         # gravity variables
         self.collide_delta = 0
         self.jump_delta    = 6
@@ -157,12 +159,19 @@ class Player(pygame.sprite.Sprite):
 
             self.collide_delta += 6
             self.jump_delta    += 6
-
+            
         hit_list = pygame.sprite.spritecollide(self, enemies, False)
-        for enemy in hit_list:
-            self.health -= 1
-            print(self.health)
-
+        if self.damage == 0:
+            for enemy in hit_list:
+                if not self.rect.contains(enemy):
+                    self.damage = self.rect.colliderect(enemy)
+                
+        if self.damage == 1:
+            idx = self.rect.collidelist(hit_list)
+            if idx == -1:
+                self.damage = 0   # set damage back to 0
+                self.health -= 1  # subtract 1 hp
+                
     def jump(self,platform_list):
         self.jump_delta = 0
 

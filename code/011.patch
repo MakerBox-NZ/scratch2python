@@ -1,14 +1,15 @@
 --- 010.py	2017-05-17 15:05:51.024577000 +1200
-+++ 011.py	2017-08-15 21:55:18.886500621 +1200
-@@ -9,6 +9,7 @@
++++ 011.py	2017-08-16 14:08:52.409248289 +1200
+@@ -9,6 +9,8 @@
  # add scrolling
  # add loot
  # add auto enemy
 +# add onscreen text
++# fix multiple hits from enemy
  
  # GNU All-Permissive License
  # Copying and distribution of this file, with or without modification,
-@@ -19,6 +20,7 @@
+@@ -19,6 +21,7 @@
  import pygame
  import sys
  import os
@@ -16,7 +17,40 @@
  
  '''
  Objects
-@@ -188,6 +190,13 @@
+@@ -79,6 +82,7 @@
+         self.frame     = 0
+         self.score     = 0
+         self.health    = 10
++        self.damage    = 0
+         # gravity variables
+         self.collide_delta = 0
+         self.jump_delta    = 6
+@@ -155,12 +159,19 @@
+ 
+             self.collide_delta += 6
+             self.jump_delta    += 6
+-
++            
+         hit_list = pygame.sprite.spritecollide(self, enemies, False)
+-        for enemy in hit_list:
+-            self.health -= 1
+-            print(self.health)
+-
++        if self.damage == 0:
++            for enemy in hit_list:
++                if not self.rect.contains(enemy):
++                    self.damage = self.rect.colliderect(enemy)
++                
++        if self.damage == 1:
++            idx = self.rect.collidelist(hit_list)
++            if idx == -1:
++                self.damage = 0   # set damage back to 0
++                self.health -= 1  # subtract 1 hp
++                
+     def jump(self,platform_list):
+         self.jump_delta = 0
+ 
+@@ -188,6 +199,13 @@
      loot = Platform(666,355,92,99, os.path.join('images','loot.png'))
      loot_list.add(loot)
      return loot_list
@@ -30,7 +64,7 @@
      
  '''
  Setup
-@@ -202,6 +211,7 @@
+@@ -202,6 +220,7 @@
  afps = 4        # animation cycles
  clock = pygame.time.Clock()
  pygame.init()
@@ -38,7 +72,7 @@
  main = True
  
  screen = pygame.display.set_mode([screenX,screenY])
-@@ -223,6 +233,10 @@
+@@ -223,6 +242,10 @@
  forwardX  = 600     # when to scroll
  backwardX = 230     # when to scroll
  
@@ -49,7 +83,7 @@
  '''
  Main loop
  '''
-@@ -281,5 +295,6 @@
+@@ -281,5 +304,6 @@
      enemy.move()
      movingsprites.draw(screen)   # refresh player position
      enemies.draw(screen)
