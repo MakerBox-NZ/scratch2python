@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r"
+   sodipodi:docname="cover.svg"
+   inkscape:export-filename="/ixsystems/sxe/scratch2python.git/img/cover_front.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="277.99359"
+     inkscape:cy="279.49126"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="761"
+     inkscape:window-x="-1"
+     inkscape:window-y="12"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:0.98999999;fill:#4281b2;fill-opacity:1;stroke:none;stroke-width:0.70555556;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4485"
+       width="213.81561"
+       height="299.8764"
+       x="-0.53453904"
+       y="-0.20371455" />
+    <path
+       style="fill:#ffdf5a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 192.43406,-0.73825359 68.420999,301.81086 -0.53453902,299.67269 V -0.20371455 Z"
+       id="path4622"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <g
+       id="g4664"
+       transform="translate(-1.0583333)">
+      <text
+         id="text4650"
+         y="45.284283"
+         x="17.287441"
+         style="font-style:normal;font-weight:normal;font-size:35.22865295px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan4652"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:0px;font-family:'Ostrich Sans';-inkscape-font-specification:'Ostrich Sans Heavy';stroke-width:0.26458332px"
+           y="45.284283"
+           x="17.287441"
+           sodipodi:role="line">Scratch to</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:48.7381897px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="17.287441"
+         y="87.004318"
+         id="text4658"><tspan
+           sodipodi:role="line"
+           x="17.287441"
+           y="87.004318"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;line-height:0px;font-family:'Ostrich Sans';-inkscape-font-specification:'Ostrich Sans Heavy';stroke-width:0.26458332px"
+           id="tspan4656">Python</tspan></text>
+    </g>
+  </g>
+</svg>

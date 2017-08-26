@@ -1,0 +1,12 @@
+<fop version="2.0">
+<renderers>
+  <renderer mime="application/pdf">
+     <fonts>
+        <!-- register all the fonts found in a directory -->
+        <directory recursive="true">/home/sek/.local/share/fonts</directory>
+        <!-- automatically detect operating system installed fonts -->
+        <auto-detect/>
+     </fonts>
+  </renderer>
+</renderers>
+</fop>
