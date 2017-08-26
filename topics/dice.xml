@@ -130,7 +130,7 @@ else:
 
   </section>
 
-  <section id="dice_alpha">
+  <section id="dice_beta">
     <title>
       Dice game beta
     </title>
@@ -251,7 +251,7 @@ else:
 
   </section>
 
-  <section id="dice_prep">
+  <section id="dice_final">
     <title>
       Dice game final
     </title>

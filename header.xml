@@ -4,12 +4,17 @@
     Graduating from Scratch to Python&#58; A Student and Teacher Guide
   </title>
 
-
   <info>
     <author>
       <personname>
       <firstname>Seth</firstname>
       <surname>Kenlon</surname>
+    </personname>
+    </author>
+    <author>
+      <personname>
+      <firstname>Jess</firstname>
+      <surname>Weichler</surname>
     </personname>
     </author>
     <copyright>
@@ -18,7 +23,7 @@
     </copyright>
     <volumenum>1</volumenum>
     <issuenum>1</issuenum>
-    <publisher><publishername>Makerbox</publishername></publisher>
+    <publisher><publishername>Makerbox.org.nz</publishername></publisher>
     <pubdate>2017</pubdate>
   
     <revhistory>
@@ -32,9 +37,33 @@
 	<date>2017-08-17</date>
 	<revremark>Additions based on term 1.</revremark>
       </revision>
+      <revision>
+	<revnumber>3.0</revnumber>
+	<date>2017-09-01</date>
+	<revremark>Jess&#39;s additions &#38; changes.</revremark>
+      </revision>
     </revhistory>
+
+
+  <legalnotice>
+    <literallayout>
+
+
+
+
+    </literallayout>
+    
+<informalexample>
+    <mediaobject>
+	<imageobject>
+	  <imagedata fileref="img/logo.png" width="1.76in"
+		     format="png" />
+	</imageobject>
+      </mediaobject>
+</informalexample>
+  </legalnotice>
   </info>
-<!--
+  <!--
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
 	      href="topics/preface.xml" />
  end -->
