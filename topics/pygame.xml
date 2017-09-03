@@ -1,0 +1,31 @@
+<chapter id="pygame">
+  <title>
+    Installing Pygame
+  </title>
+
+  <para>
+    Before continuing into the exciting world of Pygame, you must
+    install it first. Python 3, like Linux, has a <firstterm>package
+    manager</firstterm> that lets you install extra modules from the
+    Internet.
+  </para>
+
+  <para>
+    To install Pygame with Python 3, open a terminal window
+  &#40;on Windows, use <application>run cmd</application>&#41;&#58;
+  </para>
+
+  <screen>
+    pip3 install pygame
+  </screen>
+
+  <para>
+    If you&#39;re on Windows, you might need to use this instead &#40;it depends on how you installed Python&#41;&#58;
+  </para>
+
+<screen>
+C&#58;\Windows\py.exe -m &#39;pip&#39; install pygame --user
+</screen>
+
+</chapter>
+

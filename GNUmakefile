@@ -11,6 +11,7 @@ coverp:	img/cover_front.jpg
 cat:
 	cat header.xml topics/preface.xml \
 	topics/intro.xml \
+	topics/pygame.xml \
 	topics/dice.xml \
 	topics/world.xml \
 	topics/player.xml \
@@ -23,6 +24,7 @@ cat:
 	topics/loot.xml \
 	topics/enemy.xml \
 	topics/score.xml \
+	topics/osdc.xml \
 	topics/colophon.xml > scratch2python.tmp.xml
 
 html: cat check coverp scratch2python.tmp.xml build

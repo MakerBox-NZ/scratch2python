@@ -58,7 +58,7 @@
   <title>Setting up your Pygame script</title>
 
   <para>
-    A Python script starts with the filetype, your name, and the license
+    A Python script starts with the file type, your name, and the license
     you want to use. Use an open source license so that your friends can
     improve your game and share their changes with you&#58;
   </para>
@@ -203,7 +203,7 @@ main = True
     Scratch already knows what the <emphasis>stage</emphasis> is, but
     Python does not. Outside of Scratch, most video games just call
     the stage the &#34;screen&#34;, so create a stage called screen
-    for your game, and load a background imaage
+    for your game, and load a background image
     &#40;<filename>stage.png</filename>&#41; for it. Before you do,
     create a directory called <filename>images</filename> alongside of
     your Python script file and put a background image called

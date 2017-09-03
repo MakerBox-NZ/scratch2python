@@ -7,8 +7,8 @@
     Python is an all-purpose programming language. It can be used to
     create desktop applications, 3d graphics, video games, and even
     websites. It's a good language to learn because it's simpler than
-    complex languages like C, C++, or Java, but is almost as powerful,
-    and is used in just about every industry that uses computers.
+    complex languages like C, C++, or Java, but is powerful and
+    robust, and is used in just about every industry that uses computers.
   </para>
 
   <para>
@@ -33,7 +33,7 @@
   </imageobject>
   <textobject>
     <para>
-    The Scratch interface is like Python. The Scratch scripts and you
+    The Scratch interface is like Python. The Scratch scripts you
     make with Scratch blocks are like Python code.      
     </para>
   </textobject>
@@ -53,7 +53,11 @@
   </bridgehead>
   
       <para>
-	If you use <ulink url="http://getfedora.org">Linux</ulink>, Python is already included, but make sure that you have <code>Python 3</code>, specifically. To check what version you have installed, open a terminal window and type&#58;
+	If you use <ulink
+	url="https://software.opensuse.org/distributions/leap">Linux</ulink>,
+	Python is already included, but make sure that you have
+	<code>Python 3</code>, specifically. To check what version you
+	have installed, open a terminal window and type&#58;
       </para>
 
       <code>
@@ -61,7 +65,9 @@
       </code>
 
       <para>
-	If that command is not found, then install Python 3 from your package manager.
+	If that command is not found, then <ulink
+	url="https://software.opensuse.org/package/python3-base">install
+	Python 3</ulink> from your package manager.
       </para>
 
   <bridgehead>
@@ -75,31 +81,52 @@
     url="https://www.python.org/downloads/mac-osx/">python.org&#47;downloads&#47;mac-osx</ulink>.
   </para>
 
+  <warning>
+  <para>
+    Mac OS does have Python 2 installed, but you should learn Python 3.
+  </para>
+  </warning>
+  
   <bridgehead>
     Windows
   </bridgehead>
 
   <para>
-    At the time of this writing, Microsoft Windows doesn&#39;t yet ship with Python. Install it from <ulink url="https://www.python.org/downloads/windows">python.org&#47;downloads&#47;windows</ulink>. Be sure to select <guilabel>Add Python to PATH</guilabel> in the install wizard.
+    At the time of this writing, Microsoft Windows doesn&#39;t yet
+    ship with Python. Install it from <ulink
+    url="https://www.python.org/downloads/windows">python.org&#47;downloads&#47;windows</ulink>. Be
+    sure to select <guilabel>Add Python to PATH</guilabel> in the
+    install wizard.
   </para>
-    
 </section>
 
-<section id="intro_start-python">
-  <title>
-    Starting Python 3
-  </title>
+<section id="intro_ide">
+  <title>Running an IDE</title>
 
   <para>
-    Since you&#39;ve never used Python before, your first task is to try a
-    few simple one-line programmes with it. You can talk directly to
-    Python by running it in a terminal. 
+    To write programmes in the Python language, all you really need is
+    a text editor, but it&#39;s convenient to have what&#39;s called
+    an IDE, or an <emphasis>Integrated Development
+    Environment</emphasis>. An IDE integrates a text editor with some
+    friendly and helpful Python features.
+  </para>
+
+  <bridgehead>IDLE 3</bridgehead>
+  
+  <para>
+    Python comes with a basic IDE called
+    <application>IDLE</application>. It has keyword highlighting to
+    help detect typos and a <guibutton>Run</guibutton> button to quickly
+    and easily test code.
   </para>
 
   <itemizedlist>
+    <title>Launching IDLE</title>
+    
     <listitem>
       <para>
-	On Linux or macOS, launch a terminal window and type <command>python3</command> 
+	On Linux or Mac OS, launch a terminal window and type
+	<command>idle3</command>
       </para>
     </listitem>
 
@@ -108,21 +135,100 @@
 	On Windows, launch Python 3 from the Start menu.
       </para>
       <para>
-	If there is no Python in the Start menu, launch Windows
-	PowerShell and type <command>C&#58;\Windows\py.exe</command>
+	If there is no Python in the Start menu, launch the Windows
+	command prompt, called <application>cmd</application> in your
+	start menu, and type <command>C&#58;\Windows\py.exe</command>
+      </para>
+
+      <para>
+	If that doesn&#39;t work, try reinstalling Python. Be sure to
+	select <guilabel>Add Python to PATH</guilabel> in the install
+	wizard. Refer to <ulink
+	url="https://docs.python.org/3/using/windows.html">docs.python.org/3/using/windows.html</ulink>
+	for detailed instructions.
       </para>
       <para>
-	If that doesn&#39;t work, try reinstalling Python. Be sure to select <guilabel>Add Python to PATH</guilabel> in the install wizard. Refer to <ulink url="https://docs.python.org/3/using/windows.html">docs.python.org/3/using/windows.html</ulink> for detailed instructions.
-      </para>
-      <para>
-	If that doesn&#39;t work, make sure you have Python installed, or
-	just use <ulink
-	url="https://getfedora.org/en_GB/workstation/download/">Linux</ulink>. It's
-	free and doesn't even require you to install it to use it.
+	If that doesn&#39;t work, make sure you have Python installed,
+	or just use <ulink
+	url="https://software.opensuse.org/distributions/leap">Linux</ulink>. It's
+	free and, as long as you save your Python files to a USB
+	thumbdrive, doesn&#39;t even require you to install it to use it.
       </para>
     </listitem>
   </itemizedlist>
 
+
+  <bridgehead>Ninja-IDE</bridgehead>
+  
+  <para>
+    An excellent Python IDE is <ulink
+    url="http://ninja-ide.org/">Ninja-IDE</ulink>. It has keyword
+    highlighting to help detect typos, quotation and parenthesis
+    completion to avoid syntax errors, line numbers &#40;helpful when
+    debugging&#41;, indentation markers, and a
+    <guibutton>Run</guibutton> button to quickly and easily test code.
+  </para>
+
+  <orderedlist>
+    <title>Using Ninja-IDE</title>
+    
+    <listitem>
+      <para>
+	Install <ulink url="http://ninja-ide.org/">Ninja-IDE</ulink>
+	by downloading its installer from the web site. If you&#39;re
+	using Linux, it&#39;s easier to just use your package manager.
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+	Launch Ninja-IDE.
+      </para>
+    </listitem>
+
+    <listitem>
+      <para>
+	Go to the <guimenu>Edit</guimenu> menu and select
+	<guimenuitem>Preferences</guimenuitem>.
+      </para>
+
+      <para>
+	In the <guilabel>Preferences</guilabel> window, click the
+	<guilabel>Execution</guilabel> tab.
+      </para>
+
+      <para>
+	In the <guilabel>Execution</guilabel> tab, change
+	<code>python</code> to <code>python3</code>.
+      </para>
+
+      <mediaobject>
+	<info>
+	  <othercredit>
+	    <orgname>MakerBox</orgname>
+	  </othercredit>
+	  <othercredit>
+	    <orgname>MIT</orgname>
+	  </othercredit>
+	</info>
+	<alt>Python3 in Ninja-IDE</alt>
+	<imageobject>
+	  <imagedata align="left" format="PNG"
+		     fileref="topics/images/ninja.png"/>
+	</imageobject>
+	<textobject>
+	  <para>
+	    Set Ninja-IDE to use Python3.
+	  </para>
+	</textobject>
+      </mediaobject>
+    </listitem>
+
+    <para>
+      Click the <guibutton>Save</guibutton> button to save your
+      changes.
+    </para>    
+  </orderedlist>
 </section>
 
 <section id="intro_python-commands">
@@ -136,159 +242,67 @@
   </para>
 
   <para>
-    For instance, type this at your Python prompt and then press <keycode>Return</keycode>&#58;
+    In either IDLE or Ninja, go to the <guimenu>File</guimenu> menu
+    and create a new file. Ninja users&#58; do not create a new
+    project, just a new file.
   </para>
-
-  <programlisting><![CDATA[
-    >>> print("Hello world.")
-    Hello world.
-  ]]></programlisting>
-
+  
   <para>
-    The keyword <command>print</command> tells Python to print out
-    whatever text you give it in parentheses and quotes.
+    In your new, empty file, type this into IDLE or Ninja&#58;
   </para>
 
-  <para>
-    That's not very exciting, though. Unlike Scratch, which has
-    probably 100 code blocks ready to use, Python only
-    has access to some basic keywords, like <command>print</command>,
-    <command>help</command>, and so on.
-  </para>
+<programlisting><![CDATA[
+print("Hello world.")
+]]></programlisting>
 
-  <para>
-    Use the <command>import</command> keyword to load more keywords.
-  </para>
+<para>
+  If you are using IDLE, go to the <guimenu>Run</guimenu> menu and
+  select <guimenu>Run module</guimenu> option.
+</para>
 
-  <programlisting><![CDATA[
-    >>> import turtle
-  ]]></programlisting>
+<para>
+  If you are using Ninja, click the <guibutton>Run file</guibutton>
+  button in the left button bar.
+</para>
 
-  <para>
-    Turtle is a fun module to use. It&#39;s exactly like the Pen code
-    blocks in Scratch.
-  </para>
-
-  <programlisting><![CDATA[
-    >>> turtle.begin_fill()
-    >>> turtle.forward(100)
-    >>> turtle.left(90)
-    >>> turtle.forward(100)
-    >>> turtle.left(90)
-    >>> turtle.forward(100)
-    >>> turtle.left(90)
-    >>> turtle.forward(100)
-    >>> turtle.end_fill()
-  ]]></programlisting>
-
-  <section id="intro_exercise">
-    <title>Exercise</title>
-
+<mediaobject>
+  <info>
+    <othercredit>
+      <orgname>MakerBox</orgname>
+    </othercredit>
+    <othercredit>
+      <orgname>MIT</orgname>
+    </othercredit>
+  </info>
+  <alt>Run file in Ninja.</alt>
+  <imageobject>
+    <imagedata align="left" format="PNG"
+	       fileref="topics/images/ninja_run.png"/>
+  </imageobject>
+  <textobject>
     <para>
-      See what shapes you can draw with the turtle module.
+      Running a file in Ninja.
     </para>
+  </textobject>
+</mediaobject>
 
-    <para>
-      To clear you turtle drawing area, use the
-      <command>turtle.clear&#40;&#41;</command> keyword.
-    </para>
+<para>
+  The keyword <command>print</command> tells Python to print out
+  whatever text you give it in parentheses and quotes.
+</para>
 
-    <para>
-      What do you think the keyword
-      <command>turtle.color&#40;&#34;blue&#34;&#41;</command> does?
-    </para>
-  </section>
-</section>
+<para>
+  That&#39;s not very exciting, though. Unlike Scratch, which has
+  at least a hundred code blocks ready to use, Python only
+  has access to some basic keywords, like <command>print</command>,
+  <command>help</command>, and so on.
+</para>
 
-  <section id="intro_script">
-    <title>Scripting Python</title>
-    
-    <para>
-      Now that you&#39;ve had a chance to play around with Python 3 in the
-      terminal, it&#39;s time to write a Python script. 
-    </para>
-
-    <qandaset>
-      <qandaentry>
-	<question>
-	  <para>What is a script in Scratch?</para>
-	</question>
-	<answer>
-	  <para>It&#39;s a list of instructions that controls your programme.</para>
-	</answer>
-      </qandaentry>
-    </qandaset>
-
-    <para>
-      A script in Python 3 is a lot like a script in Scratch. The
-      difference is that instead of using code blocks, Python 3 uses
-      keywords.
-    </para>
-
-    <!-- TODO tell users to use GUI IDLE instead -->
-    
-    <para>
-      To write a Python script, you must have a text editor.
-    </para>
-
-    <itemizedlist>
-      <listitem>
-	<para>
-	  If you use <emphasis>Linux</emphasis>, you can use whatever
-	  editor is already included &#40;common ones are gedit, kate,
-	  and mousepad&#41;. Alternately, you can try something more
-	  advanced, like <ulink url="atom.io">Atom</ulink> or <ulink
-	  url="http://gnu.org/software/emacs">Emacs</ulink>.
-	</para>
-      </listitem>
-
-      <listitem>
-	<para>
-	  On <emphasis>Mac OS</emphasis>, do not use Text&#032;Edit,
-	  because it&#39;s not Python-aware, and it sometimes fails to
-	  save files as text. Instead, use <ulink
-	  url="http://ftp.gnome.org/pub/GNOME/binaries/mac/gedit/3.2/gedit-3.2.6.dmg">gedit</ulink>
-	  or <ulink url="atom.io">Atom</ulink>
-	</para>
-      </listitem>
-
-      <listitem>
-	<para>
-	  On Windows, you can use Notepad, but it&#39;s not Python-aware. try a good text editor like <ulink
-	  url="https://notepad-plus-plus.org">Notepad++</ulink> or
-	  <ulink url="atom.io">Atom</ulink>.
-	</para>
-    </listitem>
-    </itemizedlist>
-
-    <para>
-      Open an empty text file and type this programme. In Python, the
-      indentation matters, so type this exactly as you see it, using
-      the <keycode>Tab</keycode> key to indent when necessary.
-    </para>
-
-
-    <programlisting><![CDATA[
-      import turtle as t
-      import time
-      
-      t.color("blue")
-      t.begin_fill()
-
-      counter=0
-      
-      while counter < 4:
-          t.forward(100)
-          t.left(90)
-	  counter = counter+1
-
-      t.end_fill()
-      time.sleep(5)
-    ]]></programlisting>
-
-    <para>
-      Save the text file as <filename>myturtle.py</filename>.
-    </para>
+<para>
+  Use the <command>import</command> keyword to load more
+  keywords. Start a new file in IDLE or Ninja and name it
+  <filename>pen.py</filename>.
+</para>
 
     <warning>
       <para>
@@ -300,13 +314,68 @@
 	your own file.
       </para>
     </warning>
-    
-    <para>
-      To run your script, type <command>python3
-      $MOHE/turtle.py</command> on Linux or macOS. On Windows, type
-      <command>Python.exe turtle.py</command>
-    </para>
 
+<para>
+  Type this code into your file, and then run it&#58;
+</para>
+
+<programlisting><![CDATA[
+import turtle
+]]></programlisting>
+
+  <para>
+    Turtle is a fun module to use. It&#39;s a lot like the Pen code
+    blocks in Scratch. Try this&#58;
+  </para>
+
+<programlisting><![CDATA[
+turtle.begin_fill()
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.end_fill()
+]]></programlisting>
+
+<para>
+  See what shapes you can draw with the turtle module.
+</para>
+
+<para>
+  To clear your turtle drawing area, use the
+  <command>turtle.clear&#40;&#41;</command> keyword.
+</para>
+
+<para>
+  What do you think the keyword
+  <command>turtle.color&#40;&#34;blue&#34;&#41;</command> does?
+</para>
+
+<para>
+  Try some more complex code&#58;
+</para>
+
+<programlisting><![CDATA[
+import turtle as t
+import time
+
+t.color("blue")
+t.begin_fill()
+
+counter=0
+
+while counter < 4:
+    t.forward(100)
+    t.left(90)
+    counter = counter+1
+
+t.end_fill()
+time.sleep(5)
+]]></programlisting>
+    
     <para>
       Once you have run your script, it&#39;s time to explore an even
       better module. One popular module used to create video games with Python
@@ -314,31 +383,4 @@
       but is also a lot more complex, so be prepared.
     </para>
   </section>
-
-<section id="intro_pygame">
-  <title>
-    Installing Pygame
-  </title>
-
-  <para>
-    Before continuing into the exciting world of Pygame, you must install it first. Pythen 3, like Linux, has a <firstterm>package manager</firstterm> that lets you install extra modules from the Internet.
-  </para>
-
-  <para>
-    To install Pygame with Python 3, open a terminal window &#40;on Windows, open Windows PowerShell&#41;&#58;
-  </para>
-
-  <screen>
-    pip3 install pygame
-  </screen>
-
-  <para>
-    If you&#39;re on Windows, you might need to use this instead &#40;it depends on how you installed Python&#41;&#58;
-  </para>
-  
-  <screen>
-    C&#58;\Windows\py.exe -m &#39;pip&#39; install pygame --user
-  </screen>
-
-</section>
 </chapter>
