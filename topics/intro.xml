@@ -225,7 +225,7 @@
     </listitem>
 
     <para>
-      Click the <guibutton>Save</guibutton> button to save your
+      Click the <guibutton>Save</guibutton> button to commit your
       changes.
     </para>    
   </orderedlist>
@@ -255,15 +255,20 @@
 print("Hello world.")
 ]]></programlisting>
 
-<para>
-  If you are using IDLE, go to the <guimenu>Run</guimenu> menu and
-  select <guimenu>Run module</guimenu> option.
-</para>
-
-<para>
-  If you are using Ninja, click the <guibutton>Run file</guibutton>
-  button in the left button bar.
-</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      If you are using IDLE, go to the <guimenu>Run</guimenu> menu and
+      select <guimenu>Run module</guimenu> option.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      If you are using Ninja, click the <guibutton>Run file</guibutton>
+      button in the left button bar.
+    </para>
+  </listitem>
+</itemizedlist>
 
 <mediaobject>
   <info>

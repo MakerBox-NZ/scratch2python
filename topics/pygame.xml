@@ -5,27 +5,184 @@
 
   <para>
     Before continuing into the exciting world of Pygame, you must
-    install it first. Python 3, like Linux, has a <firstterm>package
-    manager</firstterm> that lets you install extra modules from the
-    Internet.
+    install it. Python 3, like Linux, has a <firstterm>package
+    manager</firstterm>, called <application>pip3</application>, that
+    lets you install extra modules from the Internet.
+  </para>
+
+  <section id="pygame_linux">
+    <title>Linux and BSD</title>
+
+    <para>
+      Linux is a great operating system that powers everything from
+      super computers to space stations to movie studios. It has two
+      important advantages over others&#58; it&#39;s open source, so
+      you have access to all the code you run, and it accepts commands
+      directly from the user to the operating system itself. While
+      there are ways to control Linux through desktop icons and menus,
+      it&#39;s often faster to just tell Linux exactly what you want
+      it to do. And that&#39;s why many programmers prefer Linux&#58;
+      they can tell the computer exactly what to do with just a few
+      quickly-typed commands.
+    </para>
+
+    <para>
+      To install Pygame with Python 3 on Linux or BSD, open a terminal
+      window.
+    </para>
+
+<programlisting><![CDATA[
+$ sudo pip3 install pygame
+]]></programlisting>
+
+<para>
+  Enter your administrative password when prompted and wait for the
+  install to complete.
+</para>
+
+<programlisting><![CDATA[
+Password: [type your password]
+Collecting pygame...
+
+Installing collected packages: pygame
+Successfully installed pygame-1.9.3
+]]></programlisting>
+
+<para>
+  Confirm that it has been installed with this command&#58;
+</para>
+
+<programlisting><![CDATA[
+$ python3 -c 'import pygame' || echo 'failed'
+]]></programlisting>
+
+<para>
+  If you get the message <computeroutput>failed</computeroutput> back,
+  then PyGame has not installed correctly. Try running the install
+  command again. Make sure you enter the correct administrative
+  password for your computer.
+</para>
+
+<para>
+  If you do not have the admin password, install PyGame to just your
+  own home directory&#58;
+</para>
+
+<programlisting><![CDATA[
+$ pip3 install pygame --user
+]]></programlisting>
+
+<para>
+  Confirm it again&#58;
+</para>
+
+<programlisting><![CDATA[
+$ python3 -c 'import pygame' || echo 'failed'
+]]></programlisting>
+
+<para>
+  As long as everything went well, move on to the next chapter.
+</para>
+</section>
+  
+  <section id="pygame_mac">
+    <title>Mac</title>
+    
+  <para>
+    Beneath the non-open source interface of the Mac operating system
+    is UNIX, the same technology that powers Linux and BSD. Broadly,
+    terminal usage on a Mac is limited compared to what you can do in
+    a Linux terminal, but for Python it&#39;s mostly the same.
   </para>
 
   <para>
-    To install Pygame with Python 3, open a terminal window
-  &#40;on Windows, use <application>run cmd</application>&#41;&#58;
+    To install Pygame with Python 3 on an Apple Mac computer, open a
+    terminal window. Use the same command as you would on Linux&#58;
+  </para>
+
+<programlisting><![CDATA[
+$ sudo pip3 install pygame
+]]></programlisting>
+
+<para>
+  Enter your administrative password when prompted and wait for the
+  install to complete.
+</para>
+
+<programlisting><![CDATA[
+Password: [type your password]
+Collecting pygame...
+
+Installing collected packages: pygame
+Successfully installed pygame-1.9.3
+]]></programlisting>
+  
+<para>
+  Confirm that it has been installed with this command&#58;
+</para>
+
+<programlisting><![CDATA[
+$ python3 -c 'import pygame' || echo 'failed'
+]]></programlisting>
+
+<para>
+  If you get the message <computeroutput>failed</computeroutput> back,
+  then PyGame has not installed correctly. Try running the install
+  command again. Make sure you enter the adminstrative password for
+  your computer.
+</para>
+
+<para>
+  If you do not have the admin password, install PyGame to just your
+  own home directory&#58;
+</para>
+
+<programlisting><![CDATA[
+$ pip3 install pygame --user
+]]></programlisting>
+
+<para>
+  Confirm it again&#58;
+</para>
+
+<programlisting><![CDATA[
+$ python3 -c 'import pygame' || echo 'failed'
+]]></programlisting>
+
+<para>
+  As long as everything went well, move on to the next chapter.
+</para>
+  </section>
+
+  
+  <section id="pygame_window">
+    <title>Windows</title>
+
+    <para>
+      On Microsoft Windows, go to the Start menu and launch
+      <application>run cmd</application>&#58;
+  </para>
+
+  <para>
+    Initially, try the same command as Linux uses&#58;
   </para>
 
   <screen>
     pip3 install pygame
   </screen>
-
+  
   <para>
-    If you&#39;re on Windows, you might need to use this instead &#40;it depends on how you installed Python&#41;&#58;
+    If that fails, then you have installed Python without adding it to
+    your <envar>PATH</envar>. Use this command instead&#58;
   </para>
 
-<screen>
-C&#58;\Windows\py.exe -m &#39;pip&#39; install pygame --user
-</screen>
+  <screen>
+    C&#58;\Windows\py.exe -m &#39;pip&#39; install pygame --user
+  </screen>
 
+  <para>
+  As long as everything went well, move on to the next chapter.
+</para>
+  </section>
 </chapter>
 

@@ -32,7 +32,9 @@
     <orderedlist>
       <listitem>
 	<para>
-	  Start the dice game and press RETURN or ENTER to roll.
+	  Start the dice game and press
+	  <keycombo><keycap>Return</keycap></keycombo> or
+	  <keycombo><keycap>Enter</keycap></keycombo> to roll.
 	</para>
       </listitem>
       <listitem>
@@ -114,6 +116,46 @@
       with is stored in variables.
     </para>
 
+    <variablelist>
+      <title>Important terms</title>
+
+      <varlistentry>
+      <term>
+	Variable
+      </term>
+
+	<listitem>
+	  <para>
+	    A value subject to change.
+	  </para>
+
+	  <para>
+	    For example, in the maths equation <code>x + 5 =
+	    20</code>, the variable is <emphasis>x</emphasis>, because
+	    the letter <emphasis>x</emphasis> is a placeholder for a
+	    value.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+      <term>
+	Integer
+      </term>
+
+	<listitem>
+	  <para>
+	    A number. It can be positive or negative.
+	  </para>
+
+	  <para>
+	    For example, 1 and -1 are both integers. So are 14, 21,
+	    and even 10947.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>	
+    
     <para>
       Variables in Python are easy to create, and easy to work
       with. In this initial version of the dice game, two variables
