@@ -58,6 +58,34 @@
   <title>Setting up your Pygame script</title>
 
   <para>
+    To start a new Pygame project, create a folder on your
+    computer. All of your game files go into this directory. It&#39;s
+    vitally important that you keep all the files needed to run your
+    game inside of your project folder.
+  </para>
+
+    <mediaobject>
+    <info>
+    <othercredit>
+      <orgname>MakerBox</orgname>
+    </othercredit>
+    <othercredit>
+      <orgname>Red Hat</orgname>
+    </othercredit>
+  </info>
+  <alt>Create a project directory</alt>
+  <imageobject>
+    <imagedata align="left" format="JPG"
+	       fileref="topics/images/project.jpg"/>
+  </imageobject>
+  <textobject>
+    <para>
+      Create a project directory to keep your files organised.
+    </para>
+  </textobject>
+  </mediaobject>
+  
+  <para>
     A Python script starts with the file type, your name, and the license
     you want to use. Use an open source license so that your friends can
     improve your game and share their changes with you&#58;
@@ -123,7 +151,7 @@ Main Loop
 <para>
   Next, set the window size for your game. Keep in mind that not
   everyone has a big computer screen, so it&#39;s best to use a screen
-  size that will fit on most people&#39;s computers.
+  size that fits on most people&#39;s computers.
 </para>
 
 <programlisting><![CDATA[
@@ -202,12 +230,66 @@ main = True
   <para>
     Scratch already knows what the <emphasis>stage</emphasis> is, but
     Python does not. Outside of Scratch, most video games just call
-    the stage the &#34;screen&#34;, so create a stage called screen
-    for your game, and load a background image
-    &#40;<filename>stage.png</filename>&#41; for it. Before you do,
-    create a directory called <filename>images</filename> alongside of
-    your Python script file and put a background image called
-    <filename>stage.png</filename> into it.
+    the stage the &#34;screen&#34;.
+  </para>
+
+  <para>
+    Before you continue, open a graphics application and create a
+    background for your game world. Save it as
+    <filename>stage.png</filename> inside of a folder called <filename>images</filename> in your project directory.
+  </para>
+
+  <para>
+    There are several free graphics applications you can use.
+  </para>
+
+  <variablelist>
+    <title>Open source graphics applications</title>
+
+    <varlistentry>
+      <term>Krita</term>
+      
+    <listitem>
+      <para>
+	A professional-level paint materials emulator. Beautiful
+	images can be made with <ulink
+	url="http://krita.org">Krita</ulink>.
+      </para>
+    </listitem>
+
+    </varlistentry>
+
+        <varlistentry>
+      <term>Pinta</term>
+      
+    <listitem>
+      <para>
+	<ulink
+	url="https://pinta-project.com/pintaproject/pinta/releases">Pinta</ulink>
+	is a basic paint application. Easy to learn.
+      </para>
+    </listitem>
+
+	</varlistentry>
+
+	<varlistentry>
+	  <term>Inkscape</term>
+      
+	  <listitem>
+	    <para>
+	      <ulink url="http://inkscape.org">Inkscape</ulink> is a vector
+	      graphics application. Draw with shapes, lines, splines, and
+	      B&#233;zier curves.
+	    </para>
+	  </listitem>
+	  
+	</varlistentry>
+	
+  </variablelist>
+
+  <para> Your graphic doesn&#39;t have to be complex, and you can
+  always go back and change it later. Once you have it, add this code
+  in the setup section of your file&#58;
   </para>
   
   <programlisting><![CDATA[
@@ -234,24 +316,62 @@ main = True
     To prove that this is the case, save your file as
     <filename>your-name_game.py</filename> &#40;replace
     <replaceable>your-name</replaceable> with your actual
-    name&#41;. Then launch your game with Python&#58;
+    name&#41;. Then launch your game.
+  </para>
+
+  <para>
+    If you are using IDLE, run your game by selecting <guimenuitem>Run
+    Module</guimenuitem> from the <guimenu>Run</guimenu> menu.
+  </para>
+
+  <pare>
+    If you are using Ninja, click the <guibutton>Run file</guibutton>
+    button in the left button bar.
+  </pare>
+
+<mediaobject>
+  <info>
+    <othercredit>
+      <orgname>MakerBox</orgname>
+    </othercredit>
+    <othercredit>
+      <orgname>MIT</orgname>
+    </othercredit>
+  </info>
+  <alt>Run file in Ninja.</alt>
+  <imageobject>
+    <imagedata align="left" format="PNG"
+	       fileref="topics/images/ninja_run.png"/>
+  </imageobject>
+  <textobject>
+    <para>
+      Running a file in Ninja.
+    </para>
+  </textobject>
+</mediaobject>
+
+
+    
+  <para>
+    You can also run a Python script straight from a UNIX terminal or
+    a Windows command prompt.
   </para>
   
   <programlisting><![CDATA[
-    $python3 ./your-name_game.py
+    $ python3 ./your-name_game.py
   ]]></programlisting>
 
   <para>
-    If you&#39;re still using Windows, use this command&#58;
+    If you&#39;re using Windows, use this command&#58;
   </para>
 
   <programlisting><![CDATA[
-    Python.exe your-name_game.py
+    py.exe your-name_game.py
   ]]></programlisting>
 
   <para>
-    Don&#39;t expect much, because your game only lasts a millisecond
-    right now. Fix that in the next section.
+    However you launch it, don&#39;t expect much, because your game
+    only lasts a millisecond right now. Fix that in the next section.
   </para>
   
 </section>
@@ -311,7 +431,7 @@ while main == True:
             pygame.quit(); sys.exit()
             main = False
 
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYDOWN:
             if event.key == ord('q'):
                 pygame.quit()
                 sys.exit()

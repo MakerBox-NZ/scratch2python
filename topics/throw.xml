@@ -246,12 +246,13 @@ firepower = pygame.sprite.Group()
 </para>
 
 <programlisting><![CDATA[
-    enemy.move()                 #context
+    enemy.move()               #context
+
     if fire.firing:
         fire.update(screenY)
         firepower.draw(screen)
-    movingsprites.draw(screen)   #context
-    enemies.draw(screen)         #context
+    movingsprites.draw(screen) #context
+    enemy_list.draw(screen)       #context
 ]]></programlisting>
 
 <para>
@@ -291,13 +292,13 @@ firepower = pygame.sprite.Group()
   </para>
 
 <programlisting><![CDATA[
-    def update(self,firepower, enemies):
+    def update(self,firepower, enemy_list):
         '''
         detect firepower collision
         '''
         fire_hit_list = pygame.sprite.spritecollide(self,firepower,False)
         for fire in fire_hit_list:
-            enemies.remove(self)
+            enemy_list.remove(self)
 ]]></programlisting>
 
 <para>
@@ -311,10 +312,10 @@ your new firing block in the main loop&#58;
 </para>
 
 <programlisting><![CDATA[
-    if fire.firing:
-        fire.update(screenY)
-        firepower.draw(screen)
-        enemies.update(firepower,enemies) #update enemy
+    if fire.firing:                             # context
+        fire.update(screenY)                    # context
+        firepower.draw(screen)                  # context
+        enemy_list.update(firepower,enemy_list) # update enemy
 ]]></programlisting>
 
 <para>

@@ -1,0 +1,172 @@
+<chapter id="hitbox">
+  <title>A better hitbox</title>
+
+  <para>
+    Currently, all collision detection is based on the image of your
+    sprites. Sometimes that's all you need, but sometimes you want to
+    change what counts as a collision.
+  </para>
+
+  <para>
+    Instead of basing collision on the natural bounds of your sprite's
+    image, you can create a <firstterm>hitbox</firstterm> variable for
+    sprites.
+  </para>
+
+  <para>
+    To add a custom hitbox to your player, create a hitbox variable in
+    the Player <code>__init__</code> function&#58;
+  </para>
+
+<programlisting><![CDATA[
+            self.images.append(img)
+            self.image = self.images[0]
+            self.rect = self.image.get_rect()
+            self.hitbox = pygame.Rect(0,0,58, 202)
+]]></programlisting>
+
+<para>
+  In this example, 58 and 202 are the width and height of your new
+  hitbox. Change them to fit your sprite, and depending on what size
+  hitbox you want.
+</para>
+
+<para>
+  The hitbox, to be useful, must follow your sprite every where it
+  goes. To force your hitbox to mirror your sprite, set your hitbox to
+  track your sprite's <code>rect</code> in your Player&#39;s update
+  function. In this code sample, the last two lines are for context,
+  so only add the first line&#58;
+</para>
+
+<programlisting><![CDATA[
+            self.hitbox.center = self.rect.center
+            currentX = self.rect.x
+            self.hitbox.center = self.rect.center
+]]></programlisting>
+
+<para>
+  Your sprite&#39;s rect property has several anchor points you can
+  attach your hitbox to. The code sample above uses the center point,
+  but you can also anchor your hitbox to&#58;
+</para>
+
+<itemizedlist>
+  <listitem><para><code>self.rect.top</code> &#40;the top border&#41;</para></listitem>
+  <listitem><para><code>self.rect.left</code> &#40;the left border&#41;</para></listitem>
+  <listitem><para><code>self.rect.bottom</code> &#40;the bottom border&#41;</para></listitem>
+  <listitem><para><code>self.rect.right</code> &#40;the right border&#41;</para></listitem>
+
+  <listitem><para><code>self.rect.topleft</code> &#40;the top left corner&#41;</para></listitem>
+  <listitem><para><code>self.rect.bottomleft</code> &#40;the bottom
+  left corner&#41;</para></listitem>
+  <listitem><para><code>self.rect.topright</code> &#40;the top right corner&#41;</para></listitem>
+  <listitem><para><code>self.rect.bottomright</code> &#40;the bottom
+  right corner&#41;</para></listitem>
+  <listitem><para><code>self.rect.center</code> &#40;the center point&#41;</para></listitem>
+</itemizedlist>
+
+
+<para>
+  Sometimes it&#39;s hard to get your hitbox just right. You can
+  temporarily see your hitbox as you work by filling it in with a colour.
+</para>
+
+<para>
+  Add a definition for your colour in your SETUP section&#58;
+</para>
+
+<programlisting><![CDATA[
+blue  = (0,0,189)
+]]></programlisting>
+
+<para>
+  And then in your main loop, fill in the hitbox, just before you update
+  gravity&#58;
+</para>
+
+<programlisting><![CDATA[
+    pygame.Surface.fill(screen,blue,player.hitbox)
+    player.gravity() # context
+]]></programlisting>
+
+<para>
+  Once you're happy with your hitbox's location, you can comment the line
+  out. But before you do, play your game with your hitbox visible and
+  see if anything is different about how your player sprite interacts
+  with the objects in your world.
+</para>
+
+<para>
+  You should notice that nothing has changed. Do you know why?
+</para>
+
+<section id="hitbox-collide">
+  <title>Collision detection</title>
+
+  <para>
+    Just because you've created a new hitbox doesn't mean your game is
+    using it. All of your collisions are still based on the
+    <code>self.rect</code> of your sprite, because that's how you
+    programmed it in the first place.
+  </para>
+
+  <para>
+    Go through your game and find the collisions you are detecting
+    against your player sprite and specify 
+    <code>self.hitbox</code> as the object you want to scan for
+    collisions.
+  </para>
+
+  <para>
+    For example, collision detection with enemy sprites is currently
+    set to&#58;
+  </para>
+
+<programlisting><![CDATA[
+            if self.damage == 0:
+                 for enemy in enemy_hit_list:
+                     if not self.rect.contains(enemy):
+                         self.damage = self.rect.colliderect(enemy)
+
+            if self.damage == 1:
+                idx = self.rect.collidelist(enemy_hit_list)
+                if idx == -1:
+                    self.damage = 0 #set damage back to 0
+                    self.score -= 1 #subtract 1 hp
+]]></programlisting>
+
+<para>
+  But you no longer want to detect collisions for
+  <code>self.rect</code>, you want to detect collisions for
+  <code>self.hitbox</code>&#58;
+</para>
+
+<programlisting><![CDATA[
+            if self.damage == 0:
+                 for enemy in enemy_hit_list:
+                     if not self.hitbox.contains(enemy):
+                         self.damage = self.hitbox.colliderect(enemy)
+                         print(self.score)
+
+            if self.damage == 1:
+                idx = self.hitbox.collidelist(enemy_hit_list)
+                if idx == -1:
+                    self.damage = 0 #set damage back to 0
+                    self.score -= 1 #subtract 1 hp
+]]></programlisting>
+
+<para>
+  Now launch your game. Notice that an enemy hit doesn&#39;t register
+  until the enemy touches the <emphasis>hitbox</emphasis>, not just
+  the image of your sprite.
+</para>
+
+<para>
+  You can make this adjustment to any object that collides with
+  another object. Just remember to create a hitbox for that object,
+  and then to change the collision code to <emphasis>use</emphasis>
+  the hitbox.
+</para>
+</section>
+</chapter>
