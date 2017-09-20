@@ -1,7 +1,8 @@
 <?xml version='1.0'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:import href="/usr/share/xml/docbook/xsl-stylesheets-1.78.1/fo/docbook.xsl"/>
-
+  <!--xsl:import href="/usr/share/xml/docbook/xsl-stylesheets-1.78.1/fo/docbook.xsl"/ -->
+  <xsl:import href="docbook-xsl-1.77.1/fo/docbook.xsl" />
+  
   <xsl:template match="title" mode="chapter.titlepage.recto.auto.mode">  
     <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" 
 	      xsl:use-attribute-sets="chapter.titlepage.recto.style" 
@@ -251,3 +252,4 @@
 </xsl:template>
 
 </xsl:stylesheet>
+

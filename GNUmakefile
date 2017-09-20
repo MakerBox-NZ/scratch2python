@@ -24,6 +24,9 @@ cat:
 	topics/loot.xml \
 	topics/enemy.xml \
 	topics/score.xml \
+	topics/throw.xml \
+	topics/hitbox.xml \
+	topics/sound.xml \
 	topics/osdc.xml \
 	topics/colophon.xml > scratch2python.tmp.xml
 

@@ -75,7 +75,7 @@ SOUND = os.path.join('sound')
 	<ulink url="http://incompetech.com/music/royalty-free/">Incompetech.com</ulink> hosts background music.
       </para></listitem>
       <listitem><para>
-	<ulink url="https://opengameart.org/art-search-advanced?keys=&field_art_type_tid[]=13&sort_by=count&sort_order=DESC">Open Game Art</ulink> hosts sound effects and music.
+	<ulink url="https://opengameart.org">Open Game Art</ulink> hosts sound effects and music.
       </para></listitem>
     </itemizedlist>
 
