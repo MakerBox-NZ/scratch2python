@@ -1,0 +1,400 @@
+[[gravity]]
+Simulate gravity in your Python game
+------------------------------------
+
+The real world is full of movement and life. The thing that makes the
+real world so busy and dynamic is physics. Physics is the way matter
+moves through space. Since a video game world has no matter, it also has
+no physics, so game programmers have to _simulate_ physics.
+
+In terms of most video games, there are basically only two aspects of
+physics that are important: gravity and collision.
+
+You implemented some collision detection when
+you xref:enemy[added an enemy] to
+your game, but this article adds more because gravity requires collision
+detection. Think about why gravity might involve collisions. If you
+can't think of any reasons, don't worry—it'll become apparent as you
+work through the sample code.
+
+Gravity in the real world is the tendency for objects with mass to be
+drawn toward one another. The larger the object, the more gravitational
+influence it exerts. In video game physics, you don't have to create
+objects with mass great enough to justify a gravitational pull; you can
+just program a tendency for objects to fall toward the presumed largest
+object in the video game world: the world itself.
+
+[[adding-a-gravity-function]]
+Adding a gravity function
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Remember that your player already has a property to determine motion.
+Use this property to pull the player sprite toward the bottom of the
+screen.
+
+In Pygame, higher numbers are closer to the bottom edge of the screen.
+
+In the real world, gravity affects everything. In platformers, however,
+gravity is selective—if you add gravity to your entire game world, all
+of your platforms would fall to the ground. Instead, you add gravity
+just to your player and enemy sprites.
+
+First, add a *gravity* function in your *Player* class:
+
+....
+    def gravity(self):
+        self.movey += 3.2 # how fast player falls
+....
+
+This is a simple function. First, you set your player in vertical
+motion, whether your player wants to be in motion or not. In other
+words, you have programmed your player to always be falling. That's
+basically gravity.
+
+For the gravity function to have an effect, you must call it in your
+main loop. This way, Python applies the falling motion to your player
+once every clock tick.
+
+In this code, add the first line to your loop:
+
+....
+    player.gravity() # check gravity
+    player.update()
+....
+
+Launch your game to see what happens. Look sharp, because it happens
+fast: your player falls out of the sky, right off your game screen.
+
+Your gravity simulation is working, but maybe too well.
+
+As an experiment, try changing the rate at which your player falls.
+
+[[adding-a-floor-to-gravity]]
+Adding a floor to gravity
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The problem with your character falling off the world is that there's no
+way for your game to detect it. In some games, if a player falls off the
+world, the sprite is deleted and respawned somewhere new. In other
+games, the player loses points or a life. Whatever you want to happen
+when a player falls off the world, you have to be able to detect when
+the player disappears offscreen.
+
+In Python, to check for a condition, you can use an *if* statement.
+
+You must check to see *if* your player is falling and how far your
+player has fallen. If your player falls so far that it reaches the
+bottom of the screen, then you can do __something__. To keep things
+simple, set the position of the player sprite to 20 pixels above the
+bottom edge.
+
+Make your *gravity* function look like this:
+
+....
+    def gravity(self):
+        self.movey += 3.2 # how fast player falls
+        
+        if self.rect.y > worldy and self.movey >= 0:
+            self.movey = 0
+            self.rect.y = worldy-ty
+....
+
+Then launch your game. Your sprite still falls, but it stops at the
+bottom of the screen. You may not be able to _see_ your sprite behind
+the ground layer, though. An easy fix is to make your player sprite
+bounce higher by adding another *-ty* to its new Y position after it
+hits the bottom of the game world:
+
+....
+    def gravity(self):
+        self.movey += 3.2 # how fast player falls
+        
+        if self.rect.y > worldy and self.movey >= 0:
+            self.movey = 0
+            self.rect.y = worldy-ty-ty
+....
+
+Now your player bounces at the bottom of the screen, just behind your
+ground sprites.
+
+What your player really needs is a way to fight gravity. The problem
+with gravity is, you can't fight it unless you have something to push
+off of. So, in the next article, you'll add ground and platform
+collision and the ability to jump. In the meantime, try applying gravity
+to the enemy sprite.
+
+Here's all the code so far:
+
+....
+#!/usr/bin/env python3
+# by Seth Kenlon
+
+# GPLv3
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import pygame
+import sys
+import os
+
+'''
+Variables
+'''
+
+worldx = 960
+worldy = 720
+fps = 40
+ani = 4
+world = pygame.display.set_mode([worldx, worldy])
+
+BLUE = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+ALPHA = (0, 255, 0)
+
+'''
+Objects
+'''
+
+# x location, y location, img width, img height, img file
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, xloc, yloc, imgw, imgh, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img)).convert()
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.y = yloc
+        self.rect.x = xloc
+
+class Player(pygame.sprite.Sprite):
+    """
+    Spawn a player
+    """
+
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.movex = 0
+        self.movey = 0
+        self.frame = 0
+        self.health = 10
+        self.images = []
+        for i in range(1, 5):
+            img = pygame.image.load(os.path.join('images', 'hero' + str(i) + '.png')).convert()
+            img.convert_alpha()
+            img.set_colorkey(ALPHA)
+            self.images.append(img)
+            self.image = self.images[0]
+            self.rect = self.image.get_rect()
+
+    def gravity(self):
+        self.movey += 3.2
+        if self.rect.y > worldy and self.movey >= 0:
+            self.movey = 0
+            self.rect.y = worldy-ty-ty
+
+    def control(self, x, y):
+        """
+        control player movement
+        """
+        self.movex += x
+        self.movey += y
+
+    def update(self):
+        """
+        Update sprite position
+        """
+
+        self.rect.x = self.rect.x + self.movex
+        self.rect.y = self.rect.y + self.movey
+
+        # moving left
+        if self.movex < 0:
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = pygame.transform.flip(self.images[self.frame // ani], True, False)
+
+        # moving right
+        if self.movex > 0:
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = self.images[self.frame // ani]
+
+        hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
+        for enemy in hit_list:
+            self.health -= 1
+            print(self.health)
+
+
+class Enemy(pygame.sprite.Sprite):
+    """
+    Spawn an enemy
+    """
+
+    def __init__(self, x, y, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img))
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.counter = 0
+
+    def move(self):
+        """
+        enemy movement
+        """
+        distance = 80
+        speed = 8
+
+        if self.counter >= 0 and self.counter <= distance:
+            self.rect.x += speed
+        elif self.counter >= distance and self.counter <= distance * 2:
+            self.rect.x -= speed
+        else:
+            self.counter = 0
+
+        self.counter += 1
+
+
+class Level:
+    def ground(lvl, gloc, tx, ty):
+        ground_list = pygame.sprite.Group()
+        i = 0
+        if lvl == 1:
+            while i < len(gloc):
+                ground = Platform(gloc[i], worldy - ty, tx, ty, 'tile-ground.png')
+                ground_list.add(ground)
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return ground_list
+
+    def bad(lvl, eloc):
+        if lvl == 1:
+            enemy = Enemy(eloc[0], eloc[1], 'enemy.png')
+            enemy_list = pygame.sprite.Group()
+            enemy_list.add(enemy)
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return enemy_list
+
+    # x location, y location, img width, img height, img file
+    def platform(lvl, tx, ty):
+        plat_list = pygame.sprite.Group()
+        ploc = []
+        i = 0
+        if lvl == 1:
+            ploc.append((200, worldy - ty - 128, 3))
+            ploc.append((300, worldy - ty - 256, 3))
+            ploc.append((500, worldy - ty - 128, 4))
+            while i < len(ploc):
+                j = 0
+                while j <= ploc[i][2]:
+                    plat = Platform((ploc[i][0] + (j * tx)), ploc[i][1], tx, ty, 'tile.png')
+                    plat_list.add(plat)
+                    j = j + 1
+                print('run' + str(i) + str(ploc[i]))
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return plat_list
+
+
+'''
+Setup
+'''
+
+backdrop = pygame.image.load(os.path.join('images', 'stage.png'))
+clock = pygame.time.Clock()
+pygame.init()
+backdropbox = world.get_rect()
+main = True
+
+player = Player()  # spawn player
+player.rect.x = 0  # go to x
+player.rect.y = 30  # go to y
+player_list = pygame.sprite.Group()
+player_list.add(player)
+steps = 10
+
+eloc = []
+eloc = [300, 0]
+enemy_list = Level.bad(1, eloc)
+
+gloc = []
+tx = 64
+ty = 64
+
+i = 0
+while i <= (worldx / tx) + tx:
+    gloc.append(i * tx)
+    i = i + 1
+
+ground_list = Level.ground(1, gloc, tx, ty)
+plat_list = Level.platform(1, tx, ty)
+
+'''
+Main Loop
+'''
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == ord('q'):
+                pygame.quit()
+                try:
+                    sys.exit()
+                finally:
+                    main = False
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(-steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(steps, 0)
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                print('jump')
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(-steps, 0)
+
+    world.blit(backdrop, backdropbox)
+    player.gravity()
+    player.update()
+    player_list.draw(world)
+    enemy_list.draw(world)
+    ground_list.draw(world)
+    plat_list.draw(world)
+    for e in enemy_list:
+        e.move()
+    pygame.display.flip()
+    clock.tick(fps)
+....
+

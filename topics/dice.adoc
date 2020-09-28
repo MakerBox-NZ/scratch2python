@@ -1,0 +1,469 @@
+[[learn-python]]
+Learn Python with video games
+-----------------------------
+
+:Author: Seth Kenlon and Jess Weichler
+:email: seth@opensource.com
+
+https://www.python.org/[Python] is an all-purpose programming language
+that can be used to create desktop applications, 3D graphics, video
+games, and even websites. It's a great first programming language
+because it can be easy to learn and it's simpler than complex languages
+like C, C++, or Java. Even so, Python is powerful and robust enough to
+create advanced applications, and it's used in just about every industry
+that uses computers. This makes Python a good language for young and
+old, with or without any programming experience.
+
+[[installing-python]]
+Installing Python
+~~~~~~~~~~~~~~~~~
+
+Before learning Python, you may need to install it.
+
+**Linux: **If you use Linux, Python is already included, but make sure
+that you have Python 3 specifically. To check which version is
+installed, open a terminal window and type:
+
+----
+python --version
+----
+
+Should that reveal that you have version 2 installed, or no version at
+all, try specifying Python 3 instead:
+
+----
+python3 --version
+----
+
+If that command is not found, then you must install Python 3 from your
+package manager or software center. Which package manager your Linux
+distribution uses depends on the distribution. The most common are *dnf*
+on Fedora and *apt* on Ubuntu. For instance, on Fedora, you type this:
+
+----
+sudo dnf install python3
+----
+
+**MacOS:** If you're on a Mac, follow the instructions for Linux to see
+if you have Python 3 installed. MacOS does not have a built-in package
+manager, so if Python 3 is not found, install it from
+https://www.python.org/downloads/mac-osx/[python.org/downloads/mac-osx].
+Although your version of macOS may already have Python 2 installed, you
+should learn Python 3.
+
+**Windows:** Microsoft Windows doesn't currently ship with Python.
+Install it from
+https://www.python.org/downloads/windows[python.org/downloads/windows].
+Be sure to select *Add Python to PATH* in the install wizard. Read my
+article
+xref:python-windows[How to
+Install Python on Windows]for instructions specific to Microsoft
+Windows.
+
+[[running-an-ide]]
+Running an IDE
+~~~~~~~~~~~~~~
+
+To write programs in Python, all you really need is a text editor, but
+it's convenient to have an integrated development environment (IDE). An
+IDE integrates a text editor with some friendly and helpful Python
+features. IDLE 3 and PyCharm (Community Edition) are
+link:/resources/python/ides[two options among many] to consider.
+
+[[idle-3]]
+IDLE 3
+^^^^^^
+
+Python comes with a basic IDE called IDLE.
+
+image:img/idle3.png[][]
+
+It has keyword highlighting to help detect typing errors, hints for code
+completion, and a Run button to test code quickly and easily. To use it:
+
+* On Linux or macOS, launch a terminal window and type **idle3**.
+* On Windows, launch Python 3 from the Start menu.
+** If you don't see Python in the Start menu, launch the Windows command
+prompt by typing **cmd** in the Start menu, and type **C:\Windows\py.exe**.
+** If that doesn't work, try reinstalling Python. Be sure to select *Add Python to PATH* in the install wizard. Refer to https://docs.python.org/3/using/windows.html[docs.python.org/3/using/windows.html] for detailed instructions.
+** If that still doesn't work, just use Linux. It's free and, as long as
+you save your Python files to a USB thumb drive, you don't even have to
+install it to use it.
+
+[[pycharm-community-edition]]
+PyCharm Community Edition
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+https://www.jetbrains.com/pycharm/download[PyCharm (Community Edition)
+IDE] is an excellent open source Python IDE. It has keyword highlighting
+to help detect typos, quotation and parenthesis completion to avoid
+syntax errors, line numbers (helpful when debugging), indentation
+markers, and a Run button to test code quickly and easily.
+
+To use it:
+
+1.  Install PyCharm (Community Edition) IDE. On Linux, it's easiest to
+https://flathub.org/apps/details/com.jetbrains.PyCharm-Community[install
+it with Flatpak]. Alternatively,
+https://www.jetbrains.com/pycharm/download/#section=linux[download] the
+correct installer version from PyCharm's website and
+link:/article/18/1/how-install-apps-linux[install it manually]. On MacOS
+or Windows, download and run the installer from the
+https://www.jetbrains.com/pycharm/download[PyCharm website].
+2.  Launch PyCharm.
+3.  Create a new project.
+
+[[telling-python-what-to-do]]
+Telling Python what to do
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Keywords tell Python what you want it to do. In your new project file,
+type this into your IDE:
+
+----
+print("Hello world.")
+----
+
+* If you are using IDLE, go to the Run menu and select Run module
+option.
+* If you are using PyCharm, click the Run File button in the left button
+bar.
+
+image:img/pycharm-button-run.jpeg[][]
+
+The keyword *print* tells Python to print out whatever text you give it
+in parentheses and quotes.
+
+That's not very exciting, though. At its core, Python has access to only
+basic keywords, like **print**, **help**, basic math functions, and so
+on.
+
+You can use the *import* keyword to load more keywords.
+
+Turtle is a fun module to use. Type this code into your file (replacing
+the old code), and then run it:
+
+----
+import turtle
+
+turtle.begin_fill()
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.end_fill()
+----
+
+See what shapes you can draw with the turtle module.
+
+To clear your turtle drawing area, use the *turtle.clear()*
+keyword. What do you think the keyword *turtle.color("blue")* does?
+
+[[advanced-turtle]]
+Advanced turtle
+^^^^^^^^^^^^^^^
+
+You can try some more complex code for similar results. Instead of
+hand-coding every line and every turn, you can use a **while loop**,
+telling Python to do this four times: draw a line and then turn. Python
+is able to keep track of how many times it's performed these actions
+with a _variable_ called **counter**. You'll learn more about variables
+soon, but for now see if you can tell how the *counter* and *while loop*
+interact.
+
+----
+import turtle as t
+import time
+
+t.color("blue")
+t.begin_fill()
+
+counter=0
+
+while counter < 4:
+    t.forward(100)
+    t.left(90)
+    counter = counter+1
+
+t.end_fill()
+time.sleep(2)
+----
+
+Once you have run your script, it's time to explore an even better
+module.
+
+[[learning-python-by-making-a-game]]
+link:[Learning Python by making a game]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To learn more about how Python works and prepare for more advanced
+programming with graphics, let's focus on game logic. In this tutorial,
+we'll also learn a bit about how computer programs are structured by
+making a text-based game in which the computer and the player roll a
+virtual die, and the one with the highest roll wins.
+
+[[planning-your-game]]
+Planning your game
+^^^^^^^^^^^^^^^^^^
+
+Before writing code, it's important to think about what you intend to
+write. Many programmers
+https://opensource.com/article/17/8/doc-driven-development[write simple
+documentation] _before_ they begin writing code, so they have a goal to
+program toward. Here's how the dice program might look if you shipped
+documentation along with the game:
+
+1.  Start the dice game and press Return or Enter to roll.
+2.  The results are printed out to your screen.
+3.  You are prompted to roll again or to quit.
+
+It's a simple game, but the documentation tells you a lot about what you
+need to do. For example, it tells you that you need the following
+components to write this game:
+
+* Player: You need a human to play the game.
+* AI: The computer must roll a die, too, or else the player has no one
+to win or lose to.
+* Random number: A common six-sided die renders a random number between
+1 and 6.
+* Operator: Simple math can compare one number to another to see which
+is higher.
+* A win or lose message.
+* A prompt to play again or quit.
+
+[[making-dice-game-alpha]]
+Making dice game alpha
+^^^^^^^^^^^^^^^^^^^^^^
+
+Few programs start with all of their features, so the first version will
+only implement the basics. First a couple of definitions:
+
+A *variable* is a value that is subject to change, and they are used a lot in Python.
+Whenever you need your program to "remember" something, you use a variable.
+In fact, almost all the information that code works with is stored in variables.
+For example, in the math equation **x + 5 = 20**, the variable is __x__, because the letter _x_ is a placeholder for a value.
+
+An *integer* is a number; it can be positive or negative. For example, 1
+and -1 are both integers. So are 14, 21, and even 10,947.
+
+Variables in Python are easy to create and easy to work with.
+This initial version of the dice game uses two variables: *player* and **ai**.
+
+Type the following code into a new project called **dice_alpha**:
+
+----
+import random
+
+player = random.randint(1,6)
+ai = random.randint(1,6)
+
+if player > ai :
+    print("You win")  # notice indentation
+else:
+    print("You lose")
+----
+
+Launch your game to make sure it works.
+
+This basic version of your dice game works pretty well. It accomplishes
+the basic goals of the game, but it doesn't feel much like a game. The
+player never knows what they rolled or what the computer rolled, and the
+game ends even if the player would like to play again.
+
+This is common in the first version of software (called an alpha
+version). Now that you are confident that you can accomplish the main
+part (rolling a die), it's time to add to the program.
+
+[[improvingthe-game]]
+Improving the game
+^^^^^^^^^^^^^^^^^^
+
+In this second version (called a beta) of your game, a few improvements
+will make it feel more like a game.
+
+[[describe-the-results]]
+1. Describe the results
++++++++++++++++++++++++
+
+Instead of just telling players whether they did or didn't win, it's
+more interesting if they know what they rolled. Try making these changes
+to your code:
+
+----
+player = random.randint(1,6)
+print("You rolled " + player)
+
+ai = random.randint(1,6)
+print("The computer rolled " + ai)
+----
+
+If you run the game now, it will crash because Python thinks you're
+trying to do math. It thinks you're trying to add the letters "You
+rolled" and whatever number is currently stored in the player variable.
+
+You must tell Python to treat the numbers in the player and ai variables
+as if they were a word in a sentence (a string) rather than a number in
+a math equation (an integer).
+
+Make these changes to your code:
+
+----
+player = random.randint(1,6)
+print("You rolled " + str(player) )
+
+ai = random.randint(1,6)
+print("The computer rolled " + str(ai) )
+----
+
+Run your game now to see the result.
+
+[[slow-it-down]]
+2. Slow it down
++++++++++++++++
+
+Computers are fast. Humans sometimes can be fast, but in games, it's
+often better to build suspense. You can use Python's **time** function
+to slow your game down during the suspenseful parts.
+
+----
+import random
+import time
+
+player = random.randint(1,6)
+print("You rolled " + str(player) )
+
+ai = random.randint(1,6)
+print("The computer rolls----" )
+time.sleep(2)
+print("The computer has rolled a " + str(player) )
+
+if player > ai :
+    print("You win")  # notice indentation
+else:
+    print("You lose")
+----
+
+Launch your game to test your changes.
+
+[[detect-ties]]
+3. Detect ties
+++++++++++++++
+
+If you play your game enough, you'll discover that even though your game
+appears to be working correctly, it actually has a bug in it: It doesn't
+know what to do when the player and the computer roll the same number.
+
+To check whether a value is equal to another value, Python uses **==**.
+That's _two_ equal signs, not just one. If you use only one, Python
+thinks you're trying to create a new variable, but you're actually
+trying to do math.
+
+When you want to have more than just two options (i.e., win or lose),
+you can using Python's keyword **elif**, which means __else if__. This
+allows your code to check to see whether any one of _some_ results are
+true, rather than just checking whether _one_ thing is true.
+
+Modify your code like this:
+
+----
+if player > ai :
+    print("You win")  # notice indentation
+elif player == ai:
+    print("Tie game.")
+else:
+    print("You lose")
+----
+
+Launch your game a few times to try to tie the computer's roll.
+
+[[programming-the-final-release]]
+Programming the final release
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The beta release of your dice game is functional and feels more like a
+game than the alpha. For the final release, create your first Python
+**function**.
+
+A function is a collection of code that you can call upon as a distinct
+unit. Functions are important because most applications have a lot of
+code in them, but not all of that code has to run at once. Functions
+make it possible to start an application and control what happens and
+when.
+
+Change your code to this:
+
+----
+import random
+import time
+
+def dice():
+    player = random.randint(1,6)
+    print("You rolled " + str(player) )
+
+    ai = random.randint(1,6)
+    print("The computer rolls----" )
+    time.sleep(2)
+    print("The computer has rolled a " + str(ai) )
+
+    if player > ai :
+        print("You win")  # notice indentation
+    else:
+        print("You lose")
+
+    print("Quit? Y/N")
+    continue = input()
+
+    if continue == "Y" or continue == "y":
+        exit()
+    elif continue == "N" or continue == "n":
+        pass
+    else:
+        print("I did not understand that. Playing again.")
+----
+
+This version of the game asks the player whether they want to quit the
+game after they play. If they respond with a *Y* or **y**, Python's
+*exit* function is called and the game quits.
+
+More importantly, you've created your own function called **dice**. The
+dice function doesn't run right away. In fact, if you try your game at
+this stage, it won't crash, but it doesn't exactly run, either. To make
+the *dice* function actually do something, you have to *call it* in your
+code.
+
+Add this loop to the bottom of your existing code. The first two lines
+are only for context and to emphasize what gets indented and what does
+not. Pay close attention to indentation.
+
+----
+    else:
+        print("I did not understand that. Playing again.")
+
+# main loop
+while True:
+    print("Press return to roll your die.")
+    roll = input()
+    dice()
+----
+
+The *while True* code block runs first. Because *True* is always true by
+definition, this code block always runs until Python tells it to quit.
+
+The *while True* code block is a loop. It first prompts the user to
+start the game, then it calls your *dice* function. That's how the
+game starts. When the dice function is over, your loop either runs again
+or it exits, depending on how the player answered the prompt.
+
+Using a loop to run a program is the most common way to code an
+application. The loop ensures that the application stays open long
+enough for the computer user to use functions within the application.
+
+[[next-steps]]
+Next steps
+~~~~~~~~~~
+
+Now you know the basics of Python.
+The next article in this series describes how to write a video game with https://www.pygame.org/news[PyGame], a module that has more features than turtle, but is also a lot more complex.

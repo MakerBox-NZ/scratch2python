@@ -1,0 +1,739 @@
+[[platform]]
+Add platforms to your platformer game
+-------------------------------------
+
+A platformer game needs platforms.
+
+In Pygame, the platforms themselves are
+sprites, just like your playable sprite. That's important because having
+platforms that are objects makes it a lot easier for your player sprite
+to interact with them.
+
+There are two major steps in creating platforms. First, you must code
+the objects, and then you must map out where you want the objects to
+appear.
+
+[[coding-platform-objects]]
+Coding platform objects
+~~~~~~~~~~~~~~~~~~~~~~~
+
+To build a platform object, you create a class called `Platform`. It's a
+sprite, just like your xref:add-sprite[`Player` sprite], with many of the same properties.
+
+Your `Platform` class needs to know a lot of information about what kind
+of platform you want, where it should appear in the game world, and what
+image it should contain. A lot of that information might not even exist
+yet, depending on how much you have planned out your game, but that's
+all right. Just as you didn't tell your Player sprite how fast to move
+until the end of the
+xref:move[Movement
+article], you don't have to tell `Platform` everything upfront.
+
+In the objects section of your script, create a new class:
+
+....
+# x location, y location, img width, img height, img file
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, xloc, yloc, imgw, imgh, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img)).convert()
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.y = yloc
+        self.rect.x = xloc
+....
+
+When called, this class creates an object onscreen in _some_ X and Y
+location, with _some_ width and height, using _some_ image file for
+texture. It's very similar to how players or enemies are drawn onscreen.
+You probably recognize this same code structure from the Player and
+Enemy classes.
+
+[[types-of-platforms]]
+Types of platforms
+~~~~~~~~~~~~~~~~~~
+
+The next step is to map out where all your platforms need to appear.
+
+[[the-tile-method]]
+The tile method
+^^^^^^^^^^^^^^^
+
+There are a few different ways to implement a platform game world. In
+the original side-scroller games, such as Mario Super Bros. and Sonic
+the Hedgehog, the technique was to use "tiles," meaning that there were
+a few blocks to represent the ground and various platforms, and these
+blocks were used and reused to make a level. You have only eight or 12
+different kinds of blocks, and you line them up onscreen to create the
+ground, floating platforms, and whatever else your game needs. Some
+people find this the easier way to make a game since you just have to
+make (or download) a small set of level assets to create many different
+levels. The code, however, requires a little more math.
+
+image:img/supertux.png[]
+
+[[the-hand-painted-method]]
+The hand-painted method
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Another method is to make each and every asset as one whole image. If
+you enjoy creating assets for your game world, this is a great excuse to
+spend time in a graphics application, building each and every part of
+your game world. This method requires less math, because all the
+platforms are whole, complete objects, and you tell Python where to
+place them onscreen.
+
+Each method has advantages and disadvantages, and the code you must use
+is slightly different depending on the method you choose. I'll cover
+both so you can use one or the other, or even a mix of both, in your
+project.
+
+[[level-mapping]]
+Level mapping
+~~~~~~~~~~~~~
+
+Mapping out your game world is a vital part of level design and game
+programming in general. It does involve math, but nothing too difficult,
+and Python is good at math so it can help some.
+
+You might find it helpful to design on paper first. Get a sheet of paper
+and draw a box to represent your game window. Draw platforms in the box,
+labeling each with its X and Y coordinates, as well as its intended
+width and height. The actual positions in the box don't have to be
+exact, as long as you keep the numbers realistic. For instance, if your
+screen is 720 pixels wide, then you can't fit eight platforms at 100
+pixels each all on one screen.
+
+Of course, not all platforms in your game have to fit in one
+screen-sized box, because your game will scroll as your player walks
+through it. So keep drawing your game world to the right of the first
+screen until the end of the level.
+
+If you prefer a little more precision, you can use graph paper. This is
+especially helpful when designing a game with tiles because each grid
+square can represent one tile.
+
+image:img/level-graph-paper.jpg[]
+
+[[coordinates]]
+Coordinates
+^^^^^^^^^^^
+
+You may have learned in school about the
+https://en.wikipedia.org/wiki/Cartesian_coordinate_system[Cartesian
+coordinate system]. What you learned applies to Pygame, except that in
+Pygame, your game world's coordinates place `0,0` in the top-left corner
+of your screen instead of in the middle, which is probably what you're
+used to from Geometry class.
+
+image:img/pygame_coordinates.png[]
+
+The X axis starts at 0 on the far left and increases infinitely to the
+right. The Y axis starts at 0 at the top of the screen and extends down.
+
+[[image-sizes]]
+Image sizes
+^^^^^^^^^^^
+
+Mapping out a game world is meaningless if you don't know how big your
+players, enemies, and platforms are. You can find the dimensions of your
+platforms or tiles in a graphics program. In
+https://krita.org/en/[Krita], for example, click on the *Image* menu and
+select **Properties**. You can find the dimensions at the very top of
+the *Properties* window.
+
+Alternately, you can create a simple Python script to tell you the
+dimensions of an image. To do that, you must install a Python module
+called Pillow, which provides the Python Image Library (PIL). Add Pillow
+to your project's `requirements.txt` file:
+
+....
+pygame~=1.9.6
+Pillow
+....
+
+Create a new Python file in PyCharm and name it `identify`. Type this
+code into it:
+
+....
+#!/usr/bin/env python3
+
+# GNU All-Permissive License
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
+
+from PIL import Image
+import os.path
+import sys
+
+if len(sys.argv) > 1:
+    print(sys.argv[1])
+else:
+    sys.exit('Syntax: identify.py [filename]')
+
+pic = sys.argv[1]
+img = Image.open(pic)
+X   = img.size[0]
+Y   = img.size[1]
+
+print(X, Y)
+....
+
+Click on the *Terminal* tab at the bottom of the PyCharm window to open
+a terminal within your virtual environment. Now you can install the
+Pillow module into your environment:
+
+....
+(venv) pip install -r requirements.txt
+Requirement already satisfied: pygame~=1.9.6 [...]
+Installed Pillow [...]
+....
+
+Once that is installed, run your script from within your game project
+directory:
+
+....
+(venv) python ./identify.py images/ground.png
+(1080, 97)
+....
+
+The image size of the ground platform in this example is 1080 pixels
+wide and 97 high.
+
+[[platform-blocks]]
+Platform blocks
+~~~~~~~~~~~~~~~
+
+If you choose to draw each asset individually, you must create several
+platforms and any other elements you want to insert into your game
+world, each within its own file. In other words, you should have one
+file per asset, like this:
+
+image:img/pygame_floating.png[]
+
+You can reuse each platform as many times as you want, just make sure
+that each file only contains one platform. You cannot use a file that
+contains everything, like this:
+
+image:img/pygame_flattened.png[]
+
+You might want your game to look like that when you've finished, but if
+you create your level in one big file, there is no way to distinguish a
+platform from the background, so either paint your objects in their own
+file or crop them from a large file and save individual copies.
+
+*Note:* As with your other assets, you can use
+https://www.gimp.org/[GIMP], http://krita.org[Krita],
+http://mypaint.org/about/[MyPaint], or
+https://inkscape.org/en/[Inkscape] to create your game assets.
+
+Platforms appear on the screen at the start of each level, so you must
+add a `platform` function in your `Level` class. The special case here
+is the ground platform, which is important enough to be treated as its
+own platform group. By treating the ground as its own special kind of
+platform, you can choose whether it scrolls or whether it stands still
+while other platforms float over the top of it. It's up to you.
+
+Add these two functions to your `Level` class:
+
+....
+def ground(lvl,x,y,w,h):
+    ground_list = pygame.sprite.Group()
+    if lvl == 1:
+        ground = Platform(x,y,w,h,'block-ground.png')
+        ground_list.add(ground)
+
+    if lvl == 2:
+        print("Level " + str(lvl) )
+
+    return ground_list
+
+def platform( lvl ):
+    plat_list = pygame.sprite.Group()
+    if lvl == 1:
+        plat = Platform(200, worldy-97-128, 285,67,'block-big.png')
+        plat_list.add(plat)
+        plat = Platform(500, worldy-97-320, 197,54,'block-small.png')
+        plat_list.add(plat)
+    if lvl == 2:
+        print("Level " + str(lvl) )
+        
+    return plat_list
+....
+
+The `ground` function requires an X and Y location so Pygame knows where
+to place the ground platform. It also requires the width and height of
+the platform so Pygame knows how far the ground extends in each
+direction. The function uses your `Platform` class to generate an object
+onscreen, and then adds that object to the `ground_list` group.
+
+The `platform` function is essentially the same, except that there are
+more platforms to list. In this example, there are only two, but you can
+have as many as you like. After entering one platform, you must add it
+to the `plat_list` before listing another. If you don't add a platform
+to the group, then it won't appear in your game.
+
+*Tip:* It can be difficult to think of your game world with 0 at the
+top, since the opposite is what happens in the real world; when figuring
+out how tall you are, you don't measure yourself from the sky down, you
+measure yourself from your feet to the top of your head.
+
+If it's easier for you to build your game world from the "ground" up, it
+might help to express Y-axis values as negatives. For instance, you know
+that the bottom of your game world is the value of `worldy`. So `worldy`
+minus the height of the ground (97, in this example) is where your
+player is normally standing. If your character is 64 pixels tall, then
+the ground minus 128 is exactly twice as tall as your player.
+Effectively, a platform placed at 128 pixels is about two stories tall,
+relative to your player. A platform at -320 is three more stories. And
+so on.
+
+As you probably know by now, none of your classes and functions are
+worth much if you don't _use_ them. Add this code to your setup section:
+
+....
+ground_list = Level.ground(1, 0, worldy-97, 1080, 97)
+plat_list = Level.platform(1)
+....
+
+And add these lines to your main loop (again, the first line is just for
+context):
+
+....
+enemy_list.draw(world)  # refresh enemies
+ground_list.draw(world)  # refresh ground
+plat_list.draw(world)  # refresh platforms
+....
+
+[[tiled-platforms]]
+Tiled platforms
+~~~~~~~~~~~~~~~
+
+Tiled game worlds are considered easier to make because you just have to
+draw a few blocks upfront and can use them over and over to create every
+platform in the game. There are sets of tiles with a
+link:/article/20/1/what-creative-commons[Creative Commons license] for
+you to use on sites like
+https://kenney.nl/assets/simplified-platformer-pack[kenney.nl] and
+https://opengameart.org/content/simplified-platformer-pack[OpenGameArt.org].
+The simplified-platformer-pack from kenney.nl are 64 pixels square, so
+that's the dimension for tiles this article uses. Should you download or
+create tiles with a different size, adjust the code as needed.
+
+The `Platform` class is the same as the one provided in the previous
+sections.
+
+The `ground` and `platform` in the `Level` class, however, must use
+loops to calculate how many blocks to use to create each platform.
+
+If you intend to have one solid ground in your game world, the ground is
+simple. You just "clone" your ground tile across the whole window. For
+instance, you could create a list of X and Y values to dictate where
+each tile should be placed, and then use a loop to take each value and
+draw one tile. This is just an example, so don't add this to your code:
+
+....
+# Do not add this to your code
+gloc = [0,656,64,656,128,656,192,656,256,656,320,656,384,656]
+....
+
+If you look carefully, though, you can see all the Y values are always
+the same (656, to be specific), and the X values increase steadily in
+increments of 64, which is the size of the tile. That kind of repetition
+is exactly what computers are good at, so you can use a little bit of
+math logic to have the computer do all the calculations for you:
+
+Add this to the setup part of your script:
+
+....
+gloc = []
+tx   = 64
+ty   = 64
+
+i=0
+while i <= (worldx/tx)+tx:
+    gloc.append(i*tx)
+    i=i+1
+
+ground_list = Level.ground( 1,gloc,tx,ty )
+....
+
+With this code, regardless of the size of your window, Python divides
+the width of the game world by the width of the tile and creates an
+array listing each X value. This doesn't calculate the Y value, but that
+never changes on flat ground anyway.
+
+To use the array in a function, use a `while` loop that looks at each
+entry and adds a ground tile at the appropriate location. Add this
+function to your `Level` class:
+
+....
+def ground(lvl,gloc,tx,ty):
+    ground_list = pygame.sprite.Group()
+    i=0
+    if lvl == 1:
+        while i < len(gloc):
+            ground = Platform(gloc[i],worldy-ty,tx,ty,'tile-ground.png')
+            ground_list.add(ground)
+            i=i+1
+
+    if lvl == 2:
+        print("Level " + str(lvl) )
+
+    return ground_list
+....
+
+This is nearly the same code as the `ground` function for the
+block-style platformer, provided in the previous section, aside from the
+`while` loop.
+
+For moving platforms, the principle is similar, but there are some
+tricks you can use to make your life easier.
+
+Rather than mapping every platform by pixels, you can define a platform
+by its starting pixel (its X value), the height from the ground (its Y
+value), and how many tiles to draw. That way, you don't have to worry
+about the width and height of every platform.
+
+The logic for this trick is a little more complex, so copy this code
+carefully. There is a `while` loop inside of another `while` loop
+because this function must look at all three values within each array
+entry to successfully construct a full platform. In this example, there
+are only three platforms defined as `ploc.append` statements, but your
+game probably needs more, so define as many as you need. Of course, some
+won't appear yet because they're far offscreen, but they'll come into
+view once you implement scrolling.
+
+....
+def platform(lvl,tx,ty):
+    plat_list = pygame.sprite.Group()
+    ploc = []
+    i=0
+    if lvl == 1:
+        ploc.append((200,worldy-ty-128,3))
+        ploc.append((300,worldy-ty-256,3))
+        ploc.append((500,worldy-ty-128,4))
+        while i < len(ploc):
+            j=0
+            while j <= ploc[i][2]:
+                plat = Platform((ploc[i][0]+(j*tx)),ploc[i][1],tx,ty,'tile.png')
+                plat_list.add(plat)
+                j=j+1
+            print('run' + str(i) + str(ploc[i]))
+            i=i+1
+            
+    if lvl == 2:
+        print("Level " + str(lvl) )
+
+    return plat_list
+....
+
+Of course, this has only created a function to calculate platforms for
+each level. You code doesn't invoke the function yet.
+
+In the setup section of your program, add this line:
+
+....
+plat_list = Level.platform(1, tx, ty)
+....
+
+To get the platforms to appear in your game world, they must be in your
+main loop. If you haven't already done so, add these lines to your main
+loop (again, the first line is just for context):
+
+....
+        enemy_list.draw(world)  # refresh enemies
+        ground_list.draw(world) # refresh ground
+        plat_list.draw(world)   # refresh platforms
+....
+
+Launch your game, and adjust the placement of your platforms as needed.
+Don't worry that you can't see the platforms that are spawned offscreen;
+you'll fix that soon.
+
+image:img/pygame-platform.jpg[]
+
+[[applying-what-you-know-platform]]
+Applying what you know
+~~~~~~~~~~~~~~~~~~~~~~
+
+I haven't demonstrated how to place your enemy in your game world, but
+apply what you've learnt so far to position the enemy sprite either on a
+platform or down on the ground.
+
+Don't position your hero sprite yet. That must be managed by the forces
+of gravity (or at least an emulation of it), which you'll learn in the
+next two articles.
+
+For now, here's the code so far:
+
+....
+#!/usr/bin/env python3
+# by Seth Kenlon
+
+# GPLv3
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import pygame
+import sys
+import os
+
+'''
+Variables
+'''
+
+worldx = 960
+worldy = 720
+fps = 40
+ani = 4
+world = pygame.display.set_mode([worldx, worldy])
+
+BLUE = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+ALPHA = (0, 255, 0)
+
+'''
+Objects
+'''
+
+# x location, y location, img width, img height, img file
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, xloc, yloc, imgw, imgh, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img)).convert()
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.y = yloc
+        self.rect.x = xloc
+
+class Player(pygame.sprite.Sprite):
+    """
+    Spawn a player
+    """
+
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.movex = 0
+        self.movey = 0
+        self.frame = 0
+        self.health = 10
+        self.images = []
+        for i in range(1, 5):
+            img = pygame.image.load(os.path.join('images', 'hero' + str(i) + '.png')).convert()
+            img.convert_alpha()
+            img.set_colorkey(ALPHA)
+            self.images.append(img)
+            self.image = self.images[0]
+            self.rect = self.image.get_rect()
+
+    def control(self, x, y):
+        """
+        control player movement
+        """
+        self.movex += x
+        self.movey += y
+
+    def update(self):
+        """
+        Update sprite position
+        """
+
+        self.rect.x = self.rect.x + self.movex
+        self.rect.y = self.rect.y + self.movey
+
+        # moving left
+        if self.movex < 0:
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = pygame.transform.flip(self.images[self.frame // ani], True, False)
+
+        # moving right
+        if self.movex > 0:
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = self.images[self.frame // ani]
+
+        hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
+        for enemy in hit_list:
+            self.health -= 1
+            print(self.health)
+
+
+class Enemy(pygame.sprite.Sprite):
+    """
+    Spawn an enemy
+    """
+
+    def __init__(self, x, y, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img))
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.counter = 0
+
+    def move(self):
+        """
+        enemy movement
+        """
+        distance = 80
+        speed = 8
+
+        if self.counter >= 0 and self.counter <= distance:
+            self.rect.x += speed
+        elif self.counter >= distance and self.counter <= distance * 2:
+            self.rect.x -= speed
+        else:
+            self.counter = 0
+
+        self.counter += 1
+
+
+class Level:
+    def ground(lvl, gloc, tx, ty):
+        ground_list = pygame.sprite.Group()
+        i = 0
+        if lvl == 1:
+            while i < len(gloc):
+                ground = Platform(gloc[i], worldy - ty, tx, ty, 'tile-ground.png')
+                ground_list.add(ground)
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return ground_list
+
+    def bad(lvl, eloc):
+        if lvl == 1:
+            enemy = Enemy(eloc[0], eloc[1], 'enemy.png')
+            enemy_list = pygame.sprite.Group()
+            enemy_list.add(enemy)
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return enemy_list
+
+    # x location, y location, img width, img height, img file
+    def platform(lvl, tx, ty):
+        plat_list = pygame.sprite.Group()
+        ploc = []
+        i = 0
+        if lvl == 1:
+            ploc.append((200, worldy - ty - 128, 3))
+            ploc.append((300, worldy - ty - 256, 3))
+            ploc.append((500, worldy - ty - 128, 4))
+            while i < len(ploc):
+                j = 0
+                while j <= ploc[i][2]:
+                    plat = Platform((ploc[i][0] + (j * tx)), ploc[i][1], tx, ty, 'tile.png')
+                    plat_list.add(plat)
+                    j = j + 1
+                print('run' + str(i) + str(ploc[i]))
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return plat_list
+
+
+'''
+Setup
+'''
+
+backdrop = pygame.image.load(os.path.join('images', 'stage.png'))
+clock = pygame.time.Clock()
+pygame.init()
+backdropbox = world.get_rect()
+main = True
+
+player = Player()  # spawn player
+player.rect.x = 0  # go to x
+player.rect.y = 30  # go to y
+player_list = pygame.sprite.Group()
+player_list.add(player)
+steps = 10
+
+eloc = []
+eloc = [300, 0]
+enemy_list = Level.bad(1, eloc)
+
+gloc = []
+tx = 64
+ty = 64
+
+i = 0
+while i <= (worldx / tx) + tx:
+    gloc.append(i * tx)
+    i = i + 1
+
+ground_list = Level.ground(1, gloc, tx, ty)
+plat_list = Level.platform(1, tx, ty)
+
+
+'''
+Main Loop
+'''
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == ord('q'):
+                pygame.quit()
+                try:
+                    sys.exit()
+                finally:
+                    main = False
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(-steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(steps, 0)
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                print('jump')
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(-steps, 0)
+
+    world.blit(backdrop, backdropbox)
+    player.update()
+    player_list.draw(world)
+    enemy_list.draw(world)
+    ground_list.draw(world)
+    plat_list.draw(world)
+    for e in enemy_list:
+        e.move()
+    pygame.display.flip()
+    clock.tick(fps)
+....
+

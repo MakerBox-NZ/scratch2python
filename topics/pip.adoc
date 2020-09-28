@@ -1,0 +1,343 @@
+= Python package management
+
+:Author: László Kiss Kollár
+:License: CC BY-SA
+
+The Python Package Index (PyPI) indexes an amazing array of libraries
+and applications covering every use case imaginable. However, when it
+comes to installing and using these packages, newcomers often find
+themselves running into issues with missing permissions, incompatible
+library dependencies, and installations that break in surprising ways.
+
+[OS_EMBEDDED_MENU_RIGHT:]The Zen of Python states: "There should be
+one—and preferably only one—obvious way to do it." This is certainly not
+always the case when it comes to installing Python packages. However,
+there are some tools and methods that can be considered best practices.
+Knowing these can help you pick the right tool for the right situation.
+
+[[installing-applications-system-wide]]
+Installing applications system-wide
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*pip* is the de facto package manager in the Python world. It can
+install packages from many sources, but https://pypi.org[PyPI] is the
+primary package source where it's used. When installing packages, *pip*
+will first resolve the dependencies, check if they are already installed
+on the system, and, if not, install them. Once all dependencies have
+been satisfied, it proceeds to install the requested package(s). This
+all happens globally, by default, installing everything onto the machine
+in a single, operating system-dependent location.
+
+Python 3.7 looks for packages on an Arch Linux system in the following
+locations:
+
+....
+$ python3.7 -c "import sys; print('\n'.join(sys.path))"
+
+/usr/lib/python37.zip
+/usr/lib/python3.7
+/usr/lib/python3.7/lib-dynload
+/usr/lib/python3.7/site-packages
+....
+
+One problem with global installations is that only a single version of a
+package can be installed at one time for a given Python interpreter.
+This can cause issues when a package is a dependency of multiple
+libraries or applications, but they require different versions of this
+dependency. Even if things seem to be working fine, it is possible that
+upgrading the dependency (even accidentally while installing another
+package) will break these applications or libraries in the future.
+
+Another potential issue is that most Unix-like distributions manage
+Python packages with the built-in package manager (**dnf**, **apt**,
+**pacman**, **brew**, and so on), and some of these tools install into a
+non-user-writeable location.
+
+....
+$ python3.7 -m pip install pytest
+Collecting pytest
+Downloading...
+[...]
+Installing collected packages: atomicwrites, pluggy, py, more-itertools, pytest
+Could not install packages due to an EnvironmentError: [Error 13] Permission denied:
+'/usr/lib/python3.7/site-packages/site-packages/atomicwrites-x.y.z.dist-info'
+Consider using '--user' option or check the permissions.
+$
+....
+
+This fails because we are running *pip install* as a non-root user and
+we don't have write permission to the *site-packages* directory.
+
+You can technically get around this by running *pip* as a root (using
+the *sudo* command) or administrative user. However, one problem is that
+we just installed a bunch of Python packages into a location the Linux
+distribution's package manager owns, making its internal database and
+the installation inconsistent. This will likely cause issues anytime we
+try to install, upgrade, or remove any of these dependencies using the
+package manager.
+
+As an example, let's try to install *pytest* again, but now using my
+system's package manager, **pacman**:
+
+....
+$ sudo pacman -S community/python-pytest
+resolving dependencies...
+looking for conflicting packages...
+[...]
+python-py: /usr/lib/site-packages/py/_pycache_/_metainfo.cpython-37.pyc exists in filesystem
+python-py: /usr/lib/site-packages/py/_pycache_/_builtin.cpython-37.pyc exists in filesystem
+python-py: /usr/lib/site-packages/py/_pycache_/_error.cpython-37.pyc exists in filesystem
+....
+
+Another potential issue is that an operating system can use Python for
+system tools, and we can easily break these by modifying Python packages
+outside the system package manager. This can result in an inoperable
+system, where restoring from a backup or a complete reinstallation is
+the only way to fix it.
+
+[[sudo-pip-install-a-bad-idea]]
+sudo pip install: A bad idea
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There is another reason why running *pip install* as root is a bad idea.
+To explain this, we first have to look at how Python libraries and
+applications are packaged.
+
+Most Python libraries and applications today use *setuptools* as their
+build system. *setuptools* requires a *setup.py* file in the root of the
+project, which describes package metadata and can contain arbitrary
+Python code to customize the build process. When a package is installed
+from the source distribution, this file is executed to perform the
+installation and execute tasks like inspecting the system, building the
+package, etc.
+
+Executing *setup.py* with root permissions means we can effectively open
+up the system to malicious code or bugs. This is a lot more likely than
+you might think. For example, in 2017, several
+https://github.com/pypa/warehouse/issues/3948[packages were uploaded to
+PyPI] with names resembling popular Python libraries. The uploaded code
+collected system and user information and uploaded it to a remote
+server. These packages were pulled shortly thereafter. However, these
+kinds of "typo-squatting" incidents can happen anytime since anyone can
+upload packages to PyPI and there is no review process to make sure the
+code doesn't do any harm.
+
+The Python Software Foundation (PSF) recently announced that it will
+sponsor work to
+http://pyfound.blogspot.com/2018/12/upcoming-pypi-improvements-for-2019.html[improve
+the security of PyPI]. This should make it more difficult to carry out
+attacks such as "https://pytosquatting.overtag.dk/[pytosquatting]" and
+hopefully make this less of an issue in the future.
+
+Security issues aside, *sudo pip install* won't solve all the dependency
+problems: you can still install only a single version of any given
+library, which means it's still easy to break applications this way.
+
+Let's look at some better alternatives.
+
+[[os-package-managers]]
+OS package managers
+~~~~~~~~~~~~~~~~~~~
+
+It is very likely that the "native" package manager we use on our OS of
+choice can also install Python packages. The question is: should we use
+**pip**, or **apt**, **dnf**, **pacman**, and so on?
+
+The answer is: __it depends__.
+
+*pip* is generally used to install packages directly from PyPI, and
+Python package authors usually upload their packages there. However,
+most package maintainers will not use PyPI, but instead take the source
+code from the source distribution (**sdist**) created by the author or a
+version control system (e.g., GitHub), apply patches if needed, and test
+and release the package for their respective platforms. Compared to the
+PyPI distribution model, this has pros and cons:
+
+* Software maintained by native package managers is generally more
+stable and usually works better on the given platform (although this
+might not always be the case).
+* This also means it takes extra work to package and test upstream
+Python code:
+1.  The package selection is usually much smaller than what PyPI offers.
+2.  Updates are slower and package managers will often ship much older
+versions.
+
+If the package we want to use is available and we don't mind slightly
+older versions, the package manager offers a convenient and safe way to
+install Python packages. And, since these packages install system-wide,
+they are available to all users on the system. This also means that we
+can use them only if we have the required permissions to install
+packages on the system.
+
+If we want to use something that is not available in the package
+manager's selection or is too old, or we simply don't have the necessary
+permissions to install packages, we can use *pip* instead.
+
+[[user-scheme-installations]]
+User scheme installations
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*pip* supports the "user scheme" mode introduced in Python 2.6. This
+allows for packages to be installed into a user-owned location. On
+Linux, this is typically the **$HOME/.local** directory.
+Putting *$HOME/.local/bin/* on our *PATH* makes it possible to have Python tools and scripts available
+at our fingertips and manage them without root privileges.
+
+....
+$ python3.7 -m pip install --user black
+Collecting black
+ Using cached
+[...]
+Installing collected packages: click, toml, black
+ The scripts black and blackd are installed in '/home/tux/.local/bin' which is not on PATH.
+ Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed black-x.y click-x.y toml-x.y.z
+$
+....
+
+However, this solution does not solve the issue if and when we need
+different versions of the same package.
+
+[[enter-virtual-environments]]
+Enter virtual environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Virtual environments offer isolated Python package installations that
+can coexist independently on the same system. This offers the same
+benefits as user scheme installations, but it also allows the creation
+of self-contained Python installations where an application does not
+share dependencies with any other application. *Virtualenv* creates a
+directory that holds a self-contained Python installation, including the
+Python binary and essential tools for package management:
+**setuptools**, **pip**, and **wheel**.
+
+[[creating-virtual-environments]]
+Creating virtual environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*virtualenv* is a third-party package, but Python 3.3 added the *venv*
+package to the standard library. As a result, we don't have to install
+anything to use virtual environments in modern versions of Python. We
+can simply use *python3.7 -m venv <env_name>* to create a new virtual
+environment.
+
+After creating a new virtual environment, we must activate it by
+sourcing the *activate* script in the *bin* directory of the newly
+created environment. The activation script creates a new subshell and
+adds the *bin* directory to the *PATH* environment variable, enabling us
+to run binaries and scripts from this location. This means that this
+subshell will use **python**, **pip**, or any other tool installed in
+this location instead of the ones installed globally on the system.
+
+....
+$ python3.7 -m venv test-env
+$ . ./test-env/bin/activate
+(test-env) $
+....
+
+After this, any command we execute will use the Python installation
+inside the virtual environment. Let's install some packages.
+
+....
+(test-env)$ python3.7 -m pip install --user black
+Collecting black
+ Using cached
+[...]
+Installing collected packages: click, toml, black
+Successfully installed black-x.y click-x.y toml-x.y.z
+(test-env) $
+....
+
+We can use *black* inside the virtual environment without any manual
+changes to the environment variables like *PATH* or **PYTHONPATH**.
+
+....
+(test-env) $ black --version
+black, version x.y
+(test-env) $ which black
+/home/tux/test-env/bin/black
+(test-env) $
+....
+
+When we are done with the virtual environment, we can simply deactivate
+it with the *deactivate* function.
+
+....
+(test-env) $ deactivate
+$ 
+....
+
+Virtual environments can also be used without the activation script.
+Scripts installed in a *venv* will have their _shebang_ line rewritten
+to use the Python interpreter inside the virtual environment. This way,
+we can execute the script from anywhere on the system using the full
+path to the script.
+
+....
+(test-env) $ head /home/tux/test-env/bin/black
+#!/home/tux/test-env/bin/python3.7
+
+# -*- coding: utf-8 -*-
+import re
+import sys
+
+from black import main
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+(test-env) $ 
+....
+
+We can simply run *~/test-env/bin/black* from anywhere on the system and
+it will work just fine.
+
+It can be useful to add certain commonly used virtual environments to
+the *PATH* environment variable so we can quickly and easily use the
+scripts in them without typing out the full path:
+
+....
+export PATH=$PATH:~/test-env/bin
+....
+
+Now when we execute **black**, it will be picked up from the virtual
+environment (unless it appears somewhere else earlier on the **PATH**).
+Add this line to your shell's initialization file (e.g., **~/.bashrc**)
+to have it automatically set in all new shells.
+
+Virtual environments are very commonly used for Python development
+because each project gets its own environment where all library
+dependencies can be installed without interfering with the system
+installation.
+
+I recommend checking out the
+https://virtualenvwrapper.readthedocs.io[virtualenvwrapper] project,
+which can help simplify common **virtualenv**-based workflows.
+
+[[what-about-conda]]
+What about Conda?
+~~~~~~~~~~~~~~~~~
+
+https://conda.io/[Conda] is a package management tool that can install
+packages provided by Anaconda on the
+https://repo.continuum.io/[repo.continuum.io] repository. It has become
+very popular, especially for data science. It offers an easy way to
+create and manage environments and install packages in them. One
+drawback compared to *pip* is that the package selection is much
+smaller.
+
+[[a-recipe-for-successful-package-management]]
+A recipe for successful package management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Never run **sudo pip install**.
+* If you want to make a package available to all users of the machine,
+you have the right permissions, and the package is available, then use
+your distribution's package manager (**apt**, **yum**, **pacman**,
+**brew**, etc.).
+* If you don't have root permissions or the OS package manager doesn't
+have the package you need, use *pip install --user* and add the user
+installation directory to the *PATH* environment variable.
+* If you want multiple versions of the same library to coexist, to do
+Python development, or just to isolate dependencies for any other
+reason, use virtual environments.
+

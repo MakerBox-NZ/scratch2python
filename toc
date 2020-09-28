@@ -1,0 +1,16 @@
+dice.adoc
+pygame.adoc
+player.adoc
+move.adoc
+enemy.adoc
+platform.adoc
+gravity.adoc
+jump.adoc
+scroll.adoc
+loot.adoc
+score.adoc
+throw.adoc
+sound.adoc
+pip.adoc
+gimp-alpha-channel.adoc
+windows-python-install.adoc

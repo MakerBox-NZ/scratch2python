@@ -1,0 +1,121 @@
+= Adding sound
+
+Pygame provides an easy way to integrate sounds into your
+game. The <code>mixer</code> module of Pygame is capable of
+playing one ore more sounds on command, and mix those sounds
+together as needed so that you can have, for instance, background
+music at the same time as the sounds of your hero collecting loot
+or jumping over enemies.
+
+The mixer module is easy to integrate into an existing game, so rather than giving you code samples showing you exactly where to put code, this chapter is an overview to the four steps required to get sound in your application.
+
+== Start the mixer
+
+First, in your SETUP section, start the mixer process. Your code already starts Pygame itself and Pygame fonts, so grouping it together with these is a good idea.
+
+----[source,python]
+pygame.init()
+pygame.font.init()
+pygame.mixer.init() # add this line
+----
+
+== Defining the sounds
+
+Next, you must define the sounds you want to use. This, of course,
+requires you to actually have sounds on your computer, just as using
+fonts requires you to have fonts, and using graphics requires you to
+have graphics.
+
+You also must bundle those sounds along with your game so that anyone
+playing your game also has the sound files.
+
+To bundle a sound with your game, first create a new directory in
+your game folder, right along with the directory you created for
+your images and fonts. Call it `sound`.
+
+----[source,python]
+s = 'sound'
+----
+
+Even though there are plenty of sounds on the internet, it's not necessarily _legal_ to download them and then give them away with your game.
+It seems strange, because so many sounds from famous video games are such a part of popular culture, but that's how the law works.
+If you want to ship a sound with your game, you must find an open source or Creative Commons sound that gives you permission to give the sound away along with your game.
+
+There are several sites that specialise in free and legal sounds:
+
+* https://freesound.org[freesound.org] hosts sound effects of all sorts
+* http://incompetech.com/music/royalty-free[Incompetech.com] hosts background music
+* https://opengameart.org[Open Game Art] hosts some sound effects and music
+
+Some sound files are free to use only if you give the composer or sound designer credit.
+Read the conditions of use carefully before bundling with your game!
+Musicians and sound designers work just as hard on their sounds as you work on your code, so it's nice to give them credit even when they don't require it.
+
+To give your sound sources credit, list the sounds that you use
+in a text file called `CREDIT`, and place the text file in your game folder.
+
+You might also try making your own music.
+The excellent https://opensource.com/life/16/2/linux-multimedia-studio[LMMS] audio workstation is easy to use and ships with lots of interesting sounds.
+It's available on all major platforms, and exports to Ogg Vorbis.
+
+== Adding sound to Pygame
+
+When you find a sound that you like, download it. If it comes in
+a ZIP or tar file, extract it and move the sounds into the
+`sound` folder in your game directory.
+
+If the sound file has a complicated name with spaces or special
+characters, rename it. The filename is completely
+arbitrary, and the simpler it is, the easier it is for you to
+type into your code.
+
+Most video games use `.ogg` (Ogg Vorbis) sound files because it provides high quality in small file sizes.
+When you download a sound file, it might be an MP3, or WAVE, FLAC, or any one of several audio formats.
+To keep your compatibility high and your download size low, convert these to Ogg Vorbis with a tool like https://www.freac.org/index.php/en/downloads-mainmenu-330[fre:ac] or http://getmiro.com[Miro].
+
+For the purpose of this example, assume you have downloaded a sound file called `ouch.ogg`.
+
+In your Setup section, create a variable representing the sound file you want to use:
+
+----[source,python]
+ouch = pygame.mixer.Sound(os.path.join(s, 'ouch.ogg'))
+----
+
+== Triggering sound
+
+To use a sound, all you have to do is call the variable when you want to trigger it. For instance, to trigger the `OUCH` sound effect when your player hits an enemy:
+
+----[source,python]
+for enemy in enemy_hit_list:
+    pygame.mixer.Sound.play(ouch)
+    score -= 1
+----
+
+You can create sounds for all kinds of actions, such as jumping,
+collecting loot, throwing, colliding, and whatever else you can imagine.
+
+== Background music
+
+If you have music or atmospheric sound effects you want to play in the background of your game, you can use the `music` function of Pygame's `mixer` module.
+In your Setup section, load the music file:
+
+----[source,Python]
+music = pygame.mixer.music.load(os.path.join(s, 'music.ogg'))
+----
+
+And then start the music:
+
+----[source,Python]
+pygame.mixer.music.play(-1)
+----
+
+The `-1` value tells Pygame to loop the music file infinitely.
+You can set it to anything from `0` and beyond to define how many times the music should loop before stopping.
+
+
+== Soundscapes
+
+Music and sound can add a lot of flavor to your game.
+Try adding some to your Pygame project!
+
+

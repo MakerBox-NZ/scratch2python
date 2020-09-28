@@ -1,0 +1,600 @@
+[[jump]]
+Add jumping to your Python platformer game
+------------------------------------------
+
+In the xref:gravity[previous article] in this series, you simulated gravity, but now you need to give
+your player a way to fight against gravity by jumping.
+
+A jump is a temporary reprieve from gravity. For a few moments, you jump
+_up_ instead of falling down, the way gravity is pulling you. But once
+you hit the peak of your jump, gravity kicks in again and pulls you back
+down to earth.
+
+In code, this translates to variables. First, you must establish
+variables for the player sprite so that Python can track whether or not
+the sprite is jumping. Once the player sprite is jumping, then gravity
+is applied to the player sprite again, pulling it back down to the
+nearest object.
+
+[[setting-jump-state-variables]]
+Setting jump state variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You must add two new variables to your Player class:
+
+* One to track whether your player is jumping or not, determined by
+whether or not your player sprite is standing on solid ground
+* One to bring the player back down to the ground
+
+Add these variables to your *Player* class. In the following code, the
+lines above the comment are for context, so just add the final two
+lines:
+
+....
+        self.frame = 0
+        self.health = 10
+        # jump code below
+        self.is_jumping = True
+        self.is_falling = False
+....
+
+These new values are called Boolean values, which is a term (named after
+mathematician George Boole) meaning __either true or false__. In
+programming, this is a special data type indicating that a variable is
+either "on" or "off". In this case, the hero sprite can either be
+falling or not falling, and it can be jumping or not jumping.
+
+The first variable (**is_jumping**) is set to *True* because I'm spawing
+the hero in the sky and need it to fall immediately to the ground, as if
+it were in mid-jump. This is a little counter-intuitive, because the
+hero isn't actually jumping. The hero has only just spawned. This is
+theoretically an abuse of this Boolean value, and it is admittedly
+"cleaner" code to have True and False statements that actually reflect
+reality. However, I find it easier to let gravity help the hero find the
+ground rather than having to hard code a spawn position every level. It
+also evokes classic platformers, and gives the player the sense of
+"jumping into" the game world. In other words, this is a small initial
+lie that serves the program, so set it to **True**.
+
+The other variable (**is_falling**) is also set to *True* because the
+hero does indeed need to descend to the ground.
+
+[[colliding-mid-jump]]
+Conditional gravity
+~~~~~~~~~~~~~~~~~~~
+
+In the real world, jumping is an act of moving against gravity. In your
+game, though, gravity only needs to be "on" when the hero sprite isn't
+standing on solid ground. When you have gravity on all the time (in
+Pygame), you risk getting a bounce-effect on your hero sprite as gravity
+constantly tries to force the hero down while the collision with the
+ground resists. Not all game engines require this much interaction with
+gravity, but Pygame isn't designed exclusively for platformers (you
+could write a top-down game instead, for example) so gravity isn't
+managed by the engine.
+
+Your code is only _emulating_ gravity in your game world. The hero
+sprite isn't actually falling when it appears to fall, it's being moved
+by your *gravity* function. To permit your hero sprite to fight gravity
+and jump, or to collide with solid objects (like the ground and floating
+platforms), you must modify your *gravity* function to activate only
+when the hero is jumping. This code _replaces_ the entire *gravity*
+function you wrote for the previous article:
+
+....
+    def gravity(self):
+        if self.is_jumping:
+            self.movey += 3.2
+....
+
+This causes your hero sprite to fall right through the bottom of the
+screen, but you can fix that with some collision detection on the
+ground.
+
+[[programming-solid-ground]]
+Programming solid ground
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the previous article, a quick hack was implemented to keep the hero
+sprite from falling through the bottom of the screen. It kept the hero
+on screen, but only by creating an invisible wall across the bottom of
+the screen. It's cleaner to use objects as objects, and besides it's
+pretty common in platformers to allow players to fall off the world as a
+penalty for a poorly timed jump.
+
+In the *update* function of your *Player* class, add this code:
+
+....
+        ground_hit_list = pygame.sprite.spritecollide(self, ground_list, False)
+        for g in ground_hit_list:
+            self.movey = 0
+            self.rect.bottom = g.rect.top
+            self.is_jumping = False  # stop jumping
+
+        # fall off the world
+        if self.rect.y > worldy:
+            self.health -=1
+            print(self.health)
+            self.rect.x = tx
+            self.rect.y = ty
+....
+
+This code block checks for collisions happening between ground sprites
+and the hero sprite. This is the same principle you used when detecting
+a hit against your hero by an enemy.
+
+In the event of a collision, it uses builtin information provided by
+Pygame to find the bottom of the hero sprite (**self.rect.bottom**), and
+set its position to the top of the ground sprite (**p.rect.top**). This
+provides the illusion that the hero sprite is "standing" on the ground,
+and prevents it from falling through the ground.
+
+It also sets *self.is_falling* to 0 so that the program is aware that
+the hero is not in mid-jump. Additionally, it sets *self.movey* to 0 so
+the hero is not pulled by gravity (it's a quirk of game physics that you
+don't need to continue to pull a sprite toward Earth once the sprite has
+been grounded).
+
+[OS_EMBEDDED_MENU_RIGHT:]The *if* statement at the end detects whether
+the player has descended _below_ the level of the ground; if so, it
+deducts health points as a penalty, and then respawns the hero sprite
+back at the top left of the screen (using the values of *tx* and **ty**,
+the size of tiles. as quick and easy starting values.) This assumes that
+you want your player to lose health points and respawn for falling off
+the world. That's not strictly necessary; it's just a common convention
+in platformers.
+
+[[jumping-in-pygame]]
+Jumping in Pygame
+~~~~~~~~~~~~~~~~~
+
+The code to jump happens in several places. First, create a *jump*
+function to "flip" the *is_jumping* and *is_falling* values:
+
+....
+    def jump(self):
+        if self.is_jumping is False:
+            self.is_falling = False
+            self.is_jumping = True
+....
+
+The actual lift-off from the jump action happens in the *update*
+function of your *Player* class:
+
+....
+        if self.is_jumping and self.is_falling is False:
+            self.is_falling = True
+            self.movey -= 33  # how high to jump
+....
+
+This code executes only when the *is_jumping* variable is True while the
+*is_falling* variable is False. When these conditions are satisfied, the
+hero sprite's Y position is adjusted to 33 pixels in the "air". It's
+_negative_ 33 because a lower number on the Y axis in Pygame means it's
+closer to the top of the screen. That's effectively a jump. You can
+adjust the number of pixels for a lower or higher jump. This clause also
+sets *is_falling* to True, which prevents another jump from being
+registered. If you set it to False, a jump action would compound on
+itself, shooting your hero into space, which is fun to witness but not
+ideal for gameplay.
+
+[[calling-the-jump-function]]
+Calling the jump function
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The problem is that nothing in your main loop is calling the *jump*
+function yet. You made a placeholder keypress for it early on, but right
+now, all the jump key does is print *jump* to the terminal.
+
+In your main loop, change the result of the Up arrow from printing a
+debug statement to calling the *jump* function.
+
+....
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                player.jump()
+....
+
+If you would rather use the Spacebar for jumping, set the key to
+*pygame.K_SPACE* instead of **pygame.K_UP**. Alternately, you can use
+both (as separate *if* statements) so that the player has a choice.
+
+[[landing-on-a-platform]]
+Landing on a platform
+~~~~~~~~~~~~~~~~~~~~~
+
+So far, you've defined an anti-gravity condition for when the player
+sprite hits the ground, but the game code keeps platforms and the ground
+in separate lists. (As with so many choices made in this article, that's
+not strictly necessary, and you can experiment with treating the ground
+as just another platform.) To enable a player sprite to stand on top of
+a platform, you must detect a collision between the player sprite and a
+platform sprite, and stop gravity from "pulling" it downward.
+
+Place this code into your *update* function:
+
+....
+        plat_hit_list = pygame.sprite.spritecollide(self, plat_list, False)
+        for p in plat_hit_list:
+            self.is_jumping = False  # stop jumping
+            self.movey = 0
+
+            # approach from below
+            if self.rect.bottom <= p.rect.bottom:
+               self.rect.bottom = p.rect.top
+            else:
+               self.movey += 3.2
+....
+
+This code scans through the list of platforms for any collisions with
+your hero sprite. If one is detected, then *is_jumping* is set to False
+and any movement in the sprite's Y position is cancelled.
+
+Platforms hang in the air, meaning the player can interact with them by
+approaching them from either above or below. It's up to you how you want
+the platforms to react to your hero sprite, but it's not uncommon to
+block a sprite from accessing a platform from below. The code in the
+second code block treats platforms as a sort of ceiling or pergola, such
+that the hero can jump onto a platform as long as it jumps higher than
+the platform's topside, but obstructs the sprite when it tries to jump
+from beneath:
+
+The first clause of the *if* statement detects whether the bottom of the
+hero sprite is less than (higher on the screen) than the platform. If it
+is, then the hero "lands" on the platform, because the value of the
+bottom of the hero sprite is made equal to the top of the platform
+sprite. Otherwise, the hero sprite's Y position is increased, causing it
+to "fall" away from the platform.
+
+[[falling]]
+Falling
+~~~~~~~
+
+If you try your game now, you find that jumping works mostly as
+expected, but falling isn't consistent. For instance, after your hero
+jumps onto a platform, it can't walk off of a platform to fall to the
+ground. It just stays in the air, as if there was still a platform
+beneath it. However, you are able to cause the hero to _jump_ off of a
+platform.
+
+The reason for this is the way gravity has been implemented. Colliding
+with a platform turns gravity "off" so the hero sprite doesn't fall
+through the platform. The problem is, nothing turns gravity back on when
+the hero walks off the edge of a platform.
+
+You can force gravity to reactivate by activating gravity during the
+hero sprite's movement. Edit the movement code in the *update* function
+of your *Player* class, adding a statement to activate gravity during
+movement. The two lines you need to add are commented:
+
+....
+        if self.movex < 0:
+            self.is_jumping = True  # turn gravity on
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = pygame.transform.flip(self.images[self.frame // ani], True, False)
+
+        if self.movex > 0:
+            self.is_jumping = True  # turn gravity on
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = self.images[self.frame // ani]
+....
+
+This activates gravity long enough to cause the hero sprite to fall to
+the ground upon a failed platform collision check.
+
+Try your game now.  Everything works as expected, but try changing some
+variables to see what's possible.
+
+In the next article, you'll make your world scroll.
+
+Here's all the code so far:
+
+....
+#!/usr/bin/env python3
+# by Seth Kenlon
+
+# GPLv3
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import pygame
+import sys
+import os
+
+'''
+Variables
+'''
+
+worldx = 960
+worldy = 720
+fps = 40
+ani = 4
+world = pygame.display.set_mode([worldx, worldy])
+
+BLUE = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+ALPHA = (0, 255, 0)
+
+'''
+Objects
+'''
+
+# x location, y location, img width, img height, img file
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, xloc, yloc, imgw, imgh, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img)).convert()
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.y = yloc
+        self.rect.x = xloc
+
+
+class Player(pygame.sprite.Sprite):
+    """
+    Spawn a player
+    """
+
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.movex = 0
+        self.movey = 0
+        self.frame = 0
+        self.health = 10
+        self.is_jumping = True
+        self.is_falling = True
+        self.images = []
+        for i in range(1, 5):
+            img = pygame.image.load(os.path.join('images', 'hero' + str(i) + '.png')).convert()
+            img.convert_alpha()
+            img.set_colorkey(ALPHA)
+            self.images.append(img)
+            self.image = self.images[0]
+            self.rect = self.image.get_rect()
+
+    def gravity(self):
+        if self.is_jumping:
+            self.movey += 3.2
+
+    def control(self, x, y):
+        """
+        control player movement
+        """
+        self.movex += x
+
+    def jump(self):
+        if self.is_jumping is False:
+            self.is_falling = False
+            self.is_jumping = True
+
+    def update(self):
+        """
+        Update sprite position
+        """
+
+        # moving left
+        if self.movex < 0:
+            self.is_jumping = True
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = pygame.transform.flip(self.images[self.frame // ani], True, False)
+
+        # moving right
+        if self.movex > 0:
+            self.is_jumping = True
+            self.frame += 1
+            if self.frame > 3 * ani:
+                self.frame = 0
+            self.image = self.images[self.frame // ani]
+
+        # collisions
+        enemy_hit_list = pygame.sprite.spritecollide(self, enemy_list, False)
+        for enemy in enemy_hit_list:
+            self.health -= 1
+            # print(self.health)
+
+        ground_hit_list = pygame.sprite.spritecollide(self, ground_list, False)
+        for g in ground_hit_list:
+            self.movey = 0
+            self.rect.bottom = g.rect.top
+            self.is_jumping = False  # stop jumping
+
+        # fall off the world
+        if self.rect.y > worldy:
+            self.health -=1
+            print(self.health)
+            self.rect.x = tx
+            self.rect.y = ty
+
+        plat_hit_list = pygame.sprite.spritecollide(self, plat_list, False)
+        for p in plat_hit_list:
+            self.is_jumping = False  # stop jumping
+            self.movey = 0
+            if self.rect.bottom <= p.rect.bottom:
+               self.rect.bottom = p.rect.top
+            else:
+               self.movey += 3.2
+
+        if self.is_jumping and self.is_falling is False:
+            self.is_falling = True
+            self.movey -= 33  # how high to jump
+
+        self.rect.x += self.movex
+        self.rect.y += self.movey
+
+class Enemy(pygame.sprite.Sprite):
+    """
+    Spawn an enemy
+    """
+
+    def __init__(self, x, y, img):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join('images', img))
+        self.image.convert_alpha()
+        self.image.set_colorkey(ALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.counter = 0
+
+    def move(self):
+        """
+        enemy movement
+        """
+        distance = 80
+        speed = 8
+
+        if self.counter >= 0 and self.counter <= distance:
+            self.rect.x += speed
+        elif self.counter >= distance and self.counter <= distance * 2:
+            self.rect.x -= speed
+        else:
+            self.counter = 0
+
+        self.counter += 1
+
+
+class Level:
+    def ground(lvl, gloc, tx, ty):
+        ground_list = pygame.sprite.Group()
+        i = 0
+        if lvl == 1:
+            while i < len(gloc):
+                ground = Platform(gloc[i], worldy - ty, tx, ty, 'tile-ground.png')
+                ground_list.add(ground)
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return ground_list
+
+    def bad(lvl, eloc):
+        if lvl == 1:
+            enemy = Enemy(eloc[0], eloc[1], 'enemy.png')
+            enemy_list = pygame.sprite.Group()
+            enemy_list.add(enemy)
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return enemy_list
+
+    # x location, y location, img width, img height, img file
+    def platform(lvl, tx, ty):
+        plat_list = pygame.sprite.Group()
+        ploc = []
+        i = 0
+        if lvl == 1:
+            ploc.append((200, worldy - ty - 128, 3))
+            ploc.append((300, worldy - ty - 256, 3))
+            ploc.append((550, worldy - ty - 128, 4))
+            while i < len(ploc):
+                j = 0
+                while j <= ploc[i][2]:
+                    plat = Platform((ploc[i][0] + (j * tx)), ploc[i][1], tx, ty, 'tile.png')
+                    plat_list.add(plat)
+                    j = j + 1
+                print('run' + str(i) + str(ploc[i]))
+                i = i + 1
+
+        if lvl == 2:
+            print("Level " + str(lvl))
+
+        return plat_list
+
+
+'''
+Setup
+'''
+
+backdrop = pygame.image.load(os.path.join('images', 'stage.png'))
+clock = pygame.time.Clock()
+pygame.init()
+backdropbox = world.get_rect()
+main = True
+
+player = Player()  # spawn player
+player.rect.x = 0  # go to x
+player.rect.y = 30  # go to y
+player_list = pygame.sprite.Group()
+player_list.add(player)
+steps = 10
+
+eloc = []
+eloc = [300, 0]
+enemy_list = Level.bad(1, eloc)
+
+gloc = []
+tx = 64
+ty = 64
+
+i = 0
+while i <= (worldx / tx) + tx:
+    gloc.append(i * tx)
+    i = i + 1
+
+ground_list = Level.ground(1, gloc, tx, ty)
+plat_list = Level.platform(1, tx, ty)
+
+'''
+Main Loop
+'''
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == ord('q'):
+                pygame.quit()
+                try:
+                    sys.exit()
+                finally:
+                    main = False
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(-steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(steps, 0)
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                player.jump()
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                player.control(steps, 0)
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                player.control(-steps, 0)
+
+    world.blit(backdrop, backdropbox)
+    player.update()
+    player.gravity()
+    player_list.draw(world)
+    enemy_list.draw(world)
+    ground_list.draw(world)
+    plat_list.draw(world)
+    for e in enemy_list:
+        e.move()
+    pygame.display.flip()
+    clock.tick(fps)
+....
+

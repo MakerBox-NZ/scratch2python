@@ -1,0 +1,236 @@
+[[python-windows]]
+Install Python on Windows
+-------------------------
+
+So you want to learn to program? One of the most common languages to
+start with is https://www.python.org/[Python], popular for its unique
+blend of
+https://opensource.com/article/19/7/get-modular-python-classes[object-oriented]
+structure and simple syntax. Python is also an _interpreted_
+__language__, meaning you don't need to learn how to compile code into
+machine language: Python does that for you, allowing you to test your
+programs sometimes instantly and, in a way, while you write your code.
+
+Just because Python is easy to learn doesn't mean you should
+underestimate its potential power. Python is used by
+https://github.com/edniemeyer/weta_python_db[movie]
+https://www.python.org/about/success/ilm/[studios], financial
+institutions, IT houses, video game studios, makers, hobbyists,
+https://opensource.com/article/19/7/rgb-cube-python-scribus[artists],
+teachers, and many others.
+
+On the other hand, Python is also a serious programming language, and
+learning it takes dedication and practice. Then again, you don't have to
+commit to anything just yet. You can install and try Python on nearly
+any computing platform, so if you're on Windows, this article is for
+you.
+
+If you want to try Python on a completely open source operating system,
+you can
+https://opensource.com/article/19/7/ways-get-started-linux[install
+Linux] and then https://opensource.com/article/17/10/python-101[try
+Python].
+
+[[windows-get-python]]
+Get Python
+~~~~~~~~~~
+
+Python is available from its website,
+https://www.python.org/downloads/[Python.org]. Once there, hover your
+mouse over the *Downloads* menu, then over the *Windows* option, and
+then click the button to download the latest release.
+
+image:img/win-python-install.jpg[image]
+
+Alternatively, you can click the *Downloads* menu button and select a
+specific version from the downloads page.
+
+[[windows-install-python]]
+Install Python
+~~~~~~~~~~~~~~
+
+Once the package is downloaded, open it to start the installer.
+
+It is safe to accept the default install location, and it's vital to add
+Python to PATH. If you don't add Python to your PATH, then Python
+applications won't know where to find Python (which they require in
+order to run). This is _not_ selected by default, so activate it at the
+bottom of the install window before continuing!
+
+image:img/win-python-path.jpg[image]
+
+Before Windows allows you to install an application from a publisher
+other than Microsoft, you must give your approval. Click the *Yes*
+button when prompted by the *User Account Control* system.
+
+image:img/win-python-publisher.jpg[image]
+
+Wait patiently for Windows to distribute the files from the Python
+package into the appropriate locations, and when it's finished, you're
+done installing Python.
+
+Time to play.
+
+[[windows-run-an-ide]]
+Install an IDE
+~~~~~~~~~~~~~~
+
+To write programs in Python, all you really need is a text editor, but
+it's convenient to have an integrated development environment (IDE). An
+IDE integrates a text editor with some friendly and helpful Python
+features. IDLE 3 and Pycharm (Community Edition) are two great open
+source options to consider.
+
+[[windows-idle-3]]
+IDLE 3
+^^^^^^
+
+Python comes with an IDE called IDLE. You can write code in any text
+editor, but using an IDE provides you with keyword highlighting to help
+detect typos, a *Run* button to test code quickly and easily, and other
+code-specific features that a plain text editor like
+https://notepad-plus-plus.org/[Notepad++] normally doesn't have.
+
+To start IDLE, click the *Start* (or **Window**) menu and type *python*
+for matches. You may find a few matches, since Python provides more than
+one interface, so make sure you launch IDLE.
+
+image:img/idle3.png[image]
+
+If you don't see Python in the Start menu, reinstall Python. Be sure to
+select *Add Python to PATH* in the install wizard. Refer to the
+http://docs.python.org/3/using/windows.html[Python docs] for detailed
+instructions.
+
+[[windows-pycharm-ide]]
+PyCharm IDE
+^^^^^^^^^^^
+
+If you already have some coding experience and IDLE seems too simple for
+you, try
+https://www.jetbrains.com/pycharm/download/#section=windows[PyCharm
+(Community Edition)], an open source IDE for Python. It has keyword
+highlighting to help detect typos, quotation and parenthesis completion
+to avoid syntax errors, line numbers (helpful when debugging),
+indentation markers, and a *Run* button to test code quickly and easily.
+
+To install it, visit the PyCharm IDE website, download the installer,
+and run it. The process is the same as with Python: start the installer,
+allow Windows to install a non-Microsoft application, and wait for the
+installer to finish.
+
+Once PyCharm is installed, double-click the PyCharm icon on your desktop
+or select it from the Start menu.
+
+[[windows-tell-python-what-to-do]]
+Tell Python what to do
+~~~~~~~~~~~~~~~~~~~~~~
+
+Keywords tell Python what you want it to do. In IDLE, go to the File
+menu and create a new file. In PyCharm, click the *New Project* button.
+
+In your new, empty file, type this into IDLE or PyCharm:
+
+....
+print("Hello world.")
+....
+
+* If you are using IDLE, go to the Run menu and select the Run Module
+option.
+* If you are using PyCharm, click the Run button in the top right corner
+of the window.
+
+image:img/win-pycharm-button-run.jpeg[image]
+
+Any time you run code, your IDE prompts you to save the file you're
+working on. Do that before continuing.
+
+The keyword *print* tells Python to print out whatever text you give it
+in parentheses and quotes.
+
+[OS_EMBEDDED_MENU_RIGHT:]That's not very exciting, though. At its core,
+Python has access to only basic keywords like *print* and **help**,
+basic math functions, and so on.
+
+Use the *import* keyword to load more keywords. Start a new file and
+name it **pen.py**.
+
+**Warning**: Do _not_ call your file **turtle.py**, because *turtle.py*
+is the name of the file that contains the turtle program you are
+controlling. Naming your file *turtle.py* confuses Python because it
+thinks you want to import your own file.
+
+https://opensource.com/life/15/8/python-turtle-graphics[Turtle] is a fun
+module to use. Add this code to your file:
+
+....
+import turtle
+
+turtle.begin_fill()
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.left(90)
+turtle.forward(100)
+turtle.end_fill()
+....
+
+See what shapes you can draw with the turtle module.
+
+To clear your turtle drawing area, use the *turtle.clear()* keyword.
+What do you think the keyword *turtle.color("blue")* does?
+
+Try more complex code:
+
+....
+import turtle as t
+import time
+
+t.color("blue")
+t.begin_fill()
+
+counter = 0
+
+while counter < 4:
+    t.forward(100)
+    t.left(90)
+    counter = counter+1
+
+t.end_fill()
+time.sleep(2)
+....
+
+Notice that turtle, in this example code, has not only been imported,
+but it's also been given the shorter nickname **t**, which is quicker
+and easier to type. This is a convenience function in Python.
+
+[[windows-challenge]]
+Challenge
+^^^^^^^^^
+
+As a challenge, try changing your script to get this result:
+
+image:win-python-idle-turtle.jpg[image]
+
+Once you complete that script, you're ready to move on to more exciting
+modules. A good place to start is this
+https://opensource.com/article/17/10/python-101#python-101-dice-game[introductory
+dice game].
+
+[[windows-stay-pythonic]]
+Stay Pythonic
+~~~~~~~~~~~~~
+
+Python is a fun language with modules for practically anything you can
+think to do with it. As you can see, it's easy to get started with
+Python, and as long as you're patient with yourself, you may find
+yourself understanding and writing Python code with the same fluidity as
+you write your native language.
+Try scripting some small tasks for yourself, and see where Python takes you.
+To really integrate Python with your daily workflow, you might even try Linux, which is natively scriptable in ways no other operating system is.
+You might find yourself, given enough time, using the applications you create!
+
+Good luck, and stay Pythonic.
+

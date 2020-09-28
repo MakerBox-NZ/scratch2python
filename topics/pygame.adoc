@@ -1,0 +1,487 @@
+[[get-started]]
+Getting started with Pygame
+---------------------------
+
+In my xref:learn-python[first article] in this series, I explained how to use Python to create a simple,
+text-based dice game. You also used the Turtle module to generate some
+simple graphics. In this article, you start using a module called Pygame
+to create a game with graphics.
+
+The Turtle module is included with Python by default. Anyone who's got
+Python installed also has Turtle. The same is not true for an advanced
+module like Pygame. Because it's a specialized code library, you must
+install Pygame yourself. Modern Python development uses the concept of
+virtual __environments__, which provides your Python code its own space
+to run in, and also helps manage which code libraries your application
+uses. This ensures that when you pass your Python application to another
+user to play, you know exactly what they need to install to make it
+work.
+
+You can manage your Python virtual environment manually, or you can let
+your IDE help you. For now, you can let PyCharm do all the work. If
+you don't want to use PyCharm,
+xref:learn-pip[read László Kiss Kollár's article about managing Python packages].
+
+
+Introducing the Pygame module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pygame is a library, or __Python module__. It's a collection of common
+code that prevents you from having to reinvent the wheel with every new
+game you write. You've already used the Turtle module, and you can
+imagine how complex that could have been if you'd had to write the code
+to create a pen before drawing with it. Pygame offers similar
+advantages, but for video games.
+
+A video game needs a setting, a world in which it takes place. In
+Pygame, there are two different ways to create your setting:
+
+* Set a background color
+* Set a background image
+
+Either way, your background is only an image or a color. Your video game
+characters can't interact with things in the background, so don't put
+anything too important back there. It's just set dressing.
+
+[[setting-up-your-first-pygame-script]]
+Setting up your first Pygame script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To start a new Python project, you would normally create a new folder on
+your computer and place all your game files go into this directory. It's
+vitally important that you keep all the files needed to run your game
+inside of your project folder.
+
+PyCharm (or whatever IDE you use) can do this for you.
+
+To create a new project in PyCharm, navigate to the *File* menu and
+select **New Project**. In the window that appears, enter a name for
+your project (such as **game_001**.) Notice that this project is saved
+into a special *PycharmProjects* folder in your home directory. This
+ensures that all the files your game needs stays in one place.
+
+When creating a new project, let PyCharm create a new environment using
+Virtualenv, and accept all defaults. Enable the option to create a
+*main.py* file (and to set up some important defaults.)
+
+image:img/pycharm-new-project_0.jpg[]
+
+After you've clicked the *Create* button, a new project appears in your
+PyCharm window. The project consists of a virtual environment (the
+*venv* directory listed in the left column) and a demo file called
+**main.py**.
+
+Delete all the contents of *main.py* so you can enter your own custom
+code. A Python script starts with the file type, your name, and the
+license you want to use. Use an open source license so your friends can
+improve your game and share their changes with you:
+
+....
+#!/usr/bin/env python3
+# by Seth Kenlon
+
+## GPLv3
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+....
+
+Then tell Python what modules you want to use. In this code sample, you
+don't have to type the # character or anything after it on each line.
+The # character in Python represents a __comment__, notes in code left
+for yourself and other coders.
+
+....
+import pygame  # load pygame keywords
+import sys     # let  python use your file system
+import os      # help python identify your OS
+....
+
+Notice that PyCharm doesn't understand what Pygame is, and underlines it
+to mark it as an error. This is because Pygame, unlike sys and os, isn't
+included with Python by default. You need to include Pygame in your
+project directory before you can use it successfully in code. To include
+it, hover your mouse over the word *pygame* until you see a notification
+popup explaining the error.
+
+Click the *Install package pygame* link in the alert box, and wait for
+PyCharm to install Pygame into your virtual environment.
+
+Once it's installed, the error disappears.
+
+Without an IDE like PyCharm, you can install Pygame into your virtual
+environment manually using the *pip* command.
+
+[[code-sections]]
+Code sections
+~~~~~~~~~~~~~
+
+Because you'll be working a lot with this script file, it helps to make
+sections within the file so you know where to put stuff. You do this
+with block comments, which are comments that are visible only when
+looking at your source code. Create four blocks in your code. These are
+all comments that Python ignores, but they're good placeholders for you
+as you follow along with these lessons. I still use placeholders when I
+code, because it helps me organize and plan.
+
+....
+'''
+Variables
+'''
+
+# put variables here
+
+
+'''
+Objects
+'''
+
+# put Python classes and functions here
+
+
+'''
+Setup
+'''
+
+# put run-once code here
+
+
+'''
+Main Loop
+'''
+
+# put game loop here
+....
+
+Next, set the window size for your game. Keep in mind that not everyone
+has a big computer screen, so it's best to use a screen size that fits
+on "most" people's computers.
+
+There is a way to toggle full-screen mode, the way many modern video
+games do, but since you're just starting out, keep it simple and just
+set one size.
+
+....
+'''
+Variables
+'''
+worldx = 960
+worldy = 720
+....
+
+The Pygame engine requires some basic setup before you can use it in a
+script. You must set the frame rate, start its internal clock, and start
+(using the keyword `init`, for __initialize__) Pygame.
+
+Add these variables:
+
+....
+fps   = 40  # frame rate
+ani   = 4   # animation cycles
+....
+
+Add instructions to start Pygame's internal clock in the Setup section:
+
+....
+'''
+Setup
+'''
+
+clock = pygame.time.Clock()
+pygame.init()
+....
+
+Now you can set your background.
+
+[[setting-the-background]]
+Setting the background
+~~~~~~~~~~~~~~~~~~~~~~
+
+Before you continue, open a graphics application and create a background
+for your game world. Save it as `stage.png` inside a folder called
+`images` in your project directory. If you need a starting point, you
+can download a set of link:/article/20/1/what-creative-commons[Creative
+Commons] backgrounds from
+https://kenney.nl/assets/background-elements-redux[kenny.nl].
+
+There are several free graphic applications you can use to create,
+resize, or modify graphics for your games.
+
+* https://pinta-project.com/pintaproject/pinta/releases[Pinta] is a
+basic, easy to learn paint application.
+* http://krita.org[Krita] is a professional-level paint materials
+emulator that can be used to create beautiful images. If you're very
+interested in creating art for video games, you can even purchase a
+series of online https://gumroad.com/l/krita-game-art-tutorial-1[game
+art tutorials].
+* http://inkscape.org[Inkscape] is a vector graphics application. Use it
+to draw with shapes, lines, splines, and Bézier curves.
+
+Your graphic doesn't have to be complex, and you can always go back and
+change it later. Once you have a background, add this code in the setup
+section of your file:
+
+....
+world = pygame.display.set_mode([worldx,worldy])
+backdrop = pygame.image.load(os.path.join('images','stage.png'))
+backdropbox = world.get_rect()
+....
+
+If you're just going to fill the background of your game world with a
+color, all you need is:
+
+....
+world = pygame.display.set_mode([worldx, worldy])
+....
+
+You also must define a color to use. In your setup section, create some
+color definitions using values for red, green, and blue (RGB).
+
+....
+'''
+Variables
+'''
+
+BLUE  = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+....
+
+[[look-out-for-errors]]
+Look out for errors
+~~~~~~~~~~~~~~~~~~~
+
+PyCharm is strict, and that's pretty typical for programming. Syntax is
+paramount! As you enter your code into PyCharm, you see warnings and
+errors. The warnings are yellow and the errors are red.
+
+PyCharm can be over-zealous sometimes, though, so it's usually safe to
+ignore warnings. You may be violating the "Python style", but these are
+subtle conventions that you'll learn in time. Your code will still run
+as expected.
+
+Errors, on the other hand, prevent your code (and sometimes PyCharm)
+from doing what you expect. For instance, PyCharm is very insistent that
+there's a newline character at the end of the last line of code, so you
+*must* press *Enter* or *Return* on your keyboard at the end of your
+code. If you don't, PyCharm quietly refuses to run your code.
+
+[[running-the-game-pygame]]
+Running the game
+~~~~~~~~~~~~~~~~
+
+At this point, you could theoretically start your game. The problem is,
+it would only last for a millisecond.
+
+To prove this, save and then run your game.
+
+If you are using IDLE, run your game by selecting `Run Module` from the
+Run menu.
+
+If you are using PyCharm, click the `Run file` button in the top right
+toolbar.
+
+image:img/pycharm-button-run.jpeg[]
+
+You can also run a Python script straight from a Unix terminal or a
+Windows command prompt, as long as you're in your virtual environment.
+
+However you launch it, don't expect much, because your game only lasts a
+few milliseconds right now. You can fix that in the next section.
+
+[[looping]]
+Looping
+~~~~~~~
+
+Unless told otherwise, a Python script runs once and only once.
+Computers are very fast these days, so your Python script runs in less
+than a second.
+
+To force your game to stay open and active long enough for someone to
+see it (let alone play it), use a `while` loop. To make your game remain
+open, you can set a variable to some value, then tell a `while` loop to
+keep looping for as long as the variable remains unchanged.
+
+This is often called a "main loop," and you can use the term `main` as
+your variable. Add this anywhere in your Variables section:
+
+....
+main = True
+....
+
+During the main loop, use Pygame keywords to detect if keys on the
+keyboard have been pressed or released. Add this to your main loop
+section:
+
+....
+'''
+Main loop
+'''
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == ord('q'):
+                pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+....
+
+Be sure to press *Enter* or *Return* after the final line of your code
+so there's an empty line at the bottom of your file.
+
+Also in your main loop, refresh your world's background.
+
+If you are using an image for the background:
+
+....
+world.blit(backdrop, backdropbox)
+....
+
+If you are using a color for the background:
+
+....
+world.fill(BLUE)
+....
+
+Finally, tell Pygame to refresh everything on the screen and advance the
+game's internal clock.
+
+....
+    pygame.display.flip()
+    clock.tick(fps)
+....
+
+Save your file, and run it again to see the most boring game ever
+created.
+
+To quit the game, press `q` on your keyboard.
+
+[[freeze-your-python-environment]]
+Freeze your Python environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PyCharm is managing your code libraries, but your users aren't going to
+run your game from PyCharm. Just as you save your code file, you also
+need to preserve your virtual environment.
+
+Go to the *Tools* menu and select **Sync Python Requirements**. This
+saves your library dependencies to a special file called
+**requirements.txt**. The first time you sync your requirements, PyCharm
+prompts you to install a plugin and to add dependencies. Click to accept
+these offers.
+
+image:img/pycharm-requirements.jpg[]
+
+A *requirements.txt* is generated for you, and placed into your project
+directory.
+
+[[code]]
+Code
+~~~~
+
+Here's what your code should look like so far:
+
+....
+#!/usr/bin/env python3
+# by Seth Kenlon
+
+# GPLv3
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import pygame
+import sys
+import os
+
+'''
+Variables
+'''
+
+worldx = 960
+worldy = 720
+fps = 40  # frame rate
+ani = 4   # animation cycles
+main = True
+
+BLUE = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+
+
+'''
+Objects
+'''
+
+# put Python classes and functions here
+
+
+'''
+Setup
+'''
+
+clock = pygame.time.Clock()
+pygame.init()
+world = pygame.display.set_mode([worldx, worldy])
+backdrop = pygame.image.load(os.path.join('images', 'stage.png'))
+backdropbox = world.get_rect()
+
+
+'''
+Main Loop
+'''
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == ord('q'):
+                pygame.quit()
+            try:
+                sys.exit()
+            finally:
+                main = False
+    world.blit(backdrop, backdropbox)
+    pygame.display.flip()
+    clock.tick(fps)
+....
+
+[[what-to-do-next]]
+What to do next
+~~~~~~~~~~~~~~~
+
+In the next article, I'll show you how to add to your [currently empty] game world, so start creating or finding some graphics to use!
